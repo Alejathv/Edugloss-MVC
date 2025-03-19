@@ -1,0 +1,26 @@
+/* Establece la imagen de fondo */
+body {
+    background: url('../img/1.12.png') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Modifica la tarjeta para que tenga un fondo semi-transparente */
+.card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+}
+
+/* Cambia el color del botón */
+.btn-primary {
+    background-color: #6F38C5; /* Naranja */
+    border-color: #eeeeee;
+}
+
+.btn-primary:hover {
+    background-color: #ADDDD0;  /* Un poco más oscuro al pasar el mouse */
+    border-color: #ADDDD0;
+}
+.card-body{
+    background-color: #EEEEEE;
+
+}
