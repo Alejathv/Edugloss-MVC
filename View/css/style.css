@@ -339,6 +339,22 @@ font-family: "Rubik", sans-serif;
 
 
 /*** Carousel Hero Header Start ***/
+.header-carousel.owl-carousel {
+    display: block !important;
+}
+/* Desactiva el carrusel */
+.header-carousel .owl-stage-outer,
+.header-carousel .owl-stage,
+.header-carousel .owl-item {
+    transform: none !important;
+    width: 100% !important;
+    display: block !important;
+}
+
+.header-carousel .owl-item {
+    float: none !important;
+}
+/* Desactiva el carrusel */
 .header-carousel .header-carousel-item {
     height: 700px;
 }
