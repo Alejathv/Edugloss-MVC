@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-04-2025 a las 02:49:19
+-- Tiempo de generación: 24-04-2025 a las 20:41:23
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -168,7 +168,7 @@ CREATE TABLE `usuarios` (
   `telefono` varchar(12) DEFAULT NULL,
   `correo` varchar(200) NOT NULL,
   `contraseña` varchar(255) NOT NULL,
-  `rol` enum('estudiante','docente','administrador') NOT NULL,
+  `rol` enum('estudiante','docente','administrador','cliente') NOT NULL,
   `fecha_creacion` date DEFAULT curdate(),
   `estado` enum('activo','inactivo') NOT NULL DEFAULT 'activo',
   `especialidad` varchar(150) DEFAULT NULL
