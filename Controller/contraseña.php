@@ -7,7 +7,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require '../libs/vendor/autoload.php'; // Asegúrate de que esta ruta sea correcta
+require_once __DIR__ . '/../vendor/autoload.php'; // Asegúrate de que esta ruta sea correcta
 
 if (!isset($_POST['correo']) || empty($_POST['correo'])) {
     echo "<p>Error: No se proporcionó un correo válido.</p>";
