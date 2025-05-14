@@ -9,15 +9,17 @@ class UserModel {
         $this->db = $database->getConnection();
     }
 
-    public function getUserByEmail($email) {
-        $stmt = $this->db->prepare("SELECT * FROM usuarios WHERE email_usuario = ?");
-        $stmt->bind_param("s", $email);
+    public function getUserByEmail($correo) {
+        $stmt = $this->db->prepare("SELECT * FROM usuarios WHERE correo = ?");
+        $stmt->bind_param("s", $correo);
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
-    public function updatePassword($email, $newPassword) {
-        $stmt = $this->db->prepare("UPDATE usuarios SET contrasena = ? WHERE correo = ?");
-        $stmt->bind_param("ss", $newPassword, $email);
+
+    public function updatePassword($correo, $newPassword) {
+        $stmt = $this->db->prepare("UPDATE usuarios SET contraseña = ? WHERE correo = ?");
+        $stmt->bind_param("ss", $newPassword, $correo);
+
         
         return $stmt->execute();
     }
