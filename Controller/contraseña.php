@@ -9,12 +9,12 @@ use PHPMailer\PHPMailer\Exception;
 
 require '../libs/vendor/autoload.php'; // Asegúrate de que esta ruta sea correcta
 
-if (!isset($_POST['email_usuario']) || empty($_POST['email_usuario'])) {
+if (!isset($_POST['correo']) || empty($_POST['correo'])) {
     echo "<p>Error: No se proporcionó un correo válido.</p>";
     exit();
 }
 
-$correo = trim($_POST['email_usuario']);
+$correo = trim($_POST['correo']);
 
 // Crear instancia de UserModel
 $userModel = new UserModel();
