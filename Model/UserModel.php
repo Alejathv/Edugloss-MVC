@@ -15,9 +15,11 @@ class UserModel {
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
+
     public function updatePassword($correo, $newPassword) {
         $stmt = $this->db->prepare("UPDATE usuarios SET contraseña = ? WHERE correo = ?");
         $stmt->bind_param("ss", $newPassword, $correo);
+
         
         return $stmt->execute();
     }
