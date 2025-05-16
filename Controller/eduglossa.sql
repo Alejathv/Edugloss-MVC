@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-04-2025 a las 20:41:23
+-- Tiempo de generación: 09-05-2025 a las 12:46:02
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -167,7 +167,7 @@ CREATE TABLE `usuarios` (
   `apellido` varchar(100) NOT NULL,
   `telefono` varchar(12) DEFAULT NULL,
   `correo` varchar(200) NOT NULL,
-  `contraseña` varchar(255) NOT NULL,
+  `contraseña` varchar(255) DEFAULT NULL,
   `rol` enum('estudiante','docente','administrador','cliente') NOT NULL,
   `fecha_creacion` date DEFAULT curdate(),
   `estado` enum('activo','inactivo') NOT NULL DEFAULT 'activo',
@@ -181,7 +181,10 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellido`, `telefono`, `correo`, `contraseña`, `rol`, `fecha_creacion`, `estado`, `especialidad`) VALUES
 (3001, 'Lidia', 'Gutierrez', '1234567890', 'idagz#09@gmail.com', 'cinnamon', 'docente', '2025-03-21', 'activo', 'Manicure y Pedicure'),
 (4001, 'Lidia', 'Gutierrez', '0987654321', 'lidiag9@gmail.com', 'passmnb', 'administrador', '2025-03-21', 'activo', NULL),
-(5001, 'María', 'Lopez', '5546543212', 'marialopez@gmail.com', 'contra13', 'estudiante', '2025-03-21', 'activo', NULL);
+(5001, 'María', 'Lopez', '5546543212', 'marialopez@gmail.com', 'contra13', 'estudiante', '2025-03-21', 'activo', NULL),
+(5002, 'luisa', 'hernandez', '3195862728', 'luisahernandez12@gmail.com', NULL, 'cliente', '2025-05-05', 'activo', NULL),
+(5003, 'mary', 'niño', '31958627765', 'mary12@gmail.com', NULL, 'cliente', '2025-05-05', 'activo', NULL),
+(5004, 'Alejandra', 'Acosta', '3115622124', 'AlejaAcosta@gmail.com', NULL, 'cliente', '2025-05-05', 'activo', NULL);
 
 -- --------------------------------------------------------
 

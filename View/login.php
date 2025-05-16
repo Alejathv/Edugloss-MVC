@@ -1,3 +1,35 @@
+<?php
+session_start();
+$mensaje = '';
+$tipo = ''; // "exito" o "error"
+
+if (isset($_SESSION['mensaje'])) {
+    $mensaje = $_SESSION['mensaje'];
+    $tipo = 'success';
+    unset($_SESSION['mensaje']);
+} elseif (isset($_SESSION['error'])) {
+    $mensaje = $_SESSION['error'];
+    $tipo = 'danger';
+    unset($_SESSION['error']);
+}
+
+if (!empty($mensaje)) {
+    echo "<script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('mensaje-container');
+            if (container) {
+                container.innerHTML = `<div class='alert alert-{$tipo} alert-dismissible fade show'>
+                    {$mensaje}
+                    
+                </div>`;
+                setTimeout(() => {
+                    container.innerHTML = '';
+                }, 5000);
+            }
+        });
+    </script>";
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -13,16 +45,7 @@
 <body>
 
     <div class="container" id="container">
-        <div class="form-container sign-up-container">
-            <form action="#">
-                <h1>Crear cuenta</h1>
-                <span>quedaras registrado como cliente</span>
-                <input type="text" placeholder="Nombre" />
-                <input type="email" placeholder="Correo electrónico" />
-                <input type="text" placeholder="Telefono" />
-                <button>Registrarse</button>
-            </form>
-        </div>
+        
         <div class="form-container sign-in-container">
             <form action="../Controller/LoginController.php" method="POST">
                 <img id="logo" src="img/principal-principal.png" alt="Logo">
@@ -35,26 +58,26 @@
                 <a href="recovery.html">¿Olvidaste tu contraseña?</a>
                 
                 <button type="submit" name="btnlogin">Iniciar sesión</button>
-                
+            <div id="mensaje-container"></div>    
             </form>            
         </div>
         <div class="overlay-container">
             <div class="overlay">
-                <div class="overlay-panel overlay-left">
+                <div class="overlay-panel overlay-right">
                     <h1>¡Empezemos!</h1>
                     <p>Para mantenerte conectado con nosotros, inicia sesión con tu información personal</p>
-                    <button class="ghost" id="signIn">Iniciar sesión</button>
-                </div>
-                <div class="overlay-panel overlay-right">
-                    <h1>¡Registrate!</h1>
-                    <p>Ingresa tus datos personales y da el primer paso hacia tu carrera en el mundo del manicure.</p>
-                    <button class="ghost" id="signUp">Registrarse</button>
+                    <h4>¿No tienes una cuenta?</h4>
+                    <br>
+                    <p>Recuerda que primero necesitas adquirir un plan.</p>
+                    <h4>¡Te invitamos a conocer nuestras opciones!</h4>
+                    <a href="planes.html" class="ghost">Ver Planes</a>
+
                 </div>
             </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-    <script src="js/login.js"></script>
+    <script src="View/js/mensajes.js"></script>
 
 </body>
 </html>

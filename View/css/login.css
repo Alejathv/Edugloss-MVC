@@ -29,14 +29,20 @@ h1 {
 h2 {
 	text-align: center;
 }
+h4{
+	font-family: "Prompt", sans-serif;
+	font-weight: bold;
+	margin: 0;
+	letter-spacing: 1px;
+	font-weight: 600;
+}
 
 p {
 	font-size: 15px;
 	font-weight: 100;
 	line-height: 20px;
-	letter-spacing: 0.2px;
-	margin: 20px 0 30px;
-	font-family: "Prompt", sans-serif;
+	margin: 10px 0 10px;
+	font-family: "DM Serif Display", serif;
 	font-weight: 300; 
 }
 
@@ -79,10 +85,27 @@ button:focus {
 	outline: none;
 }
 
-button.ghost {
-	background-color: transparent;
-	border-color: #FFFFFF;
+a.ghost {
+  border-radius: 20px;
+  border: 1px solid #FFFFFF;
+  background-color: transparent;
+  color: #FFFFFF;
+  font-family: "Prompt", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 80ms ease-in;
+  display: inline-block;
 }
+
+a.ghost:active {
+  transform: scale(0.95);
+}
+
+
 
 form {
 	background-color: #FFFFFF;
@@ -250,29 +273,4 @@ input {
 	margin: 0 5px;
 	height: 40px;
 	width: 40px;
-}
-
-footer {
-    background-color: #222;
-    color: #fff;
-    font-size: 14px;
-    bottom: 0;
-    position: fixed;
-    left: 0;
-    right: 0;
-    text-align: center;
-    z-index: 999;
-}
-
-footer p {
-    margin: 10px 0;
-}
-
-footer i {
-    color: red;
-}
-
-footer a {
-    color: #3c97bf;
-    text-decoration: none;
 }
