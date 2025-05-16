@@ -1,3 +1,35 @@
+<?php
+session_start();
+$mensaje = '';
+$tipo = ''; // "exito" o "error"
+
+if (isset($_SESSION['mensaje'])) {
+    $mensaje = $_SESSION['mensaje'];
+    $tipo = 'success';
+    unset($_SESSION['mensaje']);
+} elseif (isset($_SESSION['error'])) {
+    $mensaje = $_SESSION['error'];
+    $tipo = 'danger';
+    unset($_SESSION['error']);
+}
+
+if (!empty($mensaje)) {
+    echo "<script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('mensaje-container');
+            if (container) {
+                container.innerHTML = `<div class='alert alert-{$tipo} alert-dismissible fade show'>
+                    {$mensaje}
+                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                </div>`;
+                setTimeout(() => {
+                    container.innerHTML = '';
+                }, 5000);
+            }
+        });
+    </script>";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,38 +74,48 @@
         </div>
         <!-- Spinner End -->
 
-        <!-- Navbar & Hero Start -->
-        <div class="container-fluid nav-bar px-0 px-lg-4 py-lg-0">
-            <div class="container">
-                <nav class="navbar navbar-expand-lg navbar-light"> 
-                    <a href="#" class="navbar-brand p-0">
-                        <h1 class="text-primary mb-0"><img src="View/img/logo.png" alt="Logo"></h1>
-                        <!-- <img src="img/logo.png" alt="Logo"> -->
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                        <span class="fa fa-bars"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarCollapse">
-                        <div class="navbar-nav mx-0 mx-lg-auto">
-                            <a href="index.html" class="nav-item nav-link active">Inicio</a>
-
-                            <a href="View/planes.html" class="nav-item nav-link active">Planes</a>
-                            <!-- <a href="service.html" class="nav-item nav-link">Adquiere un Plan</a> -->
-                            <a href="View/team.html" class="nav-item nav-link active">Equipo</a>
-                            <a href="#contacto" class="nav-item nav-link active">Contacto</a>
-                            <div class="nav-btn px-3">
-                                <a href="View/login.html" class="btn btn-primary rounded-pill py-2 px-4 ms-3 flex-shrink-0"> Campus Virtual</a>
-                            </div>
-                        </div>
+    <!-- Navbar & Hero Start -->
+    <div class="container-fluid nav-bar px-0 px-lg-4 py-lg-0">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light"> 
+                <a href="#" class="navbar-brand p-0">
+                    <h1 class="text-primary mb-0"><img src="View/img/logo.png" alt="Logo"></h1>
+                    <!-- <img src="img/logo.png" alt="Logo"> -->
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav mx-0 mx-lg-auto">
+                        <a href="index.html" class="nav-item nav-link active">Inicio</a>
+                        <a href="View/planes.html" class="nav-item nav-link active">Planes</a>
+                        <a href="View/team.html" class="nav-item nav-link active">Equipo</a>
+                        <a href="#contacto" class="nav-item nav-link active">Contacto</a>
                     </div>
-                </nav>
-            </div>
+
+                    <!-- Botones con margen pequeño -->
+                <div class="d-flex">
+                    <a href="View/carrito.html" class="btn btn-carrito rounded-pill py-2 px-4 flex-shrink-0 ms-2" style="background-color: #87a2fb; color: white; box-shadow: none;">
+                        <i class="fa fa-shopping-cart"></i> Carrito
+                    </a>
+                    
+                     
+                     <a href="View/login.php" class="btn btn-primary rounded-pill py-2 px-4 flex-shrink-0 ms-2">
+                        <i class="fa fa-graduation-cap"></i> Campus Virtual
+                    </a>
+                    
+                    </div>
+                    
+                </div>
+            </nav>
         </div>
-        <!-- Navbar & Hero End -->
+    </div>
+    <!-- Navbar & Hero End -->
+
 
         <!-- Carousel Start -->
          
-        <div class="header-carousel owl-carousel">
+        <div class="header-carousel owl-carousel" id="carousel">
             <div class="header-carousel-item bg-primary">
                 <div class="carousel-caption">
                     <div class="container">
@@ -90,7 +132,7 @@
                             </div>
                             <div class="col-lg-5 animated fadeInRight">
                                 <div class="calrousel-img" style="object-fit: cover;">
-                                    <form action="registrar.php" method="post" class="form-container">
+                                    <form action="Controller/RegistroController.php" method="post" class="form-container">
                                         <h3>Formulario de Registro</h3>
                                         <div class="card-body">
                                             <div class="row">
@@ -101,14 +143,18 @@
                                                             <strong>Nombre</strong>
                                                         </label>
                                                         <input type="text" class="form-control" name="nombre_usuario" 
-                                                               id="nombre_usuario" placeholder="" required>
+                                                               id="nombre_usuario" placeholder="" required
+                                                               pattern="[A-Za-zÀ-ÿ\s]{2,50}"
+                                                               title="Solo se permiten letras y espacios, entre 2 y 50 caracteres">
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="apellido_usuario" class="form-label">
                                                             <strong>Apellido</strong>
                                                         </label>
                                                         <input type="text" class="form-control" name="apellido_usuario" 
-                                                               id="apellido_usuario" placeholder="" required>
+                                                               id="apellido_usuario" placeholder="" required
+                                                               pattern="[A-Za-zÀ-ÿ\s]{2,50}"
+                                                               title="Solo se permiten letras y espacios, entre 2 y 50 caracteres">
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="email_usuario" class="form-label">
@@ -123,6 +169,8 @@
                                                         </label>
                                                         <input type="text" class="form-control" name="telefono_usuario" 
                                                                id="telefono_usuario" placeholder="" 
+                                                               pattern="[0-9]{7,12}" 
+                                                               title="Solo se permiten números, entre 7 y 12 dígitos"
                                                                maxlength="12" required>
                                                     </div>
                                                 </div>
@@ -131,7 +179,9 @@
                                         <div class="card-footer text-center">
                                             <button type="submit" class="btn custom-button btn-lg w-100">Registrarme</button>
                                         </div>
-                                    </form>   
+                                    </form>  
+                                    <!-- Espacio para los mensajes dinámicos -->
+                                    <div id="mensaje-container"></div>    
                                 </div>
                             </div>
                         </div>
@@ -357,7 +407,7 @@
                             </div>
                         </div>
                         <!-- Contacto -->
-                        <div class="col-6 col-md-3">
+                        <div id ="contacto"class="col-6 col-md-3">
                             <div class="footer-item text-start">
                                 <h4 class="text-white mb-2">Contacto</h4>
                                 <p class="text-white">Si tienes alguna pregunta o necesitas ayuda, contáctanos directamente en WhatsApp.</p>
@@ -441,16 +491,18 @@
     <div class="container">
         <div class="row g-4 align-items-center">
             <div class="col-md-6 text-center text-md-end mb-md-0">
-                <span class="text-body"><a href="#" class="border-bottom text-white"></a>2025 Edugloss. Todos los derechos reservados.</span>
+                <span class="text-body"><a href="#" class="border-bottom text-white"><i class="fas fa-copyright text-light me-2"></i>Edugloss</a>, Todos los derechos reservados.</span>
             </div>
             <div class="col-md-6 text-center text-md-start text-body">
-                <!-- Designed By <a class="border-bottom text-white" href="https://htmlcodex.com">HTML Codex</a> Distributed By <a class="border-bottom text-white" href="https://themewagon.com">ThemeWagon</a> -->
+                <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
+                <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
+                <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
+                Diseñado por <a class="border-bottom text-white" href="https://htmlcodex.com"> Gliz Craft's</a>  <a>2025</a>
             </div>
         </div>
     </div>
 </div>
 <!-- Copyright End -->
-
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-primary btn-lg-square rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
@@ -469,6 +521,8 @@
 
         <!-- Template Javascript -->
         <script src="View/js/main.js"></script>
+        <!-- Mensajes Javascript -->
+        <script src="View/js/mensajes.js"></script>
     </body>
 
 </html>
