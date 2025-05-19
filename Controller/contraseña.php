@@ -1,13 +1,16 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require_once '../Model/Database.php';
 require_once '../Model/UserModel.php';
+require_once __DIR__ . '/../libs/vendor/autoload.php'; // Carga automática de Composer
 
-// PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require_once __DIR__ . '/../vendor/autoload.php'; // Asegúrate de que esta ruta sea correcta
+require '../libs/vendor/autoload.php'; // Asegúrate de que esta ruta sea correcta
 
 if (!isset($_POST['correo']) || empty($_POST['correo'])) {
     echo "<p>Error: No se proporcionó un correo válido.</p>";
@@ -71,7 +74,12 @@ if ($userModel->updatePassword($correo, $clave)) {
         echo "<p>Clave actualizada correctamente. Se ha enviado un correo a <strong>$correo</strong> con la nueva contraseña.</p>";
 
     } catch (Exception $e) {
-        echo "<p>Clave actualizada, pero ocurrió un error al enviar el correo: {$mail->ErrorInfo}</p>";
+        if ($_ENV['ENV'] === 'development') {
+            echo "<p>Error al enviar el correo: {$mail->ErrorInfo}</p>";
+        } else {
+            echo "<p>Hubo un error al enviar el correo. Intenta nuevamente más tarde.</p>";
+        }
+        
     }
 
 } else {
