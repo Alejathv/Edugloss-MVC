@@ -87,7 +87,7 @@ if (!empty($mensaje)) {
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav mx-0 mx-lg-auto">
-                        <a href="index.html" class="nav-item nav-link active">Inicio</a>
+                        <a href="index.php" class="nav-item nav-link active">Inicio</a>
                         <a href="View/planes.html" class="nav-item nav-link active">Planes</a>
                         <a href="View/team.html" class="nav-item nav-link active">Equipo</a>
                         <a href="#contacto" class="nav-item nav-link active">Contacto</a>

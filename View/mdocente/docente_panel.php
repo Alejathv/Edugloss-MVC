@@ -1,6 +1,8 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 session_start();
-require_once "../Model/database.php";
+require_once "../../Model/database.php";
 
 // Aquí se crea la instancia correctamente
 $database = new Database();
@@ -18,7 +20,7 @@ $evidencias = $result->fetch_all(MYSQLI_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Panel Docente</title>
-    <link rel="stylesheet" href="css/style_panel.css"> 
+    <link rel="stylesheet" href="../css/style_panel.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
@@ -85,7 +87,7 @@ $evidencias = $result->fetch_all(MYSQLI_ASSOC);
 
 <header class="header">
     <section class="flex">
-        <a href="#" class="logo">EduGloss</a>
+        <a href="docente_panel.php" class="logo">EduGloss</a>
         <form action="search.html" method="post" class="search-form">
             <input type="text" name="search_box" required placeholder="Buscar cursos..." maxlength="100">
             <button type="submit" class="fas fa-search"></button>

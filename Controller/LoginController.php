@@ -16,22 +16,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["btnlogin"])) {
 
         switch ($user['rol']) {
             case 'administrador':
-                header("Location: ../View/admin.html");
+                header("Location: ../View/madmin/admin.html");
                 break;
             case 'docente':
-                header("Location: ../View/docente_panel.php");
+                header("Location: ../View/mdocente/docente_panel.php");
                 break;
             case 'estudiante':
-                header("Location: ../View/estudiante.html");
+                header("Location: ../View/mestudiante/estudiante.html");
                 break;
             default:
-                echo "Rol no reconocido.";
+                $_SESSION['mensaje'] = "¡Rol no reconocido.";
+                header("Location: ../login.php?mensaje=");
         }
         exit();
     } else {
+        $_SESSION['error'] = "Hubo un error al registrar. Por favor, intenta nuevamente.";
         header("Location: ../View/login.php?error=1");
     }
 } else {
-    echo "Acceso no permitido.";
+    $_SESSION['mensaje'] = "Acceso no permitido.";
+    header("Location: ../login.php?mensaje=");
 }
 ?>
