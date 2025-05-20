@@ -87,7 +87,9 @@ $evidencias = $result->fetch_all(MYSQLI_ASSOC);
 
 <header class="header">
     <section class="flex">
-        <a href="docente_panel.php" class="logo">EduGloss</a>
+        <a href="docente_panel.php" class="logo">
+            <img src="../img/LogoEGm.png" alt="EduGloss" style="height: 80px;">
+        </a>
         <form action="search.html" method="post" class="search-form">
             <input type="text" name="search_box" required placeholder="Buscar cursos..." maxlength="100">
             <button type="submit" class="fas fa-search"></button>
@@ -100,7 +102,9 @@ $evidencias = $result->fetch_all(MYSQLI_ASSOC);
         </div>
         <div class="profile">
             <img src="../img/pic-1.jpg" class="image" alt="">
-            <h3 class="name"><?= htmlspecialchars($_SESSION['nombre']) ?></h3>
+            <h3 class="name">
+                <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
+            </h3>
             <p class="role">Docente</p>
             <a href="profile.html" class="btn">Ver Perfil</a>
             <div class="flex-btn">
@@ -114,7 +118,9 @@ $evidencias = $result->fetch_all(MYSQLI_ASSOC);
     <div id="close-btn"><i class="fas fa-times"></i></div>
     <div class="profile">
         <img src="../img/pic-1.jpg" class="image" alt="">
-        <h3 class="name"><?= htmlspecialchars($_SESSION['nombre']) ?></h3>
+        <h3 class="name">
+            <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
+        </h3>
         <p class="role">Docente</p>
         <a href="profile.html" class="btn">Ver Perfil</a>
     </div>
