@@ -38,27 +38,28 @@ if (!empty($mensaje)) {
     <title>Iniciar sesión / Registrarse</title>
     <!-- Enlace a FontAwesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
     <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-
+<div id="mensaje-container"></div>  
     <div class="container" id="container">
         
         <div class="form-container sign-in-container">
             <form action="../Controller/LoginController.php" method="POST">
-                <img id="logo" src="img/principal-principal.png" alt="Logo">
+                <a href="../index.php" class="navbar-brand p-0">
+                        <h1 class="text-primary mb-0"><img src="img/logo.png" alt="Logo"></h1>
+                </a>
                 
                 <span>Ingresa con tu cuenta</span>
                 
                 <input type="email" name="email" placeholder="Correo electrónico" required />
                 <input type="password" name="password" placeholder="Contraseña" required />
                 
-                <a href="recovery.html">¿Olvidaste tu contraseña?</a>
+                <a href="recovery.php">¿Olvidaste tu contraseña?</a>
                 
-                <button type="submit" name="btnlogin">Iniciar sesión</button>
-            <div id="mensaje-container"></div>    
+                <button type="submit" name="btnlogin">Iniciar sesión</button>  
             </form>            
         </div>
         <div class="overlay-container">

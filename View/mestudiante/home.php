@@ -136,7 +136,8 @@ require_once "../../Model/database.php";
 </footer>
 
 <!-- custom js file link  -->
-<script src="js/script.js"></script>
+<script src="../js/script.js"></script>
+
 
    
 </body>

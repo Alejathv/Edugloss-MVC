@@ -1,4 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 /* Establece la imagen de fondo */
+
 body {
     background: url('../img/1.12.png') no-repeat center center fixed;
     background-size: cover;
@@ -24,3 +28,22 @@ body {
     background-color: #EEEEEE;
 
 }
+a {
+	color: black;
+	font-size: 14px;
+	text-decoration: none;
+	margin: 15px 0;
+	font-family: "Prompt", sans-serif;
+	font-weight: 400; 
+	letter-spacing: 0.2px;
+
+	display: block;               /* Hace que ocupe toda la línea */
+	text-align: center;           /* Centra el texto horizontalmente */
+	transition: color 0.3s ease;  /* Suaviza la transición al cambiar el color */
+}
+
+a:hover {
+	color: #0d6efd; /* Azul Bootstrap (o el que prefieras) */
+	text-decoration: underline;
+}
+
