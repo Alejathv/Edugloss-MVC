@@ -1,0 +1,23 @@
+# Composer
+/vendor/
+composer.lock
+
+# Entornos de desarrollo
+.env
+.DS_Store
+*.log
+
+# Archivos del sistema
+Thumbs.db
+*.swp
+*.swo
+
+# IDEs y editores
+.vscode/
+.idea/
+*.iml
+
+# Archivos temporales
+*.bak
+*.tmp
+*.cache
