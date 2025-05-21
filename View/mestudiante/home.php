@@ -79,7 +79,7 @@ require_once "../../Model/database.php";
 
    <nav class="navbar">
       <a href="home.html"><i class="fas fa-home"></i><span>Inicio</span></a>
-      <a href="ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
+      <a href="../ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
       <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
       <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Docentes</span></a>
       <a href="contact.html"><i class="fas fa-headset"></i><span>Contáctanos</span></a>
