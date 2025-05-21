@@ -13,7 +13,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["btnlogin"])) {
         if ($user && $password === $user["contraseña"]) {
         $_SESSION['user_id'] = $user['id_usuario'];
         $_SESSION['rol_nombre'] = $user['rol'];
-
+        $_SESSION['nombre'] = $user['nombre']; // Asegúrate que 'nombre' es la clave del nombre en tu base de datos
+        $_SESSION['apellido'] = $user['apellido'];
+        
         switch ($user['rol']) {
             case 'administrador':
                 header("Location: ../View/madmin/admin.html");
@@ -22,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["btnlogin"])) {
                 header("Location: ../View/mdocente/docente_panel.php");
                 break;
             case 'estudiante':
-                header("Location: ../View/mestudiante/estudiante.html");
+                header("Location: ../View/mestudiante/home.php");
                 break;
             default:
                 $_SESSION['mensaje'] = "¡Rol no reconocido.";

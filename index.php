@@ -78,9 +78,8 @@ if (!empty($mensaje)) {
     <div class="container-fluid nav-bar px-0 px-lg-4 py-lg-0">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light"> 
-                <a href="#" class="navbar-brand p-0">
+                <a href="index.php" class="navbar-brand p-0">
                     <h1 class="text-primary mb-0"><img src="View/img/logo.png" alt="Logo"></h1>
-                    <!-- <img src="img/logo.png" alt="Logo"> -->
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="fa fa-bars"></span>
@@ -395,7 +394,7 @@ if (!empty($mensaje)) {
                         <div class="col-6 col-md-3">
                             <div class="footer-item text-start">
                                 <a href="index.html" class="p-0">
-                                    <h3 class="text-white mb-2"><i class="fab fa-slack me-3"></i>EduGloss</h3>
+                                    <h3 class="text-white mb-2"></i>EduGloss</h3>
                                 </a>
                                 <p class="text-white mb-3">Encuentranos en nuestras difrerentes redes sociales</p>
                                 <div class="footer-btn d-flex">
