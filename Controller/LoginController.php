@@ -13,9 +13,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["btnlogin"])) {
         if ($user && $password === $user["contraseña"]) {
         $_SESSION['user_id'] = $user['id_usuario'];
         $_SESSION['rol_nombre'] = $user['rol'];
-        $_SESSION['nombre'] = $user['nombre']; // Asegúrate que 'nombre' es la clave del nombre en tu base de datos
+        $_SESSION['nombre'] = $user['nombre']; 
         $_SESSION['apellido'] = $user['apellido'];
-        
+        //Por el rol estudiante se sabe en que esta inscrito
+        if ($user['rol'] === 'estudiante') {
+        // Obtener inscripciones
+            $inscripciones = $userModel->getInscripcionesByUserId($user['id_usuario']);
+            $_SESSION['inscripciones'] = $inscripciones;
+        }
         switch ($user['rol']) {
             case 'administrador':
                 header("Location: ../View/madmin/admin.html");

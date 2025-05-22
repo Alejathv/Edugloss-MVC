@@ -23,5 +23,23 @@ class UserModel {
         
         return $stmt->execute();
     }
+    public function getInscripcionesByUserId($userId) {
+        $sql = "SELECT i.id_modulo, i.id_curso, m.nombre AS nombre_modulo, c.nombre AS nombre_curso
+                FROM inscripcion i
+                LEFT JOIN modulo m ON i.id_modulo = m.id_modulo
+                LEFT JOIN curso c ON i.id_curso = c.id_curso
+                WHERE i.id_usuario = ?";
+                
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $inscripciones = [];
+        while ($row = $result->fetch_assoc()) {
+            $inscripciones[] = $row;
+        }
+        return $inscripciones;
+    }
+
 }
 ?>

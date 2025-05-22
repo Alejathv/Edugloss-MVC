@@ -3,6 +3,12 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
 require_once "../../Model/database.php";
+require_once '../../Controller/EstudianteController.php';
+$database = new Database();
+$db = $database->getConnection();
+
+$controller = new EstudianteController($db);
+
 
 ?>
 <!DOCTYPE html>
@@ -26,7 +32,7 @@ require_once "../../Model/database.php";
    
    <section class="flex">
 
-      <a href="home.html" class="logo">
+      <a href="home.php" class="logo">
          <img src="../img/LogoEGm.png" alt="EduGloss" style="height: 80px;">
       </a>
       
@@ -78,9 +84,9 @@ require_once "../../Model/database.php";
    </div>
 
    <nav class="navbar">
-      <a href="home.html"><i class="fas fa-home"></i><span>Inicio</span></a>
+      <a href="home.php"><i class="fas fa-home"></i><span>Inicio</span></a>
       <a href="about.html"><i class="fas fa-question"></i><span>Nosotros</span></a>
-      <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
+      <a href="#"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
       <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Docentes</span></a>
       <a href="contact.html"><i class="fas fa-headset"></i><span>Contáctanos</span></a>
    </nav>
@@ -89,38 +95,22 @@ require_once "../../Model/database.php";
 
 <section class="home-grid">
 
-   <h1 class="heading">Accesos Frecuentes </h1>
+   <h1 class="heading">Acceso Principal </h1>
 
    <div class="box-container">
 
       <div class="box">
-         <h3 class="title">Estadisticas</h3>
-         <p class="likes">total likes : <span>25</span></p>
-         <a href="#" class="inline-btn">ver likes</a>
-         <p class="likes">total comentarios: <span>12</span></p>
-         <a href="#" class="inline-btn">ver comentarios</a>
-         <p class="likes">playlists guardadas : <span>4</span></p>
-         <a href="#" class="inline-btn">Ver Cursos</a>
-      </div>
-
-      <div class="box">
-         <h3 class="title">Top Cursos</h3>
+         <h3 class="title">Tus Cursos</h3>
          <div class="flex">
+            <?php echo $controller->mostrarInscripciones(); ?>
             
-            <a href="#"><i class="fa-solid fa-book"></i><span>Manicura Básica</span></a>
-            <a href="#"><i class="fa-solid fa-book"></i><span>Esmaltado Semiermanente</span></a>
-            <a href="#"><i class="fa-solid fa-book"></i><span>Manicura Francesa</span></a>
-            <a href="#"><i class="fa-solid fa-book"></i><span>Uñas Esculpidas</span></a>
-            <a href="#"><i class="fa-solid fa-book"></i><span>Capping</span></a>
-  <footer></footer>
-           
          </div>
       </div>
 
       <div class="box">
          <h3 class="title">Temas Populares</h3>
          <div class="flex">
-            <a href="#"><i class="fa-solid fa-book-open-reader"></i><span>Uñas en Gel: Técnicas Profesionales para un Acabado Perfecto</span></a>
+            <a href="#"><i class="fa-solid fa-book-open-reader"></i><span>Uñas en Gel: Técnicas Profesionales</span></a>
             <a href="#"><i class="fa-solid fa-book-open-reader"></i><span>Manicura y Pedicura Spa</span></a>
             <a href="#"><i class="fa-solid fa-book-open-reader"></i><span>Cuidado y Reparación de Uñas: Consejos para un Saludable Crecimiento</span></a>
             <a href="#"><i class="fa-solid fa-book-open-reader"></i><span>Principales Técnicas</span></a>
