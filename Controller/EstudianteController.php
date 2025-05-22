@@ -47,11 +47,11 @@ class EstudianteController {
     $html = "<ul>";
     foreach ($inscripciones as $row) {
        if (!empty($row['id_modulo'])) {
-            $html .= '<a href="#"><i class="fa-solid fa-book"></i><span>' 
+            $html .= '<a href="ver_materiales.php?id_modulo=' . urlencode($row['id_modulo']) .'"><i class="fa-solid fa-book"></i><span>' 
                   . htmlspecialchars($row['nombre_modulo']) 
                   . '</span></a>';
         } elseif (!empty($row['id_curso'])) {
-            $html .= '<a href="ver_videos.php?id_curso=' . urlencode($row['id_curso']) . '">
+            $html .= '<a href="ver_materiales.php?id_curso=' . urlencode($row['id_curso']) . '">
                         <i class="fa-solid fa-book"></i><span>' 
                         . htmlspecialchars($row['nombre_curso']) 
                         . '</span></a>';
