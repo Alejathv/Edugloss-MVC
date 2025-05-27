@@ -44,13 +44,14 @@ class DocenteController {
             $nuevo_nombre = uniqid() . "." . $extension;
 
             // Carpeta donde se guardan los archivos (debe tener permisos de escritura)
-            $ruta_carpeta = "documentos/";  // Por ejemplo, dentro de tu proyecto
+            $ruta_carpeta = __DIR__ . '/../documentos/'; // Por ejemplo, dentro de tu proyecto
             if (!is_dir($ruta_carpeta)) {
                 mkdir($ruta_carpeta, 0755, true);
             }
 
             // Ruta completa en servidor
             $ruta_archivo = $ruta_carpeta . $nuevo_nombre;
+
 
             // Mover el archivo temporal a la carpeta definitiva
             if (move_uploaded_file($tmp_archivo, $ruta_archivo)) {
