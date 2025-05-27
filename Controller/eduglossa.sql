@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-05-2025 a las 12:46:02
+-- Tiempo de generación: 20-05-2025 a las 05:02:35
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -33,7 +33,7 @@ CREATE TABLE `carrito` (
   `id_curso` int(11) DEFAULT NULL,
   `id_modulo` int(11) DEFAULT NULL,
   `cantidad` int(11) DEFAULT 1
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -52,6 +52,13 @@ CREATE TABLE `curso` (
   `imagen` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `curso`
+--
+
+INSERT INTO `curso` (`id_curso`, `nombre`, `descripcion`, `precio`, `fecha_inicio`, `fecha_fin`, `estado`, `imagen`) VALUES
+(1, 'funamentos completos', '...', 10000.00, '2025-03-20', '2025-03-28', 'disponible', 'imagen.png');
+
 -- --------------------------------------------------------
 
 --
@@ -65,7 +72,7 @@ CREATE TABLE `evidencias` (
   `id_modulo` int(11) DEFAULT NULL,
   `url_archivo` varchar(255) NOT NULL,
   `fecha_subida` timestamp NOT NULL DEFAULT current_timestamp()
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -81,6 +88,13 @@ CREATE TABLE `foro` (
   `estado` enum('activo','cerrado') DEFAULT 'activo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `foro`
+--
+
+INSERT INTO `foro` (`id_foro`, `id_video`, `titulo`, `fecha_creacion`, `estado`) VALUES
+(505, 1005, 'preguntas sobre la primera seccion ', '2025-05-14 00:21:28', 'activo');
+
 -- --------------------------------------------------------
 
 --
@@ -95,6 +109,14 @@ CREATE TABLE `foro_comentarios` (
   `fecha` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `foro_comentarios`
+--
+
+INSERT INTO `foro_comentarios` (`id_comentario`, `id_foro`, `id_usuario`, `contenido`, `fecha`) VALUES
+(5076, 505, 3001, 'holi', '2025-05-20 02:28:36'),
+(5077, 505, 5001, 'holi', '2025-05-20 02:50:31');
+
 -- --------------------------------------------------------
 
 --
@@ -107,6 +129,13 @@ CREATE TABLE `foro_participantes` (
   `id_usuario` int(11) NOT NULL,
   `estado` enum('activo','bloqueado') DEFAULT 'activo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `foro_participantes`
+--
+
+INSERT INTO `foro_participantes` (`id_participacion`, `id_foro`, `id_usuario`, `estado`) VALUES
+(50541, 505, 5001, 'activo');
 
 -- --------------------------------------------------------
 
@@ -122,7 +151,14 @@ CREATE TABLE `inscripcion` (
   `id_pago` int(11) NOT NULL,
   `fecha_inscripcion` timestamp NOT NULL DEFAULT current_timestamp(),
   `estado` enum('activa','completada','cancelada') DEFAULT 'activa'
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `inscripcion`
+--
+
+INSERT INTO `inscripcion` (`id_inscripcion`, `id_usuario`, `id_curso`, `id_modulo`, `id_pago`, `fecha_inscripcion`, `estado`) VALUES
+(3434, 5001, 1, 101, 12130, '2025-05-15 00:07:02', 'activa');
 
 -- --------------------------------------------------------
 
@@ -137,6 +173,13 @@ CREATE TABLE `modulo` (
   `descripcion` text DEFAULT NULL,
   `precio` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `modulo`
+--
+
+INSERT INTO `modulo` (`id_modulo`, `id_curso`, `nombre`, `descripcion`, `precio`) VALUES
+(101, 1, 'basicos', '...', 5000.00);
 
 -- --------------------------------------------------------
 
@@ -155,6 +198,13 @@ CREATE TABLE `pago` (
   `detalles_pago` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`detalles_pago`))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `pago`
+--
+
+INSERT INTO `pago` (`id_pago`, `id_usuario`, `monto_total`, `metodo_pago`, `estado`, `referencia_transaccion`, `fecha_pago`, `detalles_pago`) VALUES
+(12130, 5001, 5000.00, 'mercado_pago', 'pendiente', '....', '2025-05-14 00:06:23', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -172,7 +222,7 @@ CREATE TABLE `usuarios` (
   `fecha_creacion` date DEFAULT curdate(),
   `estado` enum('activo','inactivo') NOT NULL DEFAULT 'activo',
   `especialidad` varchar(150) DEFAULT NULL
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
@@ -198,6 +248,13 @@ CREATE TABLE `videos` (
   `nombre` varchar(150) NOT NULL,
   `url_video` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `videos`
+--
+
+INSERT INTO `videos` (`id_video`, `id_modulo`, `nombre`, `url_video`) VALUES
+(1005, 101, 'basico 1', 'QwJooBk9DGM\r\n');
 
 --
 -- Índices para tablas volcadas
@@ -303,7 +360,7 @@ ALTER TABLE `carrito`
 -- AUTO_INCREMENT de la tabla `curso`
 --
 ALTER TABLE `curso`
-  MODIFY `id_curso` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_curso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `evidencias`
@@ -315,49 +372,49 @@ ALTER TABLE `evidencias`
 -- AUTO_INCREMENT de la tabla `foro`
 --
 ALTER TABLE `foro`
-  MODIFY `id_foro` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_foro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=506;
 
 --
 -- AUTO_INCREMENT de la tabla `foro_comentarios`
 --
 ALTER TABLE `foro_comentarios`
-  MODIFY `id_comentario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_comentario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5078;
 
 --
 -- AUTO_INCREMENT de la tabla `foro_participantes`
 --
 ALTER TABLE `foro_participantes`
-  MODIFY `id_participacion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_participacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50542;
 
 --
 -- AUTO_INCREMENT de la tabla `inscripcion`
 --
 ALTER TABLE `inscripcion`
-  MODIFY `id_inscripcion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_inscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3435;
 
 --
 -- AUTO_INCREMENT de la tabla `modulo`
 --
 ALTER TABLE `modulo`
-  MODIFY `id_modulo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_modulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT de la tabla `pago`
 --
 ALTER TABLE `pago`
-  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12131;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5005;
 
 --
 -- AUTO_INCREMENT de la tabla `videos`
 --
 ALTER TABLE `videos`
-  MODIFY `id_video` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_video` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1006;
 
 --
 -- Restricciones para tablas volcadas
