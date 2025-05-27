@@ -67,10 +67,10 @@ if (!empty($mensaje)) {
                 <div class="overlay-panel overlay-right">
                     <h1>¡Empezemos!</h1>
                     <p>Para mantenerte conectado con nosotros, inicia sesión con tu información personal</p>
-                    <h4>¿No tienes una cuenta?</h4>
+                    <h5>¿No tienes una cuenta?</h5>
                     <br>
                     <p>Recuerda que primero necesitas adquirir un plan.</p>
-                    <h4>¡Te invitamos a conocer nuestras opciones!</h4>
+                    <h5>¡Te invitamos a conocer nuestras opciones!</h5>
                     <a href="planes.html" class="ghost">Ver Planes</a>
 
                 </div>
