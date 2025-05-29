@@ -158,22 +158,42 @@ $evidencias = $result->fetch_all(MYSQLI_ASSOC);
                                 <td><?= htmlspecialchars($e['id_curso']) ?></td>
                                 <td><?= htmlspecialchars($e['id_modulo']) ?></td>
                                 <td>
-                                    <?php if (!empty($e['url_archivo'])): ?>
-                                        <a href="../uploads/<?= htmlspecialchars($e['url_archivo']) ?>" target="_blank">
-                                            <img src="../uploads/<?= htmlspecialchars($e['url_archivo']) ?>" alt="Evidencia">
-                                        </a>
-                                    <?php else: ?>
+                                <?php 
+                                    $rutaFisica = __DIR__ . '/../../documentos/' . $e['url_archivo'];
+
+                                    if (!empty($e['url_archivo'])): 
+                                        $ext = strtolower(pathinfo($e['url_archivo'], PATHINFO_EXTENSION));
+                                        $rutaArchivo = "/EDUGLOSS-MVC/documentos/" . rawurlencode($e['url_archivo']);
+
+
+                                        if (file_exists($rutaFisica)):
+                                            if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif'])): ?>
+                                                <a href="<?= $rutaArchivo ?>" target="_blank" rel="noopener noreferrer">
+                                                    <img src="<?= $rutaArchivo ?>" alt="Evidencia" style="max-width:100px; max-height:100px;">
+                                                </a>
+                                            <?php elseif ($ext === 'pdf'): ?>
+                                                <a href="<?= $rutaArchivo ?>" target="_blank" rel="noopener noreferrer">
+                                                    <img src="../assets/pdf-icon.png" alt="PDF" style="max-width:50px;">
+                                                </a>
+                                            <?php else: ?>
+                                                <a href="<?= $rutaArchivo ?>" target="_blank" rel="noopener noreferrer">Descargar archivo</a>
+                                            <?php endif;
+                                        else: ?>
+                                            Archivo no disponible
+                                        <?php endif;
+                                    else: ?>
                                         No hay archivo
-                                    <?php endif; ?>
+                                    <?php endif; 
+                                ?>
                                 </td>
                                 <td><?= htmlspecialchars($e['fecha_subida']) ?></td>
                                 <td><?= ucfirst($e['estado'] ?? 'pendiente') ?></td>
                                 <td>
-                                    <form method="POST" action="../Controller/EvidenciaController.php">
-                                        <input type="hidden" name="id_evidencia" value="<?= $e['id_evidencia'] ?>">
-                                        <button type="submit" name="estado" value="aprobado" class="option-btn">Aprobar</button>
-                                        <button type="submit" name="estado" value="reprobado" class="delete-btn">Reprobar</button>
-                                    </form>
+                                <form method="POST" action="../../Controller/EvidenciaController.php">
+                                    <input type="hidden" name="id_evidencia" value="<?= $e['id_evidencia'] ?>">
+                                    <button type="submit" name="estado" value="aprobado" class="option-btn">Aprobar</button>
+                                    <button type="submit" name="estado" value="reprobado" class="delete-btn">Reprobar</button>
+                                </form>
                                 </td>
                             </tr>
                             <?php endforeach; ?>

@@ -121,9 +121,9 @@ if (isset($_GET['id_modulo'])) {
    <?php endforeach; ?>
 
    </div>
-
-   <button class="btn btn-primary" onclick="location.href='subir-y-descargar-archivos-php/indexarchivos.php'">Subir Evidencia</button>
-
+   <div style="text-align: right; margin: 10px;">
+      <a href="subir-evidencia.php" class="btn btn-primary">Subir Evidencia</a>
+   </div>
 
 </section>
 

@@ -1396,3 +1396,81 @@ section{
    }
 
 }
+/* Estilos para el formulario */
+.formularioevidencia {
+  margin-bottom: 2rem;
+}
+
+.formularioevidencia .row {
+  gap: 1rem;
+  align-items: center;
+}
+
+.formularioevidencia label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.3rem;
+  color: #333;
+}
+
+.formularioevidencia select,
+.formularioevidencia input[type="file"] {
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.formularioevidencia button {
+  background-color: #0d6efd;
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.formularioevidencia button:hover {
+  background-color: #0b5ed7;
+}
+
+/* Estilos para la tabla */
+.tablaevidencia {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.tablaevidencia thead {
+  background-color: #343a40;
+  color: white;
+}
+
+.tablaevidencia th,
+.tablaevidencia td {
+  padding: 0.75rem;
+  border: 1px solid #dee2e6;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.tablaevidencia tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.tablaevidencia a {
+  color: #0d6efd;
+  text-decoration: none;
+}
+
+.tablaevidencia a:hover {
+  text-decoration: underline;
+}
+
+.tablaevidencia .btn-danger {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.85rem;
+}
