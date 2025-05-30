@@ -1,15 +1,15 @@
 <?php
+require_once __DIR__ . '/database.php';
 class ModuloModel {
-    private $db;
+        private $db;
 
-    public function __construct() {
-        $database = new Database();
-        $this->db = $database->getConnection();
+    public function __construct($db) {
+        $this->db = $db;
     }
 
     public function crearModulo($id_curso, $nombre, $descripcion, $precio) {
         $stmt = $this->db->prepare("INSERT INTO modulo (id_curso, nombre, descripcion, precio) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("isss", $id_curso, $nombre, $descripcion, $precio);
+        $stmt->bind_param("issd", $id_curso, $nombre, $descripcion, $precio);
         return $stmt->execute();
     }
 

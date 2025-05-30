@@ -9,7 +9,7 @@ class CursoController {
     private $model;
 
     public function __construct($db) {
-        $this->model = new CursoModel($db);
+        $this->model = new CursoModel ($db);
     }
     public function crearCurso() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crear_curso'])) {
@@ -56,12 +56,20 @@ class ModuloController {
         $precio = $_POST['precio'];
 
         if (!empty($id_curso) && !empty($nombre) && !empty($descripcion)) {
-            $this->model->crearModulo($id_curso, $nombre, $descripcion, $precio);
-            echo "Módulo creado con éxito.";
+            $resultado = $this->model->crearModulo($id_curso, $nombre, $descripcion, $precio);
+            if ($resultado) {
+                // Redirige después de crear para evitar repost
+                header("Location: CursoModuloMaterial.php?success=modulo_creado");
+                exit;  // Importante para detener el script
+            } else {
+                echo "Error al crear módulo.";
+            }
         } else {
             echo "Faltan datos.";
         }
     }
+
+
 }
 
     public function obtenerModulos() {
@@ -69,7 +77,7 @@ class ModuloController {
     }
     public function mostrarFormulario() {
     require_once __DIR__ . '/../Model/CursoModel.php';
-    $cursoModel = new CursoModel();
+    $cursoModel = new CursoModel($db);
     $cursos = $cursoModel->obtenerCursos(); // Trae los cursos desde el modelo
 
     // Carga la vista y le pasa los cursos disponibles

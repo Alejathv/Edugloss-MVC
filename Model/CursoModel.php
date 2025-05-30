@@ -1,12 +1,12 @@
 <?php
+require_once __DIR__ . '/database.php';
 // En tu modelo CursoModel.php
 class CursoModel {
 
     private $db;
 
-    public function __construct() {
-        $database = new Database();
-        $this->db = $database->getConnection();
+    public function __construct($db) {
+        $this->db = $db;
     }
     //CREACION DE CURSO PARA EL DOCENTE 
     public function crearCurso($nombre, $descripcion, $precio, $fecha_inicio, $fecha_fin, $estado, $imagen) {
