@@ -102,49 +102,6 @@ $materiales = $controller->listarMateriales($id_modulo);
 </div>
 
 <section class="home-grid">
-    <H2>CREACION DE CURSO</H2> 
-<form method="POST" action="" enctype="multipart/form-data">
-    <input type="hidden" name="accion" value="crear_curso"> <!-- ESTA ES LA LÍNEA QUE FALTABA -->
-
-    <input name="nombre" placeholder="Nombre del curso" required>
-    <input name="descripcion" placeholder="Descripción" required>
-    <input name="precio" type="number" step="0.01" placeholder="Precio" required>
-    <input name="fecha_inicio" type="date" required>
-    <input name="fecha_fin" type="date" required>
-    
-    <select name="estado" required>
-        <option value="disponible">Disponible</option>
-        <option value="cerrado">Cerrado</option>
-    </select>
-
-    <input name="imagen" placeholder="Imagen (URL o nombre)" required>
-
-    <button type="submit" name="crear_curso">Crear Curso</button>
-</form>
-
-
-
-
-<H2>CREACION DE MODULO</H2> 
-<form method="POST" action="" enctype="multipart/form-data">
-    <input type="hidden" name="accion" value="crear_modulo">
-
-    <select name="id_curso" required>
-        <option value="">Selecciona un curso</option>
-        <?php foreach ($cursos as $curso): ?>
-            <option value="<?= $curso['id_curso'] ?>"><?= $curso['nombre'] ?></option>
-        <?php endforeach; ?>
-    </select>
-
-    <input name="nombre" placeholder="Nombre del módulo" required>
-    <input name="descripcion" placeholder="Descripción" required>
-    <input name="precio" type="number" step="0.01" placeholder="Precio" required>
-
-    <button type="submit" name="crear_modulo">Crear Módulo</button>
-</form>
-
-
-
 
 <H2>Subir por MODULO</H2> 
 <form method="POST" action="" enctype="multipart/form-data">

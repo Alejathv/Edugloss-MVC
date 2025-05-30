@@ -127,8 +127,8 @@ $evidencias = $result->fetch_all(MYSQLI_ASSOC);
     <nav class="navbar">
         <a href="home.html"><i class="fas fa-home"></i><span>Inicio</span></a>
         <a href="../ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
-        <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
-        <a href="CursoModuloMaterial.php"><i class="fas fa-chalkboard-user"></i><span>Contenido</span></a>
+        <a href="CursoModulo.php"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
+        <a href="Contenido.php"><i class="fas fa-chalkboard-user"></i><span>Contenido</span></a>
         <a href="estudiantes.html"><i class="fas fa-user-graduate"></i><span>Estudiantes</span></a>
     </nav>
 </div>

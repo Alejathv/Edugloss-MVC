@@ -27,7 +27,7 @@ class CursoController {
             var_dump($resultado); // Para ver si devolvió true o false
 
             if ($resultado) {
-                header("Location: CursoModuloMaterial.php?success=curso");
+                header("Location: CursoModulo.php?success=curso");
                 exit;
             } else {
                 echo "Error al crear curso.";
@@ -59,7 +59,7 @@ class ModuloController {
             $resultado = $this->model->crearModulo($id_curso, $nombre, $descripcion, $precio);
             if ($resultado) {
                 // Redirige después de crear para evitar repost
-                header("Location: CursoModuloMaterial.php?success=modulo_creado");
+                header("Location: CursoModulo.php?success=modulo_creado");
                 exit;  // Importante para detener el script
             } else {
                 echo "Error al crear módulo.";
@@ -68,8 +68,6 @@ class ModuloController {
             echo "Faltan datos.";
         }
     }
-
-
 }
 
     public function obtenerModulos() {
@@ -81,6 +79,6 @@ class ModuloController {
     $cursos = $cursoModel->obtenerCursos(); // Trae los cursos desde el modelo
 
     // Carga la vista y le pasa los cursos disponibles
-    require_once __DIR__ . '/../View/mdocente/CursoModuloMaterial.php';
+    require_once __DIR__ . '/../View/mdocente/CursoModulo.php';
 }
 }
