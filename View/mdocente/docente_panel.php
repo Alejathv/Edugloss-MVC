@@ -2,6 +2,11 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
+if (isset($_SESSION['mensaje_bienvenida'])) {
+    echo '<div id="mensaje-bienvenida" style="color: green; font-weight: bold; margin-bottom: 10px;">' . htmlspecialchars($_SESSION['mensaje_bienvenida']) . '</div>';
+    unset($_SESSION['mensaje_bienvenida']);
+}
+
 require_once "../../Model/database.php";
 
 // Aquí se crea la instancia correctamente
@@ -20,7 +25,7 @@ $evidencias = $result->fetch_all(MYSQLI_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Panel Docente</title>
-    <link rel="stylesheet" href="../css/style_panel.css"> 
+    <link rel="stylesheet" href="../css/style_panel.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
@@ -206,5 +211,6 @@ $evidencias = $result->fetch_all(MYSQLI_ASSOC);
 </section>
 
 <script src="../js/script.js"></script>
+<script src="../js/mensajes.js"></script>
 </body>
 </html>

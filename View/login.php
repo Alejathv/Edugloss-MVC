@@ -54,8 +54,8 @@ if (!empty($mensaje)) {
                 
                 <span>Ingresa con tu cuenta</span>
                 
-                <input type="email" name="email" placeholder="Correo electrónico" required />
-                <input type="password" name="password" placeholder="Contraseña" required />
+                <input type="email" name="email" placeholder="Correo electrónico" />
+                <input type="password" name="password" placeholder="Contraseña" />
                 
                 <a href="recovery.php">¿Olvidaste tu contraseña?</a>
                 

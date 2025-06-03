@@ -129,8 +129,6 @@ $materiales = $controller->listarMateriales($id_modulo);
 
 
 
-
-
 <H2>CREACION DE MODULO</H2> 
 <form method="POST" action="" enctype="multipart/form-data">
     <input type="hidden" name="accion" value="crear_modulo">

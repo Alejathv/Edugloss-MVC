@@ -2,6 +2,10 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
+if (isset($_SESSION['mensaje_bienvenida'])) {
+    echo '<div id="mensaje-bienvenida" style="color: green; font-weight: bold; margin-bottom: 10px;">' . htmlspecialchars($_SESSION['mensaje_bienvenida']) . '</div>';
+    unset($_SESSION['mensaje_bienvenida']);
+}
 require_once "../../Model/database.php";
 require_once '../../Controller/EstudianteController.php';
 $database = new Database();
@@ -129,6 +133,7 @@ $controller = new EstudianteController($db);
 
 <!-- custom js file link  -->
 <script src="../js/script.js"></script>
+<script src="../js/mensajes.js"></script>
 
 
    

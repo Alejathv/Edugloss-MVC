@@ -48,3 +48,18 @@ document.addEventListener('DOMContentLoaded', function() {
         mostrarAlerta(decodeURIComponent(params.error), 'danger');
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const mensaje = document.getElementById('mensaje-bienvenida');
+    if (mensaje) {
+        // Esperar 5 segundos y luego eliminar el mensaje
+        setTimeout(() => {
+            // Opcional: con transición para que se desvanezca
+            mensaje.style.transition = 'opacity 0.5s ease';
+            mensaje.style.opacity = '0';
+            setTimeout(() => {
+                mensaje.remove();
+            }, 500);
+        }, 5000);
+    }
+});
