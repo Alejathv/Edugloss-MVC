@@ -8,7 +8,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 }
 
 $curso_id = (int) $_GET['id'];
-$model = new CursoModel();
+$model = new CursoModel($db);
 $modulos = $model->getModulosYVideosPorCurso($curso_id);
 ?>
 
