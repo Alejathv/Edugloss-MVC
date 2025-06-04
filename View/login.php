@@ -53,10 +53,12 @@ if (!empty($mensaje)) {
                 </a>
                 
                 <span>Ingresa con tu cuenta</span>
-                
+
                 <input type="email" name="email" placeholder="Correo electrónico" />
-                <input type="password" name="password" placeholder="Contraseña" />
-                
+                <div class="custom-password-group">
+                    <input type="password" name="password" placeholder="Contraseña" id="password" class="custom-input">
+                    <i class="fas fa-eye" id="togglePassword"></i>
+                </div> 
                 <a href="recovery.php">¿Olvidaste tu contraseña?</a>
                 
                 <button type="submit" name="btnlogin">Iniciar sesión</button>  
@@ -79,6 +81,8 @@ if (!empty($mensaje)) {
     </div>
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script src="View/js/mensajes.js"></script>
+    <script src="../View/js/vercontraseña.js"></script>
+    
 
 </body>
 </html>
