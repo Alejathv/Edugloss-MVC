@@ -1436,7 +1436,14 @@ section{
 .formularioevidencia button:hover {
   background-color: #0b5ed7;
 }
+
 /* Estilos para el formulario Creación*/
+.formulario-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 1rem;
+}
 .formulario-contenedor {
     font-family: 'Nunito', sans-serif;
     border: 2px solid #3a0ca3;
@@ -1497,7 +1504,25 @@ section{
 .formulario-cuerpo button:hover {
     background-color: #4a148c;
 }
+.btn-volver {
+   background-color: #6a1b9a !important;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.5rem;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-volver:hover {
+   background-color: #5531a9;
+}
+
 /* Estilos para la tabla */
+
 .tablaevidencia {
   width: 100%;
   border-collapse: collapse;
@@ -1534,3 +1559,122 @@ section{
   padding: 0.25rem 0.5rem;
   font-size: 0.85rem;
 }
+/*TABLA CONTENEDOR*/
+.tabla-contenedor{
+   overflow-x: auto;
+   padding: 0 5rem;
+}
+/*BOTONES DEL CRUD DE CURSO Y MODULO*/
+a.boton-estilo {
+  background-color: #6F38C5; /* morado */
+  color: white;
+  border: none;
+  padding: 3px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.3rem;
+  text-decoration: none; /* para el enlace */
+  display: inline-block;
+  margin-right: 5px;
+  transition: background-color 0.3s ease;
+}
+
+a.boton-estilo:hover {
+  background-color: #532a99; /* morado oscuro al hover */
+}
+
+form.boton-estilo button {
+  all: unset;
+  cursor: pointer;
+  display: inline-block;
+  width: auto;
+  padding: 3px 12px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: white;
+  background-color: #6F38C5;
+  transition: background-color 0.3s ease;
+}
+
+form.boton-estilo button:hover {
+  background-color: #532a99;
+}
+/*BOTON DE CREAR CURSO*/
+.boton-curso {
+  background-color: #532a99;
+  color: white !important;
+  padding: 8px 14px;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 5rem;
+}
+
+.boton-curso:hover {
+  background-color: #532a99;
+}
+
+
+/*TABLA CURSO*/
+.tablacurso {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 2rem;
+}
+
+.tablacurso thead {
+  background-color: #5531a9;
+  color: white;
+  font-size: 2.5rem;
+}
+
+.tablacurso th,
+.tablacurso td {
+  padding: 0.75rem;
+  border: 1px solid #dee2e6;
+  text-align: left;
+  vertical-align: middle;
+  font-size: 2rem;
+}
+
+.tablacurso tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+
+/*TABLA MODULO*/
+.tablamodulo {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 2rem;
+}
+
+.tablamodulo thead {
+  background-color: #5531a9;
+  color: white;
+  font-size: 2.5rem;
+}
+
+.tablamodulo th,
+.tablamodulo td {
+  padding: 0.75rem;
+  border: 1px solid #dee2e6;
+  text-align: left;
+  vertical-align: middle;
+  font-size: 2rem;
+}
+
+.tablamodulo tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+

@@ -25,4 +25,10 @@ class ModuloModel {
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
+    public function eliminarModulo($id_modulo) {
+    $stmt = $this->db->prepare("DELETE FROM modulo WHERE id_modulo = ?");
+    $stmt->bind_param("i", $id_modulo);
+    return $stmt->execute();
+}
+
 }

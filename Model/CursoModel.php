@@ -38,7 +38,11 @@ class CursoModel {
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
-    
+    public function eliminarCurso($id_curso) {
+    // Primero eliminamos los módulos ligados al curso (clave foránea)
+    $this->db->query("DELETE FROM modulo WHERE id_curso = $id_curso");
+    return $this->db->query("DELETE FROM curso WHERE id_curso = $id_curso");
+}
 
 }
 

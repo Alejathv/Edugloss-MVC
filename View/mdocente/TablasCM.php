@@ -106,63 +106,92 @@ $materiales = $controller->listarMateriales($id_modulo);
     </nav>
 </div>
 
-<!--SECIÓN DE CREAR CURSO Y MODULO-->
+<h2 class="heading">Cursos Registrados</h2>
+<a href="CursoModulo.php" class="boton-curso">Crear curso</a>
 
-<section class="main-content">
-    <h2 class="heading">Gestión de Cursos y Módulos</h2>
+<div class="tabla-contenedor">
+    <table border="1" cellpadding="10" cellspacing="0" class="tablacurso">
+        <thead>
+            <tr>
+                <th>Curso</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Fechas</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($cursos as $curso): ?>
+                <tr>
+                    <td><?= htmlspecialchars($curso['nombre']) ?></td>
+                    <td><?= htmlspecialchars($curso['descripcion']) ?></td>
+                    <td>$<?= number_format($curso['precio'], 2) ?></td>
+                    <td><?= $curso['fecha_inicio'] ?> - <?= $curso['fecha_fin'] ?></td>
+                    <td><?= ucfirst($curso['estado']) ?></td>
+                    <td>
+                        <a href="editar_curso.php?id=<?= $curso['id_curso'] ?>" class="boton-estilo">Editar</a>
 
-    <div class="formulario-grid">
-        <!-- Formulario de Curso -->
-        <div class="formulario-contenedor">
-            <div class="formulario-titulo">Información del Curso</div>
+                        <form method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar este curso y sus módulos?')" class="boton-estilo">
+                            <input type="hidden" name="accion" value="eliminar_curso">
+                            <input type="hidden" name="id_curso" value="<?= $curso['id_curso'] ?>">
+                            <button type="submit">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
 
-            <form method="POST" action="" enctype="multipart/form-data" class="formulario-cuerpo">
-                <input type="hidden" name="accion" value="crear_curso">
+<br><br>
 
-                <input name="nombre" placeholder="Nombre del curso" required>
-                <input name="descripcion" placeholder="Descripción" required>
-                <input name="precio" type="number" step="0.01" placeholder="Precio" required>
-                <input name="fecha_inicio" type="date" required>
-                <input name="fecha_fin" type="date" required>
+<h2 class="heading">Módulos por Curso</h2>
+<div class="tabla-contenedor">
+    <table border="1" cellpadding="10" cellspacing="0" class="tablamodulo">
+        <thead>
+            <tr>
+                <th>Curso</th>
+                <th>Módulo</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($cursos as $curso): ?>
+                <?php
+                $modulosCurso = $moduloCtrl->obtenerModulosPorCurso($curso['id_curso']);
+                foreach ($modulosCurso as $modulo):
+                ?>
+                    <tr>
+                        <td><?= htmlspecialchars($curso['nombre']) ?></td>
+                        <td><?= htmlspecialchars($modulo['nombre']) ?></td>
+                        <td><?= htmlspecialchars($modulo['descripcion']) ?></td>
+                        <td>$<?= number_format($modulo['precio'], 2) ?></td>
+                        <td>
+                            <form method="GET" action="CursoModulo.php"class="boton-estilo">
+                                <input type="hidden" name="id_modulo" value="<?= $modulo['id_modulo'] ?>">
+                                <button type="submit">Crear </button>
+                            </form>
 
-                <select name="estado" required>
-                    <option value="disponible">Disponible</option>
-                    <option value="cerrado">Cerrado</option>
-                </select>
+                            <a href="editar_modulo.php?id=<?= $modulo['id_modulo'] ?>"class="boton-estilo">Editar</a>
 
-                <button type="submit" name="crear_curso">Crear Curso</button>
-                <a href="TablasCM.php" class="btn-volver">🔙 Volver</a>
-            </form>
-        </div>
+                            <form method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar este módulo?')"class="boton-estilo">
+                                <input type="hidden" name="accion" value="eliminar_modulo">
+                                <input type="hidden" name="id_modulo" value="<?= $modulo['id_modulo'] ?>">
+                                <button type="submit">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
 
-        <!-- Formulario de Módulo -->
-        <div class="formulario-contenedor">
-            <div class="formulario-titulo">Información del Módulo</div>
 
-            <form method="POST" action="" enctype="multipart/form-data" class="formulario-cuerpo">
-                <input type="hidden" name="accion" value="crear_modulo">
-
-                <select name="id_curso" required>
-                    <option value="">Selecciona un curso</option>
-                    <?php foreach ($cursos as $curso): ?>
-                        <option value="<?= $curso['id_curso'] ?>"><?= $curso['nombre'] ?></option>
-                    <?php endforeach; ?>
-                </select>
-
-                <input name="nombre" placeholder="Nombre del módulo" required>
-                <input name="descripcion" placeholder="Descripción" required>
-                <input name="precio" type="number" step="0.01" placeholder="Precio" required>
-
-                <button type="submit" name="crear_modulo">Crear Módulo</button>
-                <a href="TablasCM.php" class="btn-volver">🔙 Volver</a>
-            </form>
-
-        </div>
-    </div>
 </section>
-
-
-<!--SECIÓN DE CREAR CURSO Y MODULO-->
 
 <footer class="footer">
 
@@ -177,4 +206,3 @@ $materiales = $controller->listarMateriales($id_modulo);
    
 </body>
 </html>
-
