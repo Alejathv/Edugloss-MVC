@@ -55,16 +55,16 @@ $controller = new EstudianteController($db);
 
       <!-- Perfil del usuario, muestra la imagen, nombre y rol -->
       <div class="profile">
-         <img src="images/Estud1.jpeg" class="image" alt="imagen de estudiante">
+         <img src="../img/icon1.png" class="image" alt="imagen de estudiante">
          <h3 class="name">
          <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
          </h3>
          <p class="role">Estudiante</p>
-         <a href="profile.html" class="btn">ver perfil</a>
+         <a href="../perfil.php" class="btn">ver perfil</a>
          <!-- Botones para iniciar sesión o registrarse -->
          <div class="flex-btn">
-            <a href="login.html" class="option-btn">Entrar</a>
-            <a href="register.html" class="option-btn">Registrarse</a>
+         <a href="../../logout.php" class="option-btn">Cerrar Sesión</a>
+
          </div>
       </div>   
 
@@ -79,12 +79,12 @@ $controller = new EstudianteController($db);
    </div>
 
    <div class="profile">
-      <img src="images/Estud1.jpeg" class="image" alt="">
+      <img src="../img/icon1.png" class="image" alt="">
       <h3 class="name">
       <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
       </h3>
       <p class="role">estudiante</p>
-      <a href="profile.html" class="btn">ver perfil</a>
+      <a href="../perfil.php" class="btn">ver perfil</a>
    </div>
 
    <nav class="navbar">
