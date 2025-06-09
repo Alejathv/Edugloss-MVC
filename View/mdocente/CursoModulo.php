@@ -74,9 +74,9 @@ $materiales = $controller->listarMateriales($id_modulo);
                 <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
             </h3>
             <p class="role">Docente</p>
-            <a href="profile.html" class="btn">Ver Perfil</a>
+            <a href="../perfil.php" class="btn">ver perfil</a>
             <div class="flex-btn">
-                <a href="../logout.php" class="option-btn">Cerrar sesión</a>
+            <a href="../../logout.php" class="option-btn">Cerrar Sesión</a>
             </div>
         </div>
     </section>

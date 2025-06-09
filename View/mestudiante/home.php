@@ -61,10 +61,8 @@ $controller = new EstudianteController($db);
          </h3>
          <p class="role">Estudiante</p>
          <a href="../perfil.php" class="btn">ver perfil</a>
-         <!-- Botones para iniciar sesión o registrarse -->
          <div class="flex-btn">
          <a href="../../logout.php" class="option-btn">Cerrar Sesión</a>
-
          </div>
       </div>   
 
@@ -134,8 +132,5 @@ $controller = new EstudianteController($db);
 <!-- custom js file link  -->
 <script src="../js/script.js"></script>
 <script src="../js/mensajes.js"></script>
-
-
-   
 </body>
 </html>

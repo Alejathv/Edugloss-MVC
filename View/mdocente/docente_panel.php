@@ -66,7 +66,7 @@ $evidencias = $result->fetch_all(MYSQLI_ASSOC);
             gap: 8px;
             justify-content: center;
         }
-        .option-btn, .delete-btn {
+        .delete-btn {
             font-size: 14px;
             padding: 6px 12px;
             border: none;
@@ -74,18 +74,27 @@ $evidencias = $result->fetch_all(MYSQLI_ASSOC);
             cursor: pointer;
             transition: 0.3s ease;
         }
-        .option-btn {
-            background-color: #ADD8C0;
-        }
         .delete-btn {
             background-color: #FF7F7F;
-        }
-        .option-btn:hover {
-            background-color: #91b9a5;
         }
         .delete-btn:hover {
             background-color: #e36464;
         }
+        .aprobar-btn {
+            font-size: 14px;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        background-color: #ADD8C0; /* verde */
+        color: white;
+    }
+
+        .aprobar-btn:hover {
+            background-color: #91b9a5; /* verde más oscuro al pasar mouse */
+        }
+
     </style>
 </head>
 <body>
@@ -111,10 +120,10 @@ $evidencias = $result->fetch_all(MYSQLI_ASSOC);
                 <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
             </h3>
             <p class="role">Docente</p>
-            <a href="profile.html" class="btn">Ver Perfil</a>
+            <a href="../perfil.php" class="btn">ver perfil</a>
             <div class="flex-btn">
-                <a href="../logout.php" class="option-btn">Cerrar sesión</a>
-            </div>
+            <a href="../../logout.php" class="option-btn">Cerrar Sesión</a>
+
         </div>
     </section>
 </header>
@@ -130,7 +139,7 @@ $evidencias = $result->fetch_all(MYSQLI_ASSOC);
         <a href="profile.html" class="btn">Ver Perfil</a>
     </div>
     <nav class="navbar">
-        <a href="home.html"><i class="fas fa-home"></i><span>Inicio</span></a>
+        <a href="docente_panel.php"><i class="fas fa-home"></i><span>Inicio</span></a>
         <a href="../ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
         <a href="CursoModulo.php"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
         <a href="Contenido.php"><i class="fas fa-chalkboard-user"></i><span>Contenido</span></a>
@@ -196,7 +205,7 @@ $evidencias = $result->fetch_all(MYSQLI_ASSOC);
                                 <td>
                                 <form method="POST" action="../../Controller/EvidenciaController.php">
                                     <input type="hidden" name="id_evidencia" value="<?= $e['id_evidencia'] ?>">
-                                    <button type="submit" name="estado" value="aprobado" class="option-btn">Aprobar</button>
+                                    <button type="submit" name="estado" value="aprobado" class="aprobar-btn">Aprobar</button>
                                     <button type="submit" name="estado" value="reprobado" class="delete-btn">Reprobar</button>
                                 </form>
                                 </td>

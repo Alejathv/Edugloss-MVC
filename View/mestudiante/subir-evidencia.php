@@ -82,7 +82,7 @@ $evidencias = mysqli_query($conexion, "
             gap: 8px;
             justify-content: center;
         }
-        .option-btn, .delete-btn {
+         .delete-btn {
             font-size: 14px;
             padding: 6px 12px;
             border: none;
@@ -90,14 +90,9 @@ $evidencias = mysqli_query($conexion, "
             cursor: pointer;
             transition: 0.3s ease;
         }
-        .option-btn {
-            background-color: #ADD8C0;
-        }
+
         .delete-btn {
             background-color: #FF7F7F;
-        }
-        .option-btn:hover {
-            background-color: #91b9a5;
         }
         .delete-btn:hover {
             background-color: #e36464;
@@ -130,11 +125,13 @@ $evidencias = mysqli_query($conexion, "
       </div>
 
       <div class="profile d-flex flex-column align-items-center ms-3">
-         <img src="images/Estud1.jpeg" class="image rounded-circle mb-2" alt="imagen de estudiante" style="width: 60px; height: 60px;" />
+         <img src="../img/icon1.png" class="image" alt="imagen de estudiante">
          <h3 class="name mb-0"><?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?></h3>
          <p class="role mb-2">Estudiante</p>
-         <a href="profile.html" class="btn btn-outline-primary btn-sm">ver perfil</a>
-      </div>
+         <a href="../perfil.php" class="btn">ver perfil</a>
+         <div class="flex-btn">
+         <a href="../../logout.php" class="option-btn">Cerrar Sesión</a>
+         </div>
    </section>
 </header>
 
@@ -145,7 +142,7 @@ $evidencias = mysqli_query($conexion, "
    </div>
 
    <div class="profile text-center mb-4">
-      <img src="images/Estud1.jpeg" class="image rounded-circle mb-2" alt="" style="width: 80px; height: 80px;" />
+      <img src="../img/icon1.png" class="image" alt="">
       <h3 class="name mb-0"><?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?></h3>
       <p class="role mb-2">Estudiante</p>
       <a href="profile.html" class="btn btn-outline-primary btn-sm">ver perfil</a>
@@ -254,7 +251,7 @@ $evidencias = mysqli_query($conexion, "
                      <button
                         type="submit"
                         name="eliminar_evidencia"
-                        class="btn btn-danger btn-sm"
+                        class="btn delete-btn btn-sm"
                      >
                         Eliminar
                      </button>
@@ -271,6 +268,10 @@ $evidencias = mysqli_query($conexion, "
       </table>
    </div>
 </div>
+
+<!-- custom js file link  -->
+<script src="../js/script.js"></script>
+<script src="../js/mensajes.js"></script>
 
 </body>
 </html>

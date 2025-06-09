@@ -99,10 +99,10 @@ $comentarios = $foroModel->getTodosLosComentariosGenerales() ?? [];
             <div id="toggle-btn" class="fas fa-sun"></div>
         </div>
         <div class="profile">
-            <img src="../img/pic-1.jpg" class="image" alt="">
+            <img src="./img/icon1.png" class="image" alt="">
             <h3 class="name"><?= htmlspecialchars($_SESSION['nombre']) ?></h3>
             <p class="role">Docente</p>
-            <a href="profile.html" class="btn">Ver Perfil</a>
+            <a href="./perfil.php" class="btn">Ver Perfil</a>
             <div class="flex-btn">
                 <a href="../logout.php" class="option-btn">Cerrar sesión</a>
             </div>
@@ -113,10 +113,10 @@ $comentarios = $foroModel->getTodosLosComentariosGenerales() ?? [];
 <div class="side-bar">
     <div id="close-btn"><i class="fas fa-times"></i></div>
     <div class="profile">
-        <img src="../img/pic-1.jpg" class="image" alt="">
+        <img src="./img/icon1.png" class="image" alt="">
         <h3 class="name"><?= htmlspecialchars($_SESSION['nombre']) ?></h3>
         <p class="role">Docente</p>
-        <a href="profile.html" class="btn">Ver Perfil</a>
+        <a href="./perfil.php" class="btn">Ver Perfil</a>
     </div>
     <nav class="navbar">
         <a href="home.html"><i class="fas fa-home"></i><span>Inicio</span></a>
@@ -156,7 +156,10 @@ $comentarios = $foroModel->getTodosLosComentariosGenerales() ?? [];
         <button type="submit" class="btn-enviar">Enviar comentario</button>
     </form>
 </div>
-<script src="../js/script.js"></script>
+
+<!-- custom js file link  -->
+<script src="../View/js/script.js"></script>
+<script src="../View/js/mensajes.js"></script>
 
 </body>
 </html>

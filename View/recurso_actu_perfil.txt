@@ -1,0 +1,185 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+session_start();
+require_once '../model/Database.php';
+
+$db = new Database();
+$conn = $db->getConnection();
+
+$id_usuario = $_SESSION['user_id'] ?? null;
+
+if (!$id_usuario) {
+    header("Location: login.php");
+    exit;
+}
+
+$msg = "";
+
+// Obtener datos actuales
+$stmt = $conn->prepare("SELECT nombre, correo, contraseña, rol FROM usuarios WHERE id_usuario = ?");
+if (!$stmt) {
+    die("Error en la consulta: " . $conn->error);
+}
+$stmt->bind_param("i", $id_usuario);
+$stmt->execute();
+$stmt->bind_result($nombre_actual, $correo_actual, $pass_actual, $rol_actual);
+$stmt->fetch();
+$stmt->close();
+
+$foto_actual = $_SESSION['foto_perfil'] ?? 'icon1.png';
+
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
+    $nombre = $_POST['name'] ?? '';
+    $correo = $_POST['email'] ?? '';
+    $old_pass = $_POST['old_pass'] ?? '';
+    $new_pass = $_POST['new_pass'] ?? '';
+    $c_pass = $_POST['c_pass'] ?? '';
+
+    if (empty($nombre) || empty($correo)) {
+        $msg = "El nombre y el correo son obligatorios.";
+    } else {
+        $nuevo_pass = $pass_actual;
+
+        if (!empty($new_pass)) {
+            if (empty($old_pass)) {
+                $msg = "Debe ingresar la contraseña anterior para cambiar la contraseña.";
+            } elseif ($old_pass !== $pass_actual) {
+                $msg = "La contraseña anterior no coincide.";
+            } elseif ($new_pass !== $c_pass) {
+                $msg = "Las nuevas contraseñas no coinciden.";
+            } else {
+                $nuevo_pass = $new_pass;
+            }
+        } else {
+            if (!empty($old_pass)) {
+                $msg = "Para cambiar la contraseña debe ingresar una nueva contraseña.";
+            }
+        }
+
+        if (empty($msg)) {
+            $foto_perfil = $_POST['foto_perfil'] ?? 'icon1.png';
+            $permitidas = ['icon1.png', 'icon2.png', 'icon3.png', 'icon4.png'];
+            if (!in_array($foto_perfil, $permitidas)) {
+                $foto_perfil = 'icon1.png';
+            }
+
+            $_SESSION['foto_perfil'] = $foto_perfil;
+
+            $stmt = $conn->prepare("UPDATE usuarios SET nombre = ?, correo = ?, contraseña = ? WHERE id_usuario = ?");
+            if (!$stmt) {
+                die("Error en la consulta UPDATE: " . $conn->error);
+            }
+            $stmt->bind_param("sssi", $nombre, $correo, $nuevo_pass, $id_usuario);
+
+            if ($stmt->execute()) {
+                $msg = "Perfil actualizado correctamente.";
+                $foto_actual = $foto_perfil;
+                $nombre_actual = $nombre;
+                $correo_actual = $correo;
+                $pass_actual = $nuevo_pass;
+            } else {
+                $msg = "Error al actualizar el perfil.";
+            }
+            $stmt->close();
+        }
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <title>Actualizar Perfil</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+   <link rel="stylesheet" href="css/style_panel.css" />
+</head>
+<body>
+
+<header class="header">
+   <section class="flex">
+      <a href="home.html" class="logo">Educa.</a>
+      <form action="search.html" method="post" class="search-form">
+         <input type="text" name="search_box" required placeholder="Buscar cursos..." maxlength="100" />
+         <button type="submit" class="fas fa-search"></button>
+      </form>
+      <div class="icons">
+         <div id="menu-btn" class="fas fa-bars"></div>
+         <div id="search-btn" class="fas fa-search"></div>
+         <div id="user-btn" class="fas fa-user"></div>
+         <div id="toggle-btn" class="fas fa-sun"></div>
+      </div>
+      <div class="profile">
+         <img src="img/<?= htmlspecialchars($foto_actual) ?>" class="image" alt="Foto perfil" />
+         <h3 class="name"><?= htmlspecialchars($nombre_actual) ?></h3>
+         <p class="role"><?= htmlspecialchars($rol_actual) ?></p>
+         <a href="profile.html" class="btn">Ver perfil</a>
+         <div class="flex-btn">
+            <a href="../logout.php" class="option-btn">Cerrar sesión</a>
+         </div>
+      </div>
+   </section>
+</header>
+
+<div class="side-bar">
+   <div id="close-btn"><i class="fas fa-times"></i></div>
+   <div class="profile">
+      <img src="img/<?= htmlspecialchars($foto_actual) ?>" class="image" alt="Foto perfil" />
+      <h3 class="name"><?= htmlspecialchars($nombre_actual) ?></h3>
+      <p class="role"><?= htmlspecialchars($rol_actual) ?></p>
+      <a href="profile.html" class="btn">Ver perfil</a>
+   </div>
+   <nav class="navbar">
+      <a href="home.html"><i class="fas fa-home"></i><span>Inicio</span></a>
+      <a href="about.html"><i class="fas fa-question"></i><span>Acerca de</span></a>
+      <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
+      <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Profesores</span></a>
+      <a href="contact.html"><i class="fas fa-headset"></i><span>Contacto</span></a>
+   </nav>
+</div>
+
+<section class="form-container">
+   <form action="" method="post" enctype="multipart/form-data">
+      <h3>Actualizar Perfil</h3>
+      <?php if (!empty($msg)) : ?>
+         <p style="color:red;"><?= htmlspecialchars($msg) ?></p>
+      <?php endif; ?>
+      
+      <p>Actualizar nombre</p>
+      <input type="text" name="name" value="<?= htmlspecialchars($nombre_actual) ?>" maxlength="50" class="box" required />
+      
+      <p>Actualizar correo</p>
+      <input type="email" name="email" value="<?= htmlspecialchars($correo_actual) ?>" maxlength="50" class="box" required />
+      
+      <p>Contraseña anterior</p>
+      <input type="password" name="old_pass" placeholder="Tu contraseña actual" maxlength="20" class="box" />
+      
+      <p>Nueva contraseña</p>
+      <input type="password" name="new_pass" placeholder="Tu nueva contraseña" maxlength="20" class="box" />
+      
+      <p>Confirmar nueva contraseña</p>
+      <input type="password" name="c_pass" placeholder="Confirmar nueva contraseña" maxlength="20" class="box" />
+      
+      <p>Seleccionar nueva foto de perfil</p>
+      <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+         <?php foreach (['icon1.png', 'icon2.png', 'icon3.png', 'icon4.png'] as $icon) : ?>
+         <label>
+            <input type="radio" name="foto_perfil" value="<?= $icon ?>" <?= ($foto_actual === $icon ? 'checked' : '') ?> />
+            <img src="img/<?= $icon ?>" alt="<?= $icon ?>" width="60" />
+         </label>
+         <?php endforeach; ?>
+      </div>
+
+      <input type="submit" value="Actualizar perfil" name="submit" class="btn" />
+   </form>
+</section>
+
+<footer class="footer">
+   &copy; <?= date('Y') ?> por <span>Educa</span> | Todos los derechos reservados.
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>

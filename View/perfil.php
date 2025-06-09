@@ -74,7 +74,9 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'ico
 <header class="header">
    <section class="flex">
 
-      <a href="home.html" class="logo">Educa.</a>
+      <a href="home.php" class="logo">
+         <img src="../View/img/LogoEGm.png" alt="EduGloss" style="height: 80px;">
+      </a>
 
       <form action="search.html" method="post" class="search-form">
          <input type="text" name="search_box" required placeholder="search courses..." maxlength="100" />
@@ -95,10 +97,11 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'ico
          </div>
          <h3 class="name"><?php echo htmlspecialchars($nombre); ?></h3>
          <p class="role"><?php echo htmlspecialchars($rol); ?></p>
-         <a href="profile.html" class="btn">view profile</a>
+         <a href="./perfil.php" class="btn">ver perfil</a>
+         <!-- Botones para iniciar sesión o registrarse -->
          <div class="flex-btn">
-            <a href="login.html" class="option-btn">login</a>
-            <a href="register.html" class="option-btn">register</a>
+         <a href="../logout.php" class="option-btn">Cerrar Sesión</a>
+
          </div>
       </div>
 

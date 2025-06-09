@@ -58,10 +58,6 @@ $materiales = $controller->listarMateriales($id_modulo);
         <a href="docente_panel.php" class="logo">
             <img src="../img/LogoEGm.png" alt="EduGloss" style="height: 80px;">
         </a>
-        <form action="search.html" method="post" class="search-form">
-            <input type="text" name="search_box" required placeholder="Buscar cursos..." maxlength="100">
-            <button type="submit" class="fas fa-search"></button>
-        </form>
         <div class="icons">
             <div id="menu-btn" class="fas fa-bars"></div>
             <div id="search-btn" class="fas fa-search"></div>
@@ -74,10 +70,10 @@ $materiales = $controller->listarMateriales($id_modulo);
                 <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
             </h3>
             <p class="role">Docente</p>
-            <a href="profile.html" class="btn">Ver Perfil</a>
-            <div class="flex-btn">
-                <a href="../logout.php" class="option-btn">Cerrar sesión</a>
-            </div>
+         <a href="../perfil.php" class="btn">ver perfil</a>
+         <div class="flex-btn">
+         <a href="../../logout.php" class="option-btn">Cerrar Sesión</a>
+         </div>
         </div>
     </section>
 </header>
