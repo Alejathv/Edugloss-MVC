@@ -144,6 +144,10 @@ $idCursoPreseleccionado = isset($_GET['id_curso']) ? $_GET['id_curso'] : '';
                 <input name="nombre" placeholder="Nombre del módulo" required>
                 <input name="descripcion" placeholder="Descripción" required>
                 <input name="precio" type="number" step="0.01" placeholder="Precio" required>
+                <select name="estado" required>
+                    <option value="disponible">Disponible</option>
+                    <option value="cerrado">Cerrado</option>
+                </select>
 
                 <button type="submit" name="crear_modulo">Crear Módulo</button>
                 <a href="TablasCM.php" class="btn-volver">🔙 Volver</a>

@@ -10,17 +10,11 @@ class CursoModel {
     }
     //CREACION DE CURSO PARA EL DOCENTE 
     public function crearCurso($nombre, $descripcion, $precio, $fecha_inicio, $fecha_fin, $estado) {
-        $stmt = $this->db->prepare("INSERT INTO curso (nombre, descripcion, precio, fecha_inicio, fecha_fin, estado) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        if (!$stmt) {
-            die("Error en prepare: " . $this->db->error);
-        }
-        $stmt->bind_param("ssdssss", $nombre, $descripcion, $precio, $fecha_inicio, $fecha_fin, $estado);
-        $exec = $stmt->execute();
-        if (!$exec) {
-            die("Error en execute: " . $stmt->error);
-        }
-        return $exec;
-    }
+    $consulta = $this->db->prepare("INSERT INTO curso (nombre, descripcion, precio, fecha_inicio, fecha_fin, estado) VALUES (?, ?, ?, ?, ?, ?)");
+    $consulta->bind_param("ssdsss", $nombre, $descripcion, $precio, $fecha_inicio, $fecha_fin, $estado);
+    return $consulta->execute();
+}
+
 
 
     public function obtenerCursos() {
