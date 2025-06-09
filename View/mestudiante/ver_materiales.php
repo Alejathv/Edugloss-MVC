@@ -86,7 +86,7 @@ if (isset($_GET['id_modulo'])) {
       <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
       </h3>
       <p class="role">estudiante</p>
-      <a href="profile.html" class="btn">ver perfil</a>
+      <a href="../perfil.php" class="btn">ver perfil</a>
    </div>
 
    <nav class="navbar">

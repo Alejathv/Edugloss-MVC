@@ -112,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
          <img src="img/<?= htmlspecialchars($foto_actual) ?>" class="image" alt="Foto perfil" />
          <h3 class="name"><?= htmlspecialchars($nombre_actual) ?></h3>
          <p class="role"><?= htmlspecialchars($rol_actual) ?></p>
-         <a href="profile.html" class="btn">Ver perfil</a>
+         <a href="./perfil.php" class="btn">Ver perfil</a>
          <div class="flex-btn">
             <a href="../logout.php" class="option-btn">Cerrar sesión</a>
          </div>
@@ -126,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
       <img src="img/<?= htmlspecialchars($foto_actual) ?>" class="image" alt="Foto perfil" />
       <h3 class="name"><?= htmlspecialchars($nombre_actual) ?></h3>
       <p class="role"><?= htmlspecialchars($rol_actual) ?></p>
-      <a href="profile.html" class="btn">Ver perfil</a>
+      <a href="./perfil.php" class="btn">Ver perfil</a>
    </div>
    <nav class="navbar">
       <a href="home.html"><i class="fas fa-home"></i><span>Inicio</span></a>

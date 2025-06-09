@@ -145,7 +145,7 @@ $evidencias = mysqli_query($conexion, "
       <img src="../img/icon1.png" class="image" alt="">
       <h3 class="name mb-0"><?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?></h3>
       <p class="role mb-2">Estudiante</p>
-      <a href="profile.html" class="btn btn-outline-primary btn-sm">ver perfil</a>
+      <a href="../perfil.php" class="btn btn-outline-primary btn-sm">ver perfil</a>
    </div>
 
    <nav class="navbar d-flex flex-column gap-3 px-3">

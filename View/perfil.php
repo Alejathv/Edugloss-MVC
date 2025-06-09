@@ -126,7 +126,7 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'ico
       <a href="about.html"><i class="fas fa-question"></i><span>about</span></a>
       <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>courses</span></a>
       <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>teachers</span></a>
-      <a href="contact.html"><i class="fas fa-headset"></i><span>contact us</span></a>
+      <a href="contact.html"><i class="fas fa-headset"></i><span>Preguntas Frecuentes</span></a>
    </nav>
 
 </div>
