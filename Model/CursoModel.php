@@ -9,12 +9,12 @@ class CursoModel {
         $this->db = $db;
     }
     //CREACION DE CURSO PARA EL DOCENTE 
-    public function crearCurso($nombre, $descripcion, $precio, $fecha_inicio, $fecha_fin, $estado, $imagen) {
-        $stmt = $this->db->prepare("INSERT INTO curso (nombre, descripcion, precio, fecha_inicio, fecha_fin, estado, imagen) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    public function crearCurso($nombre, $descripcion, $precio, $fecha_inicio, $fecha_fin, $estado) {
+        $stmt = $this->db->prepare("INSERT INTO curso (nombre, descripcion, precio, fecha_inicio, fecha_fin, estado) VALUES (?, ?, ?, ?, ?, ?, ?)");
         if (!$stmt) {
             die("Error en prepare: " . $this->db->error);
         }
-        $stmt->bind_param("ssdssss", $nombre, $descripcion, $precio, $fecha_inicio, $fecha_fin, $estado, $imagen);
+        $stmt->bind_param("ssdssss", $nombre, $descripcion, $precio, $fecha_inicio, $fecha_fin, $estado);
         $exec = $stmt->execute();
         if (!$exec) {
             die("Error en execute: " . $stmt->error);
@@ -42,7 +42,28 @@ class CursoModel {
     // Primero eliminamos los módulos ligados al curso (clave foránea)
     $this->db->query("DELETE FROM modulo WHERE id_curso = $id_curso");
     return $this->db->query("DELETE FROM curso WHERE id_curso = $id_curso");
-}
+    }
+    public function obtenerCursoPorId($id) {
+    $stmt = $this->db->prepare("SELECT * FROM curso WHERE id_curso = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    return $stmt->get_result()->fetch_assoc();
+    }
+
+    public function actualizarCurso($data) {
+        $stmt = $this->db->prepare("UPDATE curso SET nombre = ?, descripcion = ?, precio = ?, fecha_inicio = ?, fecha_fin = ?, estado = ? WHERE id_curso = ?");
+        $stmt->bind_param("ssisssi",
+            $data['nombre'],
+            $data['descripcion'],
+            $data['precio'],
+            $data['fecha_inicio'],
+            $data['fecha_fin'],
+            $data['estado'],
+            $data['id_curso']
+        );
+        return $stmt->execute();
+    }
+
 
 }
 

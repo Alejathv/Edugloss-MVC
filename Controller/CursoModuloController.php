@@ -21,9 +21,8 @@ class CursoController {
             $fecha_inicio = $_POST['fecha_inicio'];
             $fecha_fin = $_POST['fecha_fin'];
             $estado = $_POST['estado'];
-            $imagen = $_POST['imagen'];
 
-            $resultado = $this->model->crearCurso($nombre, $descripcion, $precio, $fecha_inicio, $fecha_fin, $estado, $imagen);
+            $resultado = $this->model->crearCurso($nombre, $descripcion, $precio, $fecha_inicio, $fecha_fin, $estado);
             var_dump($resultado); // Para ver si devolvió true o false
 
             if ($resultado) {
@@ -40,15 +39,24 @@ class CursoController {
         return $this->model->obtenerCursos();
     }
     public function eliminarCurso() {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['accion'] === 'eliminar_curso') {
-        $id_curso = $_POST['id_curso'];
-        $this->model->eliminarCurso($id_curso);
-        header("Location: TablasCM.php?deleted=curso");
-        exit;
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['accion'] === 'eliminar_curso') {
+            $id_curso = $_POST['id_curso'];
+            $this->model->eliminarCurso($id_curso);
+            header("Location: TablasCM.php?deleted=curso");
+            exit;
+        }
     }
-}
+    public function obtenerCursoPorId($id) {
+    return $this->model->obtenerCursoPorId($id);
+    }
+
+    public function actualizarCurso($data) {
+        $this->model->actualizarCurso($data);
+    }
 
 }
+
+
 
 class ModuloController {
     private $model;
@@ -63,6 +71,7 @@ class ModuloController {
             $nombre = $_POST['nombre'];
             $descripcion = $_POST['descripcion'];
             $precio = $_POST['precio'];
+            $estado = $_POST['estado'];
 
             if (!empty($id_curso) && !empty($nombre) && !empty($descripcion)) {
                 $resultado = $this->model->crearModulo($id_curso, $nombre, $descripcion, $precio);
@@ -94,6 +103,14 @@ class ModuloController {
     public function obtenerModulos() {
         return $this->model->obtenerModulos();
     }
+    public function obtenerModuloPorId($id) {
+    return $this->model->obtenerModuloPorId($id);
+    }
+
+    public function actualizarModulo($data) {
+        $this->model->actualizarModulo($data);
+    }
+
 
     public function mostrarFormulario() {
     require_once __DIR__ . '/../Model/CursoModel.php';
@@ -102,6 +119,7 @@ class ModuloController {
 
     // Carga la vista y le pasa los cursos disponibles
     require_once __DIR__ . '/../View/mdocente/CursoModulo.php';
+
     
 }
 }

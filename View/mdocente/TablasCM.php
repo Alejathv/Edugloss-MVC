@@ -130,6 +130,7 @@ $materiales = $controller->listarMateriales($id_modulo);
                     <td><?= $curso['fecha_inicio'] ?> - <?= $curso['fecha_fin'] ?></td>
                     <td><?= ucfirst($curso['estado']) ?></td>
                     <td>
+                        
                         <a href="editar_curso.php?id=<?= $curso['id_curso'] ?>" class="boton-estilo">Editar</a>
 
                         <form method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar este curso y sus módulos?')" class="boton-estilo">
@@ -155,6 +156,7 @@ $materiales = $controller->listarMateriales($id_modulo);
                 <th>Módulo</th>
                 <th>Descripción</th>
                 <th>Precio</th>
+                <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -169,6 +171,7 @@ $materiales = $controller->listarMateriales($id_modulo);
                         <td><?= htmlspecialchars($modulo['nombre']) ?></td>
                         <td><?= htmlspecialchars($modulo['descripcion']) ?></td>
                         <td>$<?= number_format($modulo['precio'], 2) ?></td>
+                        <td><?= ucfirst($modulo['estado']) ?></td>
                         <td>
                             <form method="GET" action="CursoModulo.php"class="boton-estilo">
                                 <input type="hidden" name="id_modulo" value="<?= $modulo['id_modulo'] ?>">

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-05-2025 a las 05:02:35
+-- Tiempo de generación: 06-06-2025 a las 17:48:13
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Versión de PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -71,7 +71,8 @@ CREATE TABLE `evidencias` (
   `id_curso` int(11) DEFAULT NULL,
   `id_modulo` int(11) DEFAULT NULL,
   `url_archivo` varchar(255) NOT NULL,
-  `fecha_subida` timestamp NOT NULL DEFAULT current_timestamp()
+  `fecha_subida` timestamp NOT NULL DEFAULT current_timestamp(),
+  `estado` enum('pendiente','aprobado','reprobado') NOT NULL DEFAULT 'pendiente'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -82,7 +83,6 @@ CREATE TABLE `evidencias` (
 
 CREATE TABLE `foro` (
   `id_foro` int(11) NOT NULL,
-  `id_video` int(11) NOT NULL,
   `titulo` varchar(255) NOT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp(),
   `estado` enum('activo','cerrado') DEFAULT 'activo'
@@ -92,8 +92,8 @@ CREATE TABLE `foro` (
 -- Volcado de datos para la tabla `foro`
 --
 
-INSERT INTO `foro` (`id_foro`, `id_video`, `titulo`, `fecha_creacion`, `estado`) VALUES
-(505, 1005, 'preguntas sobre la primera seccion ', '2025-05-14 00:21:28', 'activo');
+INSERT INTO `foro` (`id_foro`, `titulo`, `fecha_creacion`, `estado`) VALUES
+(505, 'preguntas sobre la primera seccion ', '2025-05-14 00:21:28', 'activo');
 
 -- --------------------------------------------------------
 
@@ -231,7 +231,7 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellido`, `telefono`, `correo`, `contraseña`, `rol`, `fecha_creacion`, `estado`, `especialidad`) VALUES
 (3001, 'Lidia', 'Gutierrez', '1234567890', 'idagz#09@gmail.com', 'cinnamon', 'docente', '2025-03-21', 'activo', 'Manicure y Pedicure'),
 (4001, 'Lidia', 'Gutierrez', '0987654321', 'lidiag9@gmail.com', 'passmnb', 'administrador', '2025-03-21', 'activo', NULL),
-(5001, 'María', 'Lopez', '5546543212', 'marialopez@gmail.com', 'contra13', 'estudiante', '2025-03-21', 'activo', NULL),
+(5001, 'María', 'Lopez', '5546543212', 'marialopez@gmail.com', 'contra14', 'estudiante', '2025-03-21', 'activo', NULL),
 (5002, 'luisa', 'hernandez', '3195862728', 'luisahernandez12@gmail.com', NULL, 'cliente', '2025-05-05', 'activo', NULL),
 (5003, 'mary', 'niño', '31958627765', 'mary12@gmail.com', NULL, 'cliente', '2025-05-05', 'activo', NULL),
 (5004, 'Alejandra', 'Acosta', '3115622124', 'AlejaAcosta@gmail.com', NULL, 'cliente', '2025-05-05', 'activo', NULL);
@@ -246,15 +246,19 @@ CREATE TABLE `videos` (
   `id_video` int(11) NOT NULL,
   `id_modulo` int(11) NOT NULL,
   `nombre` varchar(150) NOT NULL,
-  `url_video` varchar(255) NOT NULL
+  `url_video` varchar(255) NOT NULL,
+  `tipo` enum('video','pdf') NOT NULL DEFAULT 'video'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `videos`
 --
 
-INSERT INTO `videos` (`id_video`, `id_modulo`, `nombre`, `url_video`) VALUES
-(1005, 101, 'basico 1', 'QwJooBk9DGM\r\n');
+INSERT INTO `videos` (`id_video`, `id_modulo`, `nombre`, `url_video`, `tipo`) VALUES
+(1, 101, 'Manicure Basic', 'https://www.youtube.com/watch?v=5in4D1tRobs', 'video'),
+(2, 101, 'Manicure Basic gel', 'https://www.youtube.com/watch?v=zlaQtQZNMDk', 'video'),
+(100, 101, 'Manicure Basic gel', 'holi.pdf', 'pdf'),
+(1005, 101, 'basico 1', 'QwJooBk9DGM\r\n', 'video');
 
 --
 -- Índices para tablas volcadas
@@ -288,8 +292,7 @@ ALTER TABLE `evidencias`
 -- Indices de la tabla `foro`
 --
 ALTER TABLE `foro`
-  ADD PRIMARY KEY (`id_foro`),
-  ADD KEY `id_video` (`id_video`);
+  ADD PRIMARY KEY (`id_foro`);
 
 --
 -- Indices de la tabla `foro_comentarios`
@@ -366,7 +369,7 @@ ALTER TABLE `curso`
 -- AUTO_INCREMENT de la tabla `evidencias`
 --
 ALTER TABLE `evidencias`
-  MODIFY `id_evidencia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_evidencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `foro`
@@ -435,12 +438,6 @@ ALTER TABLE `evidencias`
   ADD CONSTRAINT `evidencias_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE,
   ADD CONSTRAINT `evidencias_ibfk_2` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id_curso`) ON DELETE CASCADE,
   ADD CONSTRAINT `evidencias_ibfk_3` FOREIGN KEY (`id_modulo`) REFERENCES `modulo` (`id_modulo`) ON DELETE CASCADE;
-
---
--- Filtros para la tabla `foro`
---
-ALTER TABLE `foro`
-  ADD CONSTRAINT `foro_ibfk_1` FOREIGN KEY (`id_video`) REFERENCES `videos` (`id_video`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `foro_comentarios`

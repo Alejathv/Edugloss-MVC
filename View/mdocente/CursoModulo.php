@@ -31,15 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $cursos = $cursoCtrl->obtenerCursos();
 $modulos = $moduloCtrl->obtenerModulos();
-$cursoCtrl->eliminarCurso(); 
-$moduloCtrl->eliminarModulo();
-$materiales = [];
-foreach ($modulos as $m) {
-    $materiales[$m['id_modulo']] = $docenteCtrl->listarMateriales($m['id_modulo']);
-}
-
-$id_modulo = $_GET['id_modulo'] ?? 0;
-$materiales = $controller->listarMateriales($id_modulo);
+$idCursoPreseleccionado = isset($_GET['id_curso']) ? $_GET['id_curso'] : '';
 ?>
 <!DOCTYPE html>
 <html lang="es">
