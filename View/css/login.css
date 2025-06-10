@@ -126,6 +126,32 @@ input {
 	width: 100%;
     
 }
+/* Reutiliza tu estilo base */
+
+.custom-input {
+    background-color: #eee;
+    border-color:  #6F38C5;
+    width: 100%;
+    padding-right: 40px; /* espacio para el icono */
+    box-sizing: border-box;
+}
+
+/* Contenedor del input + ícono */
+.custom-password-group {
+    position: relative;
+    width: 100%; /* asegúrate que ocupe todo el ancho del padre */
+}
+
+/* Ícono del ojito */
+.custom-password-group i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6F38C5;
+}
+
 
 
 

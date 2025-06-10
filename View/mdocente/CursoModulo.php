@@ -23,18 +23,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (isset($_POST['accion']) && $_POST['accion'] === 'crear_modulo') {
         $moduloCtrl->crearModulo();
     }
+    } elseif (isset($_POST['accion']) && $_POST['accion'] === 'eliminar_curso') {
+        $cursoCtrl->eliminarCurso();
+    } elseif (isset($_POST['accion']) && $_POST['accion'] === 'eliminar_modulo') {
+        $moduloCtrl->eliminarModulo();
 }
 
 $cursos = $cursoCtrl->obtenerCursos();
 $modulos = $moduloCtrl->obtenerModulos();
-
-$materiales = [];
-foreach ($modulos as $m) {
-    $materiales[$m['id_modulo']] = $docenteCtrl->listarMateriales($m['id_modulo']);
-}
-
-$id_modulo = $_GET['id_modulo'] ?? 0;
-$materiales = $controller->listarMateriales($id_modulo);
+$idCursoPreseleccionado = isset($_GET['id_curso']) ? $_GET['id_curso'] : '';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -95,59 +92,73 @@ $materiales = $controller->listarMateriales($id_modulo);
     <nav class="navbar">
         <a href="home.html"><i class="fas fa-home"></i><span>Inicio</span></a>
         <a href="../ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
-        <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
-        <a href="subir_material.php"><i class="fas fa-chalkboard-user"></i><span>Contenido</span></a>
+        <a href="TablasCM.php"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
+        <a href="Contenido.php"><i class="fas fa-chalkboard-user"></i><span>Contenido</span></a>
         <a href="estudiantes.html"><i class="fas fa-user-graduate"></i><span>Estudiantes</span></a>
     </nav>
 </div>
 
+<!--SECIÓN DE CREAR CURSO Y MODULO-->
+
 <section class="main-content">
-    <h2 class="heading">Creación De Cursos</h2>
+    <h2 class="heading">Gestión de Cursos y Módulos</h2>
 
-<div class="formulario-contenedor">
-    <div class="formulario-titulo">Información del Curso</div>
+    <div class="formulario-grid">
+        <!-- Formulario de Curso -->
+        <div class="formulario-contenedor">
+            <div class="formulario-titulo">Información del Curso</div>
 
-    <form method="POST" action="" enctype="multipart/form-data" class="formulario-cuerpo">
-        <input type="hidden" name="accion" value="crear_curso">
+            <form method="POST" action="" enctype="multipart/form-data" class="formulario-cuerpo">
+                <input type="hidden" name="accion" value="crear_curso">
 
-        <input name="nombre" placeholder="Nombre del curso" required>
-        <input name="descripcion" placeholder="Descripción" required>
-        <input name="precio" type="number" step="0.01" placeholder="Precio" required>
-        <input name="fecha_inicio" type="date" required>
-        <input name="fecha_fin" type="date" required>
+                <input name="nombre" placeholder="Nombre del curso" required>
+                <input name="descripcion" placeholder="Descripción" required>
+                <input name="precio" type="number" step="0.01" placeholder="Precio" required>
+                <input name="fecha_inicio" type="date" required>
+                <input name="fecha_fin" type="date" required>
 
-        <select name="estado" required>
-            <option value="disponible">Disponible</option>
-            <option value="cerrado">Cerrado</option>
-        </select>
+                <select name="estado" required>
+                    <option value="disponible">Disponible</option>
+                    <option value="cerrado">Cerrado</option>
+                </select>
 
-        <input name="imagen" placeholder="Imagen (URL o nombre)" required>
+                <button type="submit" name="crear_curso">Crear Curso</button>
+                <a href="TablasCM.php" class="btn-volver">🔙 Volver</a>
+            </form>
+        </div>
 
-        <button type="submit" name="crear_curso">Crear Curso</button>
-    </form>
-</div>
+        <!-- Formulario de Módulo -->
+        <div class="formulario-contenedor">
+            <div class="formulario-titulo">Información del Módulo</div>
 
+            <form method="POST" action="" enctype="multipart/form-data" class="formulario-cuerpo">
+                <input type="hidden" name="accion" value="crear_modulo">
 
+                <select name="id_curso" required>
+                    <option value="">Selecciona un curso</option>
+                    <?php foreach ($cursos as $curso): ?>
+                        <option value="<?= $curso['id_curso'] ?>"><?= $curso['nombre'] ?></option>
+                    <?php endforeach; ?>
+                </select>
 
-<H2>CREACION DE MODULO</H2> 
-<form method="POST" action="" enctype="multipart/form-data">
-    <input type="hidden" name="accion" value="crear_modulo">
+                <input name="nombre" placeholder="Nombre del módulo" required>
+                <input name="descripcion" placeholder="Descripción" required>
+                <input name="precio" type="number" step="0.01" placeholder="Precio" required>
+                <select name="estado" required>
+                    <option value="disponible">Disponible</option>
+                    <option value="cerrado">Cerrado</option>
+                </select>
 
-    <select name="id_curso" required>
-        <option value="">Selecciona un curso</option>
-        <?php foreach ($cursos as $curso): ?>
-            <option value="<?= $curso['id_curso'] ?>"><?= $curso['nombre'] ?></option>
-        <?php endforeach; ?>
-    </select>
+                <button type="submit" name="crear_modulo">Crear Módulo</button>
+                <a href="TablasCM.php" class="btn-volver">🔙 Volver</a>
+            </form>
 
-    <input name="nombre" placeholder="Nombre del módulo" required>
-    <input name="descripcion" placeholder="Descripción" required>
-    <input name="precio" type="number" step="0.01" placeholder="Precio" required>
-
-    <button type="submit" name="crear_modulo">Crear Módulo</button>
-</form>
-
+        </div>
+    </div>
 </section>
+
+
+<!--SECIÓN DE CREAR CURSO Y MODULO-->
 
 <footer class="footer">
 

@@ -14,7 +14,7 @@ $materiales = [];
 
 if (isset($_GET['id_modulo'])) {
    $id_modulo = intval($_GET['id_modulo']);
-   $materiales = $materialModel->getMaterialesByModulo($id_modulo);
+   $materiales = $materialModel->obtenerMaterialPorModulo($id_modulo);
 }
 ?>
 <!DOCTYPE html>
@@ -106,13 +106,13 @@ if (isset($_GET['id_modulo'])) {
    <div class="box-container">
         <?php foreach ($materiales as $mat): ?>
       <?php if ($mat['tipo'] === 'pdf'): ?>
-         <a class="box" href="ver_material.php?archivo=<?= urlencode($mat['url_video']) ?>&tipo=pdf" target="_blank">
+         <a class="box" href="ver_material.php?archivo=<?= urlencode($mat['url_material']) ?>&tipo=pdf" target="_blank">
             <i class="fa-solid fa-file-pdf"></i>
             <img src="../img/videos/<?= $mat['id_video'] ?>.png" alt="pdf">
             <h3><?= htmlspecialchars($mat['nombre']) ?></h3>
          </a>
       <?php else: ?>
-         <a class="box" href="ver_material.php?archivo=<?= urlencode($mat['url_video']) ?>&tipo=video">
+         <a class="box" href="ver_material.php?archivo=<?= urlencode($mat['url_material']) ?>&tipo=video">
             <i class="fas fa-play"></i>
             <img src="../img/videos/<?= $mat['id_video'] ?>.jpg" alt="Video 1">
             <h3><?= htmlspecialchars($mat['nombre']) ?></h3>

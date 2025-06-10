@@ -11,7 +11,6 @@ require_once '../../Model/database.php';
 $db = new Database();
 $conn = $db->getConnection();
 $controller = new DocenteController($conn);
-
 $cursoCtrl = new CursoController($conn);
 $moduloCtrl = new ModuloController($conn);
 $docenteCtrl = new DocenteController($conn);
@@ -24,7 +23,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $moduloCtrl->crearModulo();
     }
 }
+// Si llega POST, procesa la subida
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $resultado = $controller->subir();
 
+    // Guardamos mensaje en sesión para evitar reenvío al refrescar
+    $_SESSION['message'] = $resultado['message'];
+    $_SESSION['success'] = $resultado['success'];
+
+    // Redireccionamos a la misma página para limpiar POST (PRG)
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
+}
+// Aquí mostramos mensajes almacenados en sesión (si hay)
+if (isset($_SESSION['message'])) {
+    if ($_SESSION['success']) {
+        echo '<p style="color: green;">' . htmlspecialchars($_SESSION['message']) . '</p>';
+    } else {
+        echo '<p style="color: red;">' . htmlspecialchars($_SESSION['message']) . '</p>';
+    }
+    unset($_SESSION['message'], $_SESSION['success']);
+}
+$controller->subir();
 $cursos = $cursoCtrl->obtenerCursos();
 $modulos = $moduloCtrl->obtenerModulos();
 
@@ -35,6 +55,10 @@ foreach ($modulos as $m) {
 
 $id_modulo = $_GET['id_modulo'] ?? 0;
 $materiales = $controller->listarMateriales($id_modulo);
+
+if (isset($_GET['m']) && $_GET['m'] == 'subir') {
+    $controller->subir();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -100,16 +124,24 @@ $materiales = $controller->listarMateriales($id_modulo);
 <section class="home-grid">
 
 <H2>Subir por MODULO</H2> 
-<form method="POST" action="" enctype="multipart/form-data">
-    <select name="id_modulo" required>
-        <?php foreach ($modulos as $modulo): ?>
-            <option value="<?= $modulo['id_modulo'] ?>"><?= $modulo['nombre'] ?></option>
-        <?php endforeach; ?>
-    </select>
-    <input name="nombre" placeholder="Nombre del material" required>
-    <input type="file" name="archivo" required>
-    <button type="submit">Subir</button>
-</form>
+    <form method="POST" action="" enctype="multipart/form-data">
+
+        <select name="id_modulo" required>
+            <?php foreach ($modulos as $modulo): ?>
+                <option value="<?= $modulo['id_modulo'] ?>"><?= $modulo['nombre'] ?></option>
+            <?php endforeach; ?>
+        </select>
+        <input name="nombre" placeholder="Nombre del material" required>
+
+        <input name="url" placeholder="URL del material (YouTube o PDF)" required>
+
+        <select name="tipo" required>
+            <option value="video">Video</option>
+            <option value="pdf">PDF</option>
+        </select>
+
+        <button type="submit">Subir</button>
+    </form>
 
 
 
