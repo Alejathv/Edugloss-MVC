@@ -107,7 +107,6 @@ $materiales = $controller->listarMateriales($id_modulo);
 </div>
 
 <h2 class="heading">Cursos Registrados</h2>
-<a href="CursoModulo.php" class="boton-curso">Crear curso</a>
 
 <div class="tabla-contenedor">
     <table border="1" cellpadding="10" cellspacing="0" class="tablacurso">
@@ -130,14 +129,19 @@ $materiales = $controller->listarMateriales($id_modulo);
                     <td><?= $curso['fecha_inicio'] ?> - <?= $curso['fecha_fin'] ?></td>
                     <td><?= ucfirst($curso['estado']) ?></td>
                     <td>
-                        
-                        <a href="editar_curso.php?id=<?= $curso['id_curso'] ?>" class="boton-estilo">Editar</a>
+                        <div class="acciones">
+                            <form method="GET" action="CursoModulo.php"class="boton-estilo">
+                                <input type="hidden" name="id_curso" value="<?= $curso['id_curso'] ?>">
+                                <button type="submit"><i class="fa-solid fa-plus"></i></button>
+                            </form>
+                            <a href="editar_curso.php?id=<?= $curso['id_curso'] ?>" class="boton-estilo"><i class="fas fa-edit"></i></a>
 
-                        <form method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar este curso y sus módulos?')" class="boton-estilo">
-                            <input type="hidden" name="accion" value="eliminar_curso">
-                            <input type="hidden" name="id_curso" value="<?= $curso['id_curso'] ?>">
-                            <button type="submit">Eliminar</button>
-                        </form>
+                            <form method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar este curso y sus módulos?')" class="boton-estilo">
+                                <input type="hidden" name="accion" value="eliminar_curso">
+                                <input type="hidden" name="id_curso" value="<?= $curso['id_curso'] ?>">
+                                <button type="submit"><i class="fas fa-trash"></i></button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -173,18 +177,21 @@ $materiales = $controller->listarMateriales($id_modulo);
                         <td>$<?= number_format($modulo['precio'], 2) ?></td>
                         <td><?= ucfirst($modulo['estado']) ?></td>
                         <td>
-                            <form method="GET" action="CursoModulo.php"class="boton-estilo">
+                            <div class="acciones">
+                               <form method="GET" action="CursoModulo.php"class="boton-estilo">
                                 <input type="hidden" name="id_modulo" value="<?= $modulo['id_modulo'] ?>">
-                                <button type="submit">Crear </button>
+                                <button type="submit"><i class="fa-solid fa-plus"></i></button>
                             </form>
 
-                            <a href="editar_modulo.php?id=<?= $modulo['id_modulo'] ?>"class="boton-estilo">Editar</a>
+                            <a href="editar_modulo.php?id=<?= $modulo['id_modulo'] ?>"class="boton-estilo"><i class="fas fa-edit"></i></a>
 
                             <form method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar este módulo?')"class="boton-estilo">
                                 <input type="hidden" name="accion" value="eliminar_modulo">
                                 <input type="hidden" name="id_modulo" value="<?= $modulo['id_modulo'] ?>">
-                                <button type="submit">Eliminar</button>
-                            </form>
+                                <button type="submit"><i class="fas fa-trash"></i></button>
+                            </form> 
+                            </div>
+                            
                         </td>
                     </tr>
                 <?php endforeach; ?>

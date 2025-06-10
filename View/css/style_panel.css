@@ -1565,8 +1565,16 @@ section{
    padding: 0 5rem;
 }
 /*BOTONES DEL CRUD DE CURSO Y MODULO*/
+.acciones {
+  display: flex;
+  gap: 5px; /* espacio entre los botones */
+  justify-content: center; /* o 'flex-start' si los quieres alineados a la izquierda */
+  align-items: center;
+}
+
+
 a.boton-estilo {
-  background-color: #6F38C5; /* morado */
+  background-color: #0d6efd; /* morado */
   color: white;
   border: none;
   padding: 3px 12px;
@@ -1594,33 +1602,13 @@ form.boton-estilo button {
   font-weight: bold;
   font-size: 1.3rem;
   color: white;
-  background-color: #6F38C5;
+  background-color: #0d6efd;
   transition: background-color 0.3s ease;
 }
 
 form.boton-estilo button:hover {
   background-color: #532a99;
 }
-/*BOTON DE CREAR CURSO*/
-.boton-curso {
-  background-color: #532a99;
-  color: white !important;
-  padding: 8px 14px;
-  font-size: 1.5rem;
-  border: none;
-  border-radius: 5px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-  cursor: pointer;
-  display: inline-block;
-  margin: 0 5rem;
-}
-
-.boton-curso:hover {
-  background-color: #532a99;
-}
-
 
 /*TABLA CURSO*/
 .tablacurso {
