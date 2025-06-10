@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-06-2025 a las 17:48:13
+-- Tiempo de generación: 10-06-2025 a las 05:45:01
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.0.30
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -48,16 +48,17 @@ CREATE TABLE `curso` (
   `precio` decimal(10,2) NOT NULL,
   `fecha_inicio` date DEFAULT NULL,
   `fecha_fin` date DEFAULT NULL,
-  `estado` enum('disponible','cerrado') NOT NULL DEFAULT 'disponible',
-  `imagen` varchar(200) DEFAULT NULL
+  `estado` enum('disponible','cerrado') NOT NULL DEFAULT 'disponible'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `curso`
 --
 
-INSERT INTO `curso` (`id_curso`, `nombre`, `descripcion`, `precio`, `fecha_inicio`, `fecha_fin`, `estado`, `imagen`) VALUES
-(1, 'funamentos completos', '...', 10000.00, '2025-03-20', '2025-03-28', 'disponible', 'imagen.png');
+INSERT INTO `curso` (`id_curso`, `nombre`, `descripcion`, `precio`, `fecha_inicio`, `fecha_fin`, `estado`) VALUES
+(1, 'Curso  Profesional', '...', 20000.00, '2025-03-20', '2025-03-28', 'cerrado'),
+(2, 'uñas capping', '.....', 450000.00, '2025-06-20', '2025-06-28', 'disponible'),
+(3, 'Curso  Profesional manicure intermedio', 'sncdcxnms vd', 340000.00, '2025-06-13', '2025-06-19', 'cerrado');
 
 -- --------------------------------------------------------
 
@@ -163,6 +164,30 @@ INSERT INTO `inscripcion` (`id_inscripcion`, `id_usuario`, `id_curso`, `id_modul
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `material`
+--
+
+CREATE TABLE `material` (
+  `id_material` int(11) NOT NULL,
+  `id_modulo` int(11) NOT NULL,
+  `nombre` varchar(150) NOT NULL,
+  `url_material` varchar(255) NOT NULL,
+  `tipo` enum('video','pdf') NOT NULL DEFAULT 'video'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `material`
+--
+
+INSERT INTO `material` (`id_material`, `id_modulo`, `nombre`, `url_material`, `tipo`) VALUES
+(1, 101, 'Manicure Basic', 'https://www.youtube.com/watch?v=5in4D1tRobs', 'video'),
+(2, 101, 'Manicure Basic gel', 'https://www.youtube.com/watch?v=zlaQtQZNMDk', 'video'),
+(100, 101, 'Manicure Basic gel', 'holi.pdf', 'pdf'),
+(1011, 101, 'video completo', 'https://www.youtube.com/watch?v=zlaQtQZNMD', 'video');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `modulo`
 --
 
@@ -171,15 +196,18 @@ CREATE TABLE `modulo` (
   `id_curso` int(11) NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `descripcion` text DEFAULT NULL,
-  `precio` decimal(10,2) NOT NULL
+  `precio` decimal(10,2) NOT NULL,
+  `estado` enum('disponible','cerrado') NOT NULL DEFAULT 'disponible'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `modulo`
 --
 
-INSERT INTO `modulo` (`id_modulo`, `id_curso`, `nombre`, `descripcion`, `precio`) VALUES
-(101, 1, 'basicos', '...', 5000.00);
+INSERT INTO `modulo` (`id_modulo`, `id_curso`, `nombre`, `descripcion`, `precio`, `estado`) VALUES
+(101, 1, 'Manicure Basic ', '...', 5000.00, 'disponible'),
+(102, 2, 'modulo profesional', '.....', 4500000.00, 'disponible'),
+(103, 1, 'manicure', '.....', 3000000.00, 'disponible');
 
 -- --------------------------------------------------------
 
@@ -235,30 +263,6 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellido`, `telefono`, `correo`
 (5002, 'luisa', 'hernandez', '3195862728', 'luisahernandez12@gmail.com', NULL, 'cliente', '2025-05-05', 'activo', NULL),
 (5003, 'mary', 'niño', '31958627765', 'mary12@gmail.com', NULL, 'cliente', '2025-05-05', 'activo', NULL),
 (5004, 'Alejandra', 'Acosta', '3115622124', 'AlejaAcosta@gmail.com', NULL, 'cliente', '2025-05-05', 'activo', NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `videos`
---
-
-CREATE TABLE `videos` (
-  `id_video` int(11) NOT NULL,
-  `id_modulo` int(11) NOT NULL,
-  `nombre` varchar(150) NOT NULL,
-  `url_video` varchar(255) NOT NULL,
-  `tipo` enum('video','pdf') NOT NULL DEFAULT 'video'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `videos`
---
-
-INSERT INTO `videos` (`id_video`, `id_modulo`, `nombre`, `url_video`, `tipo`) VALUES
-(1, 101, 'Manicure Basic', 'https://www.youtube.com/watch?v=5in4D1tRobs', 'video'),
-(2, 101, 'Manicure Basic gel', 'https://www.youtube.com/watch?v=zlaQtQZNMDk', 'video'),
-(100, 101, 'Manicure Basic gel', 'holi.pdf', 'pdf'),
-(1005, 101, 'basico 1', 'QwJooBk9DGM\r\n', 'video');
 
 --
 -- Índices para tablas volcadas
@@ -321,6 +325,13 @@ ALTER TABLE `inscripcion`
   ADD KEY `id_pago` (`id_pago`);
 
 --
+-- Indices de la tabla `material`
+--
+ALTER TABLE `material`
+  ADD PRIMARY KEY (`id_material`),
+  ADD KEY `id_modulo` (`id_modulo`);
+
+--
 -- Indices de la tabla `modulo`
 --
 ALTER TABLE `modulo`
@@ -343,13 +354,6 @@ ALTER TABLE `usuarios`
   ADD UNIQUE KEY `correo` (`correo`);
 
 --
--- Indices de la tabla `videos`
---
-ALTER TABLE `videos`
-  ADD PRIMARY KEY (`id_video`),
-  ADD KEY `id_modulo` (`id_modulo`);
-
---
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -363,7 +367,7 @@ ALTER TABLE `carrito`
 -- AUTO_INCREMENT de la tabla `curso`
 --
 ALTER TABLE `curso`
-  MODIFY `id_curso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_curso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `evidencias`
@@ -396,10 +400,16 @@ ALTER TABLE `inscripcion`
   MODIFY `id_inscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3435;
 
 --
+-- AUTO_INCREMENT de la tabla `material`
+--
+ALTER TABLE `material`
+  MODIFY `id_material` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1012;
+
+--
 -- AUTO_INCREMENT de la tabla `modulo`
 --
 ALTER TABLE `modulo`
-  MODIFY `id_modulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `id_modulo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT de la tabla `pago`
@@ -412,12 +422,6 @@ ALTER TABLE `pago`
 --
 ALTER TABLE `usuarios`
   MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5005;
-
---
--- AUTO_INCREMENT de la tabla `videos`
---
-ALTER TABLE `videos`
-  MODIFY `id_video` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1006;
 
 --
 -- Restricciones para tablas volcadas
@@ -463,6 +467,12 @@ ALTER TABLE `inscripcion`
   ADD CONSTRAINT `inscripcion_ibfk_4` FOREIGN KEY (`id_pago`) REFERENCES `pago` (`id_pago`) ON DELETE CASCADE;
 
 --
+-- Filtros para la tabla `material`
+--
+ALTER TABLE `material`
+  ADD CONSTRAINT `material_ibfk_1` FOREIGN KEY (`id_modulo`) REFERENCES `modulo` (`id_modulo`) ON DELETE CASCADE;
+
+--
 -- Filtros para la tabla `modulo`
 --
 ALTER TABLE `modulo`
@@ -473,12 +483,6 @@ ALTER TABLE `modulo`
 --
 ALTER TABLE `pago`
   ADD CONSTRAINT `pago_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE;
-
---
--- Filtros para la tabla `videos`
---
-ALTER TABLE `videos`
-  ADD CONSTRAINT `videos_ibfk_1` FOREIGN KEY (`id_modulo`) REFERENCES `modulo` (`id_modulo`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
