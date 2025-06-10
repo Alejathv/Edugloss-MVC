@@ -133,7 +133,7 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'ico
 
 <section class="user-profile">
 
-   <h1 class="heading">your profile</h1>
+   <h1 class="heading">Tu perfil</h1>
 
    <div class="info">
 
@@ -141,7 +141,7 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'ico
          <img src="../View/img/<?php echo htmlspecialchars($foto_perfil); ?>" alt="Foto de perfil" />
          <h3><?php echo htmlspecialchars($nombre); ?></h3>
          <p><?php echo htmlspecialchars($rol); ?></p>
-         <a href="actualizar_perfil.php" class="inline-btn">update profile</a>
+         <a href="actualizar_perfil.php" class="inline-btn">Actualizar Perfil</a>
       </div>
    </div>
 
