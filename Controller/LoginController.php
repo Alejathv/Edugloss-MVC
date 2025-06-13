@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["btnlogin"])) {
 
     switch ($user['rol']) {
         case 'administrador':
-            header("Location: ../View/madmin/admin.html");
+            header("Location: ../View/madmin/admin.php");
             break;
         case 'docente':
             header("Location: ../View/mdocente/docente_panel.php");

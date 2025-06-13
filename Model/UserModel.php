@@ -41,5 +41,35 @@ class UserModel {
         return $inscripciones;
     }
 
+    //paola documento
+    public function getAllUsers() {
+        $sql = "SELECT * FROM usuarios";
+        $result = $this->db->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getUserById($id) {
+        $stmt = $this->db->prepare("SELECT * FROM usuarios WHERE id_usuario = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
+
+    public function updateUser($date) {
+        $sql = "UPDATE usuarios SET nombre=?, apellido=?, telefono=?, correo=?, rol=?, estado=?, especialidad=? WHERE id_usuario=?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("sssssssi",
+            $date['nombre'],
+            $date['apellido'],
+            $date['telefono'],
+            $date['correo'],
+            $date['rol'],
+            $date['estado'],
+            $date['especialidad'],
+            $date['id_usuario']
+        );
+        $stmt->execute();
+    }
+
 }
 ?>
