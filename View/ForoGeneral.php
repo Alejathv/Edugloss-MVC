@@ -37,84 +37,94 @@ $comentarios = $foroModel->getTodosLosComentariosGenerales() ?? [];
     <title>Foro General</title>
     <link rel="stylesheet" href="css/style_panel.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Dentro del <head> ya está todo bien, no hay que modificar más -->
+<style>
+   .foro-container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+   }
 
-    <style>
-        .foro-container {
-    max-width: 800px;
-    margin: 40px auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
+   .foro-container h2 {
+      font-size: 28px;
+      color: #6610f2;
+      margin-bottom: 20px;
+      text-align: center;
+   }
 
-/* Tamaño adecuado para los mensajes */
-.comentario {
-    font-size: 18px; /* Ligera mejora para mejor lectura */
-    color: #333;
-    margin-bottom: 1rem;
-    line-height: 1.5;
-}
+   .comentario {
+      background-color: #f8f8ff;
+      border-radius: 12px;
+      padding: 15px 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+   }
 
-/* Mejor visibilidad del nombre */
-.comentario strong {
-    color: #333;
-    font-size: 22px; /* Nombre más prominente */
-}
+   .comentario strong {
+      font-size: 20px;
+      color: #4c00b4;
+   }
 
-/* Área de escritura */
-textarea {
-    width: 100%;
-    height: 100px; /* Más espacio para escribir */
-    padding: 12px;
-    resize: vertical;
-    border-radius: 8px;
-    border: 1px solid #aaa;
-    font-size: 16px; /* Tamaño más cómodo al escribir */
-}
+   .contenido-mensaje {
+      font-size: 18px;
+      color: #333;
+      margin-top: 8px;
+      line-height: 1.5;
+   }
 
-/* Botón de enviar */
-.btn-enviar {
-    margin-top: 10px;
-    background: #6610f2;
-    color: #fff;
-    padding: 12px 18px; /* Botón un poco más grande */
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px; /* Tamaño del texto en el botón */
-}
+   .fecha-mensaje {
+      font-size: 13px;
+      color: #777;
+      text-align: right;
+      display: block;
+      margin-top: 6px;
+      font-style: italic;
+   }
 
-.btn-enviar:hover {
-    background:#510ebd;
-}
+   .info-usuario {
+      font-size: 16px;
+      font-weight: bold;
+      color: #444;
+      margin-bottom: 20px;
+   }
 
-/* Información del usuario */
-.info-usuario {
-    margin-bottom: 10px;
-    font-weight: bold;
-    color: #555;
-    font-size: 16px; /* Un poco más grande para mejorar la visibilidad */
-}
+   textarea[name="contenido"] {
+      width: 100%;
+      height: 120px;
+      padding: 15px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      background: #fdfdfd;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+      resize: vertical;
+   }
 
-/* Tamaño de los mensajes */
-.contenido-mensaje {
-    font-size: 20px; /* Más grande para lectura fluida */
-    color: #333;
-    line-height: 1.6;
-}
+   .btn-enviar {
+      display: inline-block;
+      background: #6610f2;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+   }
 
-/* Tamaño de la fecha sin afectar otros elementos */
-.fecha-mensaje {
-    font-size: 12px; /* Pequeño para no destacar demasiado */
-    color: #777; /* Más discreto */
-    font-style: italic;
-    text-align: right; /* Alinear al lado derecho */
-    display: block;
-}
+   .btn-enviar:hover {
+      background: #510ebd;
+   }
 
+   form {
+      margin-top: 30px;
+   }
+</style>
 
-    </style>
 </head>
 <body>
 <header class="header">

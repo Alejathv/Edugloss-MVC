@@ -147,10 +147,6 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'ico
 
 </section>
 
-<footer class="footer">
-   &copy; copyright @ 2022 by <span>mr. web designer</span> | all rights reserved!
-</footer>
-
 <!-- custom js file link -->
 <script src="js/script.js"></script>
 

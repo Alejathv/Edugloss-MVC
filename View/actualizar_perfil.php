@@ -91,6 +91,99 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
    <link rel="stylesheet" href="css/style_panel.css" />
 </head>
+<style>
+/* Contenedor del formulario */
+.contenedor-formulario {
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: #f9f7fd;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Título del formulario */
+.contenedor-formulario h3 {
+    font-size: 26px;
+    color: #5c3fa3;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Etiquetas */
+.contenedor-formulario p {
+    margin-bottom: 8px;
+    color: #4b2e83;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+/* Campos de entrada */
+.campo-input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #c9bdf0;
+    border-radius: 12px;
+    font-size: 15px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    transition: border-color 0.3s ease;
+}
+
+.campo-input:focus {
+    outline: none;
+    border-color: #8656e9;
+}
+
+/* Botón de enviar */
+.boton-enviar {
+    width: 100%;
+    padding: 14px;
+    background-color: #8656e9;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.boton-enviar:hover {
+    background-color: #734bd1;
+}
+
+/* Imagen de selección */
+.contenedor-formulario label img {
+    border: 2px solid transparent;
+    border-radius: 12px;
+    transition: border-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Radio oculto */
+input[type="radio"] {
+    display: none;
+}
+
+/* Imagen seleccionada */
+input[type="radio"]:checked + img,
+label input[type="radio"]:checked + img {
+    border-color: #8656e9;
+    transform: scale(1.05);
+}
+
+/* Mensaje de estado */
+.mensaje-alerta {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color:#b8e5a6;
+    color:#298504;
+    font-weight: 500;
+}
+</style>
+
 <body>
 
 <header class="header">
@@ -98,10 +191,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
       <a href="home.php" class="logo">
          <img src="../View/img/LogoEGm.png" alt="EduGloss" style="height: 80px;">
       </a>
-      <form action="search.html" method="post" class="search-form">
-         <input type="text" name="search_box" required placeholder="Buscar cursos..." maxlength="100" />
-         <button type="submit" class="fas fa-search"></button>
-      </form>
       <div class="icons">
          <div id="menu-btn" class="fas fa-bars"></div>
          <div id="search-btn" class="fas fa-search"></div>
@@ -137,28 +226,29 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
    </nav>
 </div>
 
-<section class="form-container">
+<section class="contenedor-formulario">
    <form action="" method="post" enctype="multipart/form-data">
       <h3>Actualizar Perfil</h3>
+
       <?php if (!empty($msg)) : ?>
-         <p style="color:red;"><?= htmlspecialchars($msg) ?></p>
+         <div class="mensaje-alerta"><?= htmlspecialchars($msg) ?></div>
       <?php endif; ?>
-      
+
       <p>Actualizar nombre</p>
-      <input type="text" name="name" value="<?= htmlspecialchars($nombre_actual) ?>" maxlength="50" class="box" required />
-      
+      <input type="text" name="name" value="<?= htmlspecialchars($nombre_actual) ?>" maxlength="50" class="campo-input" required />
+
       <p>Actualizar correo</p>
-      <input type="email" name="email" value="<?= htmlspecialchars($correo_actual) ?>" maxlength="50" class="box" required />
-      
+      <input type="email" name="email" value="<?= htmlspecialchars($correo_actual) ?>" maxlength="50" class="campo-input" required />
+
       <p>Contraseña anterior</p>
-      <input type="password" name="old_pass" placeholder="Tu contraseña actual" maxlength="20" class="box" />
-      
+      <input type="password" name="old_pass" placeholder="Tu contraseña actual" maxlength="20" class="campo-input" />
+
       <p>Nueva contraseña</p>
-      <input type="password" name="new_pass" placeholder="Tu nueva contraseña" maxlength="20" class="box" />
-      
+      <input type="password" name="new_pass" placeholder="Tu nueva contraseña" maxlength="20" class="campo-input" />
+
       <p>Confirmar nueva contraseña</p>
-      <input type="password" name="c_pass" placeholder="Confirmar nueva contraseña" maxlength="20" class="box" />
-      
+      <input type="password" name="c_pass" placeholder="Confirmar nueva contraseña" maxlength="20" class="campo-input" />
+
       <p>Seleccionar nueva foto de perfil</p>
       <div style="display: flex; gap: 20px; align-items: center;">
          <label>
@@ -171,9 +261,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
          </label>
       </div>
 
-      <input type="submit" value="Actualizar perfil" name="submit" class="btn" />
+      <input type="submit" value="Actualizar perfil" name="submit" class="boton-enviar" />
    </form>
 </section>
+
 
 <footer class="footer">
    &copy; <?= date('Y') ?> por <span>Educa</span> | Todos los derechos reservados.
