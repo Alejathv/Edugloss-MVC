@@ -94,7 +94,7 @@ if (!empty($mensaje)) {
 
                     <!-- Botones con margen pequeño -->
                 <div class="d-flex">
-                    <a href="View/carrito.html" class="btn btn-carrito rounded-pill py-2 px-4 flex-shrink-0 ms-2" style="background-color: #87a2fb; color: white; box-shadow: none;">
+                    <a href="View/carrito.php" class="btn btn-carrito rounded-pill py-2 px-4 flex-shrink-0 ms-2" style="background-color: #87a2fb; color: white; box-shadow: none;">
                         <i class="fa fa-shopping-cart"></i> Carrito
                     </a>
                     
