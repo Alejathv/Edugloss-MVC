@@ -63,3 +63,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 5000);
     }
 });
+function mostrarAlerta() {
+    Swal.fire({
+        title: "Éxito",
+        text: "¡Tu comentario se ha publicado correctamente!",
+        icon: "success",
+        confirmButtonText: "OK"
+    });
+}

@@ -5,6 +5,10 @@ error_reporting(E_ALL);
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+// if (!isset($_SESSION['id_usuario'])) {
+//     echo "<script>alert('Debes iniciar sesión para comentar.'); window.location.href='/Edugloss-MVC/login.php';</script>";
+//     exit;
+// }
 
 require_once __DIR__ . '/../Model/ForoModel.php';
 
@@ -33,61 +37,99 @@ $comentarios = $foroModel->getTodosLosComentariosGenerales() ?? [];
     <title>Foro General</title>
     <link rel="stylesheet" href="css/style_panel.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Dentro del <head> ya está todo bien, no hay que modificar más -->
+<style>
+   .foro-container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+   }
 
-    <style>
-        .foro-container {
-            max-width: 800px;
-            margin: 40px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-      .comentario {
-    font-size: 16px; /* o 18px si quieres más grande */
-    color: #333;
-    margin-bottom: 1rem;
-    line-height: 1.4;
-}
-        .comentario:last-child {
-            border-bottom: none;
-        }
-        .comentario strong {
-            color: #333;
-            font-size: 20px;
-        }
-        textarea {
-            width: 100%;
-            height: 80px;
-            padding: 10px;
-            resize: vertical;
-            border-radius: 8px;
-            border: 1px solid #aaa;
-        }
-        .btn-enviar {
-            margin-top: 10px;
-            background: #4CAF50;
-            color: #fff;
-            padding: 10px 16px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-        .btn-enviar:hover {
-            background: #45a049;
-        }
-        .info-usuario {
-            margin-bottom: 10px;
-            font-weight: bold;
-            color: #555;
-            font-size: 15px;
-        }
-    </style>
+   .foro-container h2 {
+      font-size: 28px;
+      color: #6610f2;
+      margin-bottom: 20px;
+      text-align: center;
+   }
+
+   .comentario {
+      background-color: #f8f8ff;
+      border-radius: 12px;
+      padding: 15px 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+   }
+
+   .comentario strong {
+      font-size: 20px;
+      color: #4c00b4;
+   }
+
+   .contenido-mensaje {
+      font-size: 18px;
+      color: #333;
+      margin-top: 8px;
+      line-height: 1.5;
+   }
+
+   .fecha-mensaje {
+      font-size: 13px;
+      color: #777;
+      text-align: right;
+      display: block;
+      margin-top: 6px;
+      font-style: italic;
+   }
+
+   .info-usuario {
+      font-size: 16px;
+      font-weight: bold;
+      color: #444;
+      margin-bottom: 20px;
+   }
+
+   textarea[name="contenido"] {
+      width: 100%;
+      height: 120px;
+      padding: 15px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      background: #fdfdfd;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+      resize: vertical;
+   }
+
+   .btn-enviar {
+      display: inline-block;
+      background: #6610f2;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+   }
+
+   .btn-enviar:hover {
+      background: #510ebd;
+   }
+
+   form {
+      margin-top: 30px;
+   }
+</style>
+
 </head>
 <body>
 <header class="header">
     <section class="flex">
-        <a href="#" class="logo">EduGloss</a>
+        <a href="./img/LogoEGm.png" class="logo"></a>
         <form action="search.html" method="post" class="search-form">
             <input type="text" name="search_box" required placeholder="Buscar cursos..." maxlength="100">
             <button type="submit" class="fas fa-search"></button>
@@ -99,10 +141,10 @@ $comentarios = $foroModel->getTodosLosComentariosGenerales() ?? [];
             <div id="toggle-btn" class="fas fa-sun"></div>
         </div>
         <div class="profile">
-            <img src="../img/pic-1.jpg" class="image" alt="">
+            <img src="./img/icon1.png" class="image" alt="">
             <h3 class="name"><?= htmlspecialchars($_SESSION['nombre']) ?></h3>
-            <p class="role">Docente</p>
-            <a href="profile.html" class="btn">Ver Perfil</a>
+            <p class="role"><?= htmlspecialchars($_SESSION['rol_nombre']) ?></p>
+            <a href="./perfil.php" class="btn">Ver Perfil</a>
             <div class="flex-btn">
                 <a href="../logout.php" class="option-btn">Cerrar sesión</a>
             </div>
@@ -113,10 +155,11 @@ $comentarios = $foroModel->getTodosLosComentariosGenerales() ?? [];
 <div class="side-bar">
     <div id="close-btn"><i class="fas fa-times"></i></div>
     <div class="profile">
-        <img src="../img/pic-1.jpg" class="image" alt="">
+        <img src="./img/icon1.png" class="image" alt="">
         <h3 class="name"><?= htmlspecialchars($_SESSION['nombre']) ?></h3>
-        <p class="role">Docente</p>
-        <a href="profile.html" class="btn">Ver Perfil</a>
+        <p class="role"><?= htmlspecialchars($_SESSION['rol_nombre']) ?></p>
+
+        <a href="./perfil.php" class="btn">Ver Perfil</a>
     </div>
     <nav class="navbar">
         <a href="home.html"><i class="fas fa-home"></i><span>Inicio</span></a>
@@ -128,7 +171,7 @@ $comentarios = $foroModel->getTodosLosComentariosGenerales() ?? [];
 </div>
 
 <div class="foro-container">
-    <h2>Foro General de Dudas</h2>
+    <h2>Chat General de Dudas</h2>
 
     <div class="info-usuario">
         Bienvenido, <?= 
@@ -143,8 +186,8 @@ $comentarios = $foroModel->getTodosLosComentariosGenerales() ?? [];
         <?php foreach ($comentarios as $comentario): ?>
             <div class="comentario">
                 <strong><?= htmlspecialchars($comentario['nombre'] . ' ' . $comentario['apellido']) ?>:</strong><br>
-                <?= nl2br(htmlspecialchars($comentario['contenido'])) ?><br>
-                <?= $comentario['fecha'] ?><br>
+                <span class="contenido-mensaje"><?= nl2br(htmlspecialchars($comentario['contenido'])) ?></span><br>
+                <span class="fecha-mensaje"><?= htmlspecialchars($comentario['fecha']) ?></span><br>
             </div>
         <?php endforeach; ?>
     <?php else: ?>
@@ -153,10 +196,14 @@ $comentarios = $foroModel->getTodosLosComentariosGenerales() ?? [];
 
     <form method="POST" style="margin-top: 20px;">
         <textarea name="contenido" placeholder="Escribe tu comentario aquí..." required></textarea>
-        <button type="submit" class="btn-enviar">Enviar comentario</button>
+        <button type="submit" class="btn-enviar" onclick="mostrarAlerta()">Enviar comentario</button>
+<!--         <textarea name="contenido" placeholder="Escribe tu comentario aquí..." required></textarea> -->
     </form>
 </div>
-<script src="../js/script.js"></script>
+
+<!-- custom js file link  -->
+<script src="../View/js/script.js"></script>
+<script src="../View/js/mensajes.js"></script>
 
 </body>
 </html>
