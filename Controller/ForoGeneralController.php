@@ -33,6 +33,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contenido'])) {
     }
 }
 
-// Opcional: editar y eliminar, si los quieres mantener, ajusta aquí
-
 include '../View/ForoGeneral.php';

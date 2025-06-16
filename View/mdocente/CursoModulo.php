@@ -71,9 +71,9 @@ $idCursoPreseleccionado = isset($_GET['id_curso']) ? $_GET['id_curso'] : '';
                 <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
             </h3>
             <p class="role">Docente</p>
-            <a href="profile.html" class="btn">Ver Perfil</a>
+            <a href="../perfil.php" class="btn">ver perfil</a>
             <div class="flex-btn">
-                <a href="../logout.php" class="option-btn">Cerrar sesión</a>
+            <a href="../../logout.php" class="option-btn">Cerrar Sesión</a>
             </div>
         </div>
     </section>
@@ -87,7 +87,7 @@ $idCursoPreseleccionado = isset($_GET['id_curso']) ? $_GET['id_curso'] : '';
             <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
         </h3>
         <p class="role">Docente</p>
-        <a href="profile.html" class="btn">Ver Perfil</a>
+        <a href="../perfil.php" class="btn">Ver Perfil</a>
     </div>
     <nav class="navbar">
         <a href="home.html"><i class="fas fa-home"></i><span>Inicio</span></a>

@@ -2,20 +2,11 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
-// playlist.php
-require_once "../../Model/database.php";
-require_once "../../Model/MaterialModel.php";
-
-$db = new Database();
-$conn = $db->getConnection();
-$materialModel = new MaterialModel($conn);
-
-$materiales = [];
-
-if (isset($_GET['id_modulo'])) {
-   $id_modulo = intval($_GET['id_modulo']);
-   $materiales = $materialModel->obtenerMaterialPorModulo($id_modulo);
+if (isset($_SESSION['mensaje_bienvenida'])) {
+    echo '<div id="mensaje-bienvenida" style="color: green; font-weight: bold; margin-bottom: 10px;">' . htmlspecialchars($_SESSION['mensaje_bienvenida']) . '</div>';
+    unset($_SESSION['mensaje_bienvenida']);
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -29,7 +20,7 @@ if (isset($_GET['id_modulo'])) {
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
 
    <!-- custom css file link  -->
-   <link rel="stylesheet" href="../css/style_panel.css">
+   <link rel="stylesheet" href="./View/css/style_panel.css">
 
 </head>
 <body>
@@ -39,7 +30,7 @@ if (isset($_GET['id_modulo'])) {
    <section class="flex">
 
       <a href="home.php" class="logo">
-         <img src="../img/LogoEGm.png" alt="EduGloss" style="height: 80px;">
+         <img src="./View/img/LogoEGm.png" alt="EduGloss" style="height: 80px;">
       </a>
       
 
@@ -57,16 +48,14 @@ if (isset($_GET['id_modulo'])) {
 
       <!-- Perfil del usuario, muestra la imagen, nombre y rol -->
       <div class="profile">
-         <img src="../img/icon1.png" class="image" alt="">
+         <img src="./View/img/icon1.png" class="image" alt="imagen de estudiante">
          <h3 class="name">
          <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
          </h3>
          <p class="role">Estudiante</p>
-         <a href="profile.html" class="btn">ver perfil</a>
-         <!-- Botones para iniciar sesión o registrarse -->
+         <a href="./View/perfil.php" class="btn">ver perfil</a>
          <div class="flex-btn">
-            <a href="login.html" class="option-btn">Entrar</a>
-            <a href="register.html" class="option-btn">Registrarse</a>
+         <a href="logout.php" class="option-btn">Cerrar Sesión</a>
          </div>
       </div>   
 
@@ -81,7 +70,7 @@ if (isset($_GET['id_modulo'])) {
    </div>
 
    <div class="profile">
-            <img src="../img/icon1.png" class="image" alt="">
+      <img src="./View/img/icon1.png" class="image" alt="">
       <h3 class="name">
       <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
       </h3>
@@ -90,43 +79,16 @@ if (isset($_GET['id_modulo'])) {
    </div>
 
    <nav class="navbar">
+
       <a href="home.php"><i class="fas fa-home"></i><span>Inicio</span></a>
-      <a href="about.html"><i class="fas fa-question"></i><span>Nosotros</span></a>
-      <a href="#"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
+      <a href="../ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
+      <a href="ver_materiales.php"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
+
       <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Docentes</span></a>
       <a href="contact.html"><i class="fas fa-headset"></i><span>Contáctanos</span></a>
    </nav>
 
 </div>
-
-<section class="playlist-videos">
-
-   <h1 class="heading">Lista de Reproducción</h1>
-
-   <div class="box-container">
-        <?php foreach ($materiales as $mat): ?>
-      <?php if ($mat['tipo'] === 'pdf'): ?>
-         <a class="box" href="ver_material.php?archivo=<?= urlencode($mat['url_material']) ?>&tipo=pdf" target="_blank">
-            <i class="fa-solid fa-file-pdf"></i>
-            <img src="../img/videos/<?= $mat['id_video'] ?>.png" alt="pdf">
-            <h3><?= htmlspecialchars($mat['nombre']) ?></h3>
-         </a>
-      <?php else: ?>
-         <a class="box" href="ver_material.php?archivo=<?= urlencode($mat['url_material']) ?>&tipo=video">
-            <i class="fas fa-play"></i>
-            <img src="../img/videos/<?= $mat['id_video'] ?>.jpg" alt="Video 1">
-            <h3><?= htmlspecialchars($mat['nombre']) ?></h3>
-         </a>
-      <?php endif; ?>
-   <?php endforeach; ?>
-
-   </div>
-   <div style="text-align: right; margin: 10px;">
-      <a href="subir-evidencia.php" class="btn btn-primary">Subir Evidencia</a>
-   </div>
-
-</section>
-
 
 <footer class="footer">
 
@@ -135,10 +97,7 @@ if (isset($_GET['id_modulo'])) {
 </footer>
 
 <!-- custom js file link  -->
-<script src="../js/script.js"></script>
-
-
-   
+<script src="./View/js/script.js"></script>
+<script src="./View/js/mensajes.js"></script>
 </body>
 </html>
-

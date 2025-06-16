@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-06-2025 a las 05:45:01
+-- Tiempo de generación: 16-06-2025 a las 14:38:03
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -29,10 +29,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `carrito` (
   `id_carrito` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL,
   `id_curso` int(11) DEFAULT NULL,
   `id_modulo` int(11) DEFAULT NULL,
-  `cantidad` int(11) DEFAULT 1
+  `total` int(5) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -146,20 +145,9 @@ INSERT INTO `foro_participantes` (`id_participacion`, `id_foro`, `id_usuario`, `
 
 CREATE TABLE `inscripcion` (
   `id_inscripcion` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL,
-  `id_curso` int(11) DEFAULT NULL,
-  `id_modulo` int(11) DEFAULT NULL,
   `id_pago` int(11) NOT NULL,
-  `fecha_inscripcion` timestamp NOT NULL DEFAULT current_timestamp(),
-  `estado` enum('activa','completada','cancelada') DEFAULT 'activa'
+  `estado` enum('activa','inactiva','cancelada') DEFAULT 'activa'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `inscripcion`
---
-
-INSERT INTO `inscripcion` (`id_inscripcion`, `id_usuario`, `id_curso`, `id_modulo`, `id_pago`, `fecha_inscripcion`, `estado`) VALUES
-(3434, 5001, 1, 101, 12130, '2025-05-15 00:07:02', 'activa');
 
 -- --------------------------------------------------------
 
@@ -218,20 +206,12 @@ INSERT INTO `modulo` (`id_modulo`, `id_curso`, `nombre`, `descripcion`, `precio`
 CREATE TABLE `pago` (
   `id_pago` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
-  `monto_total` decimal(10,2) NOT NULL,
-  `metodo_pago` enum('tarjeta','paypal','mercado_pago') NOT NULL,
   `estado` enum('pendiente','completado','cancelado') DEFAULT 'pendiente',
-  `referencia_transaccion` varchar(255) DEFAULT NULL,
+  `referencia_pago` varchar(255) DEFAULT NULL,
   `fecha_pago` timestamp NOT NULL DEFAULT current_timestamp(),
-  `detalles_pago` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`detalles_pago`))
+  `detalles_pago` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`detalles_pago`)),
+  `id_carrito` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `pago`
---
-
-INSERT INTO `pago` (`id_pago`, `id_usuario`, `monto_total`, `metodo_pago`, `estado`, `referencia_transaccion`, `fecha_pago`, `detalles_pago`) VALUES
-(12130, 5001, 5000.00, 'mercado_pago', 'pendiente', '....', '2025-05-14 00:06:23', NULL);
 
 -- --------------------------------------------------------
 
@@ -273,7 +253,6 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellido`, `telefono`, `correo`
 --
 ALTER TABLE `carrito`
   ADD PRIMARY KEY (`id_carrito`),
-  ADD KEY `id_usuario` (`id_usuario`),
   ADD KEY `id_curso` (`id_curso`),
   ADD KEY `id_modulo` (`id_modulo`);
 
@@ -319,9 +298,6 @@ ALTER TABLE `foro_participantes`
 --
 ALTER TABLE `inscripcion`
   ADD PRIMARY KEY (`id_inscripcion`),
-  ADD KEY `id_usuario` (`id_usuario`),
-  ADD KEY `id_curso` (`id_curso`),
-  ADD KEY `id_modulo` (`id_modulo`),
   ADD KEY `id_pago` (`id_pago`);
 
 --
@@ -343,8 +319,8 @@ ALTER TABLE `modulo`
 --
 ALTER TABLE `pago`
   ADD PRIMARY KEY (`id_pago`),
-  ADD UNIQUE KEY `referencia_transaccion` (`referencia_transaccion`),
-  ADD KEY `id_usuario` (`id_usuario`);
+  ADD KEY `fk_pago_carrito` (`id_carrito`),
+  ADD KEY `fk_pago_usuario` (`id_usuario`);
 
 --
 -- Indices de la tabla `usuarios`
@@ -431,7 +407,6 @@ ALTER TABLE `usuarios`
 -- Filtros para la tabla `carrito`
 --
 ALTER TABLE `carrito`
-  ADD CONSTRAINT `carrito_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE,
   ADD CONSTRAINT `carrito_ibfk_2` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id_curso`) ON DELETE SET NULL,
   ADD CONSTRAINT `carrito_ibfk_3` FOREIGN KEY (`id_modulo`) REFERENCES `modulo` (`id_modulo`) ON DELETE SET NULL;
 
@@ -461,9 +436,6 @@ ALTER TABLE `foro_participantes`
 -- Filtros para la tabla `inscripcion`
 --
 ALTER TABLE `inscripcion`
-  ADD CONSTRAINT `inscripcion_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE,
-  ADD CONSTRAINT `inscripcion_ibfk_2` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id_curso`) ON DELETE CASCADE,
-  ADD CONSTRAINT `inscripcion_ibfk_3` FOREIGN KEY (`id_modulo`) REFERENCES `modulo` (`id_modulo`) ON DELETE CASCADE,
   ADD CONSTRAINT `inscripcion_ibfk_4` FOREIGN KEY (`id_pago`) REFERENCES `pago` (`id_pago`) ON DELETE CASCADE;
 
 --
@@ -482,7 +454,8 @@ ALTER TABLE `modulo`
 -- Filtros para la tabla `pago`
 --
 ALTER TABLE `pago`
-  ADD CONSTRAINT `pago_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_pago_carrito` FOREIGN KEY (`id_carrito`) REFERENCES `carrito` (`id_carrito`),
+  ADD CONSTRAINT `fk_pago_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -417,7 +417,6 @@ section{
 .home-grid .box-container .likes span{
    color:var(--main-color);
 }
-
 .about .row{
    display: flex;
    align-items: center;
@@ -484,7 +483,6 @@ section{
    font-size: 1.7rem;
    color:var(--light-color);
 }
-
 .reviews .box-container{
    display: grid;
    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
@@ -529,6 +527,7 @@ section{
    font-size: 1.5rem;
    color:var(--orange);
 }
+
 
 .courses .box-container{
    display: grid;
@@ -1787,4 +1786,27 @@ form.boton-estilo button:hover {
   background-color: #734bd1;
 }
 
+
+.profile-image-container .image {
+   width: 120px;
+   height: 120px;
+   border-radius: 50%;
+   object-fit: cover;
+}
+
+.edit-icon {
+   position: absolute;
+   bottom: 8px;
+   right: 8px;
+   background-color: #fff;
+   border-radius: 50%;
+   padding: 6px;
+   cursor: pointer;
+   border: 1px solid #ccc;
+   color: #333;
+   font-size: 14px;
+}
+.edit-icon:hover {
+   background-color: #f0f0f0;
+}
 
