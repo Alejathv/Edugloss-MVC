@@ -1687,6 +1687,43 @@ form.boton-estilo button:hover {
 .tablamodulo tbody tr:nth-child(even) {
   background-color: #f9f7fd;
 }
+/*Tabla usuarios*/
+.contenedor-tabla-usuarios {
+  padding: 0 1rem;
+  overflow-x: auto;
+}
+
+.tablausuarios {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  font-size: 2rem;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin-top: 2rem;
+}
+
+.tablausuarios thead {
+  background-color: #e9defb;
+  color: #4b2e83;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.tablausuarios th,
+.tablausuarios td {
+  padding: 1rem;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid #e3d7f7;
+  font-size: 2rem;
+}
+
+.tablausuarios tbody tr:nth-child(even) {
+  background-color: #f9f7fd;
+}
+
 /*TABLA DE EDITAR*/
 .formulario-edicion {
   max-width: 800px;
