@@ -122,8 +122,8 @@ $idCursoPreseleccionado = isset($_GET['id_curso']) ? $_GET['id_curso'] : '';
                     <option value="cerrado">Cerrado</option>
                 </select>
 
-                <button type="submit" name="crear_curso">Crear Curso</button>
-                <a href="TablasCM.php" class="btn-volver">🔙 Volver</a>
+                <button type="submit" name="crear_curso">Crear</button>
+                <a href="TablasCM.php" class="btn-volver">Volver</a>
             </form>
         </div>
 
@@ -149,8 +149,8 @@ $idCursoPreseleccionado = isset($_GET['id_curso']) ? $_GET['id_curso'] : '';
                     <option value="cerrado">Cerrado</option>
                 </select>
 
-                <button type="submit" name="crear_modulo">Crear Módulo</button>
-                <a href="TablasCM.php" class="btn-volver">🔙 Volver</a>
+                <button type="submit" name="crear_modulo">Crear</button>
+                <a href="TablasCM.php" class="btn-volver">Volver</a>
             </form>
 
         </div>

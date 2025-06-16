@@ -1438,86 +1438,99 @@ section{
 
 /* Estilos para el formulario Creación*/
 .formulario-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    padding: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 2rem;
+  background-color: #f0f0f5;
+  border-radius: 16px;
 }
+
 .formulario-contenedor {
-    font-family: 'Nunito', sans-serif;
-    border: 2px solid #3a0ca3;
-    border-radius: 8px;
-    max-width: 900px;
-    margin: 30px auto;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(58, 12, 163, 0.15);
+  font-family: 'Nunito', sans-serif;
+  border: 1px solid #c9bdf0;
+  border-radius: 16px;
+  max-width: 900px;
+  margin: 30px auto;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .formulario-titulo {
-    background-color: #6610f2;
-    color: white;
-    padding: 15px 25px;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    font-weight: bold;
-    font-size: 2rem;
+  background-color: #5c3fa3;
+  color: white;
+  padding: 18px 30px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  font-weight: bold;
+  font-size: 2.2rem;
+  text-align: center;
 }
 
 .formulario-cuerpo {
-    padding: 20px 25px;
+  padding: 30px;
 }
 
 .formulario-cuerpo label {
-    font-weight: 700;
-    color: #000;
-    font-size: 4rem;
-    display: block;
-    margin-bottom: 4px;
+  font-weight: 700;
+  color: #4b2e83;
+  font-size: 1.6rem;
+  display: block;
+  margin-bottom: 6px;
 }
 
 .formulario-cuerpo input,
 .formulario-cuerpo select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 12px;
-    border: 1.5px solid #210235;
-    border-radius: 5px;
-    font-size: 1.5rem;
-    color: #333;
-    background-color: #fafafa;
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  border: 1.5px solid #c1b4e3;
+  border-radius: 10px;
+  font-size: 1.5rem;
+  color: #333;
+  background-color: #fafafa;
+  transition: border-color 0.3s ease;
+}
+
+.formulario-cuerpo input:focus,
+.formulario-cuerpo select:focus {
+  border-color: #8656e9;
+  outline: none;
+  background-color: #fefefe;
 }
 
 .formulario-cuerpo button {
-    background-color: #6a1b9a;
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1.5rem;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
+  background-color: #8656e9;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.5rem;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
 }
 
 .formulario-cuerpo button:hover {
-    background-color: #4a148c;
+  background-color: #734bd1;
 }
+
 .btn-volver {
-   background-color: #6a1b9a !important;
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1.5rem;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
+  background-color: #8656e9 !important;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.5rem;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
 }
 
 .btn-volver:hover {
-   background-color: #5531a9;
+  background-color: #5531a9;
 }
 
 /* Estilos para la tabla */
@@ -1613,55 +1626,127 @@ form.boton-estilo button:hover {
 .tablacurso {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
+  background-color: #fff;
   font-size: 2rem;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin-top: 1rem;
 }
 
 .tablacurso thead {
-  background-color: #5531a9;
-  color: white;
+  background-color: #e9defb;
+  color: #4b2e83;
   font-size: 2.5rem;
+  font-weight: bold;
 }
 
 .tablacurso th,
 .tablacurso td {
-  padding: 0.75rem;
-  border: 1px solid #dee2e6;
-  text-align: left;
+  padding: 1rem;
+  text-align: center;
   vertical-align: middle;
+  border: 1px solid #e3d7f7;
   font-size: 2rem;
 }
 
 .tablacurso tbody tr:nth-child(even) {
-  background-color: #f8f9fa;
+  background-color: #f9f7fd;
 }
+
 
 
 /*TABLA MODULO*/
 .tablamodulo {
-  width: 100%;
+   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
+  background-color: #fff;
   font-size: 2rem;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin-top: 1rem;
 }
 
 .tablamodulo thead {
-  background-color: #5531a9;
-  color: white;
+  background-color: #e9defb;
+  color: #4b2e83;
   font-size: 2.5rem;
+  font-weight: bold;
 }
 
 .tablamodulo th,
 .tablamodulo td {
-  padding: 0.75rem;
-  border: 1px solid #dee2e6;
-  text-align: left;
+ padding: 1rem;
+  text-align: center;
   vertical-align: middle;
+  border: 1px solid #e3d7f7;
   font-size: 2rem;
 }
 
 .tablamodulo tbody tr:nth-child(even) {
-  background-color: #f8f9fa;
+  background-color: #f9f7fd;
+}
+/*TABLA DE EDITAR*/
+.formulario-edicion {
+  max-width: 800px;
+  margin: 40px auto;
+  background-color: #fff;
+  border: 1px solid #c9bdf0;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  font-family: 'Nunito', sans-serif;
+  padding: 30px;
+}
+
+.formulario-edicion label {
+  display: block;
+  font-weight: 700;
+  color: #4b2e83;
+  margin-bottom: 6px;
+  font-size: 1.6rem;
+}
+
+.formulario-edicion input[type="text"],
+.formulario-edicion input[type="number"],
+.formulario-edicion input[type="date"],
+.formulario-edicion textarea,
+.formulario-edicion select {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  border: 1.5px solid #c1b4e3;
+  border-radius: 10px;
+  font-size: 1.5rem;
+  color: #333;
+  background-color: #fafafa;
+  transition: border-color 0.3s ease;
+}
+
+.formulario-edicion input:focus,
+.formulario-edicion textarea:focus,
+.formulario-edicion select:focus {
+  border-color: #8656e9;
+  outline: none;
+  background-color: #fefefe;
+}
+
+.formulario-edicion button {
+  background-color: #8656e9;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.5rem;
+  transition: background-color 0.3s ease;
+  display: block;
+  margin: 0 auto;
+}
+
+.formulario-edicion button:hover {
+  background-color: #734bd1;
 }
 
 
