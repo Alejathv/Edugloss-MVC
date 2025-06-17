@@ -58,16 +58,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
         }
 
         if (empty($msg)) {
-            $foto_perfil = ($_POST['foto_perfil'] === 'icon2.png') ? 'icon2.png' : 'icon1.png';
-            $_SESSION['foto_perfil'] = $foto_perfil;
-
-            $stmt = $conn->prepare("UPDATE usuarios SET nombre = ?, correo = ?, contraseña = ? WHERE id_usuario = ?");
-            if (!$stmt) {
-                die("Error en la consulta UPDATE: " . $conn->error);
-            }
-            $stmt->bind_param("sssi", $nombre, $correo, $nuevo_pass, $id_usuario);
-
+            $foto_perfil = $_POST['foto_perfil']; // Obtiene 'icon1.png' o 'icon2.png'
+            
+            // Actualiza la BD incluyendo foto_perfil
+            $stmt = $conn->prepare("UPDATE usuarios SET nombre = ?, correo = ?, contraseña = ?, foto_perfil = ? WHERE id_usuario = ?");
+            $stmt->bind_param("ssssi", $nombre, $correo, $nuevo_pass, $foto_perfil, $id_usuario);
+            
             if ($stmt->execute()) {
+                // Actualiza la sesión para reflejar cambios al instante
+                $_SESSION['foto_perfil'] = $foto_perfil;
+                $_SESSION['nombre'] = $nombre;
                 $msg = "Perfil actualizado correctamente.";
                 $foto_actual = $foto_perfil;
                 $nombre_actual = $nombre;

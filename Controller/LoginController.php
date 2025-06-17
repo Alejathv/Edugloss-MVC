@@ -38,6 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["btnlogin"])) {
     $_SESSION['rol_nombre'] = $user['rol'];
     $_SESSION['nombre'] = $user['nombre'];
     $_SESSION['apellido'] = $user['apellido'];
+    $_SESSION['foto_perfil'] = $user['foto_perfil'] ?? 'icon1.png'; // Línea agregada
 
     if ($user['rol'] === 'estudiante') {
         $inscripciones = $userModel->getInscripcionesByUserId($user['id_usuario']);

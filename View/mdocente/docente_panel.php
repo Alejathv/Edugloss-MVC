@@ -161,7 +161,7 @@ $evidencias = $result->fetch_all(MYSQLI_ASSOC);
             <div id="toggle-btn" class="fas fa-sun"></div>
         </div>
         <div class="profile">
-            <img src="../img/icon1.png" class="image" alt="">
+            <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
             <h3 class="name">
                 <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
             </h3>
@@ -177,7 +177,7 @@ $evidencias = $result->fetch_all(MYSQLI_ASSOC);
 <div class="side-bar">
     <div id="close-btn"><i class="fas fa-times"></i></div>
     <div class="profile">
-        <img src="../img/icon1.png" class="image" alt="">
+        <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
         <h3 class="name">
             <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
         </h3>

@@ -55,7 +55,7 @@ $controller = new EstudianteController($db);
 
       <!-- Perfil del usuario, muestra la imagen, nombre y rol -->
       <div class="profile">
-         <img src="../img/icon1.png" class="image" alt="imagen de estudiante">
+         <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
          <h3 class="name">
          <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
          </h3>
@@ -77,7 +77,7 @@ $controller = new EstudianteController($db);
    </div>
 
    <div class="profile">
-      <img src="../img/icon1.png" class="image" alt="">
+      <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
       <h3 class="name">
       <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
       </h3>
