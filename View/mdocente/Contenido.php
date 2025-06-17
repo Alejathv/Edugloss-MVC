@@ -113,11 +113,11 @@ if (isset($_GET['m']) && $_GET['m'] == 'subir') {
         <a href="../perfil.php" class="btn">Ver Perfil</a>
     </div>
     <nav class="navbar">
-        <a href="home.html"><i class="fas fa-home"></i><span>Inicio</span></a>
+        <a href="docente_panel.php"><i class="fas fa-home"></i><span>Inicio</span></a>
         <a href="../ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
-        <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
-        <a href="subir_material.php"><i class="fas fa-chalkboard-user"></i><span>Contenido</span></a>
-        <a href="estudiantes.html"><i class="fas fa-user-graduate"></i><span>Estudiantes</span></a>
+        <a href="TablasCM.php"><i class="fas fa-graduation-cap"></i><span>Gestión de Aprendizaje</span></a>
+        <a href="Contenido.php"><i class="fas fa-chalkboard-user"></i><span>Contenido</span></a>
+        <a href="evidencias.php"><i class="fas fa-user-graduate"></i><span>Evidencias</span></a>
     </nav>
 </div>
 
