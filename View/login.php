@@ -73,7 +73,7 @@ if (!empty($mensaje)) {
                     <br>
                     <p>Recuerda que primero necesitas adquirir un plan.</p>
                     <h5>¡Te invitamos a conocer nuestras opciones!</h5>
-                    <a href="planes.html" class="ghost">Ver Planes</a>
+                    <a href="planes.php" class="ghost">Ver Planes</a>
 
                 </div>
             </div>

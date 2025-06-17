@@ -29,13 +29,6 @@ class ModuloModel {
     $stmt->bind_param("i", $id_modulo);
     return $stmt->execute();
     }
-    public function obtenerModuloPorId($id_modulo) {
-    $stmt = $this->db->prepare("SELECT * FROM modulo WHERE id_modulo = ?");
-    $stmt->bind_param("i", $id_modulo);
-    $stmt->execute();
-    return $stmt->get_result()->fetch_assoc();
-    }
-
 
     public function actualizarModulo($data) {
     $stmt = $this->db->prepare("UPDATE modulo SET nombre = ?, descripcion = ?, precio = ?, estado = ? WHERE id_modulo = ?");
@@ -48,6 +41,26 @@ class ModuloModel {
     );
     return $stmt->execute();
 }
+public function obtenerModulosDisponibles() {
+        $stmt = $this->db->prepare("SELECT id_modulo, nombre, descripcion, precio FROM modulo WHERE estado = 'disponible'");
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        $modulos = $resultado->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        
+        return $modulos;
+    }
+
+    public function obtenerModuloPorId($id_modulo) {
+        $stmt = $this->db->prepare("SELECT id_modulo, nombre, descripcion, precio FROM modulo WHERE id_modulo = ?");
+        $stmt->bind_param("i", $id_modulo);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        $modulo = $resultado->fetch_assoc();
+        $stmt->close();
+        
+        return $modulo;
+    }
 
 
 }
