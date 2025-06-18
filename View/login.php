@@ -67,7 +67,7 @@ if (!empty($mensaje)) {
         <div class="overlay-container">
             <div class="overlay">
                 <div class="overlay-panel overlay-right">
-                    <h1>¡Empezemos!</h1>
+                    <h1>¡Empecemos!</h1>
                     <p>Para mantenerte conectado con nosotros, inicia sesión con tu información personal</p>
                     <h5>¿No tienes una cuenta?</h5>
                     <br>
