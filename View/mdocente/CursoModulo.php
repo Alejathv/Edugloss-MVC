@@ -66,7 +66,7 @@ $idCursoPreseleccionado = isset($_GET['id_curso']) ? $_GET['id_curso'] : '';
             <div id="toggle-btn" class="fas fa-sun"></div>
         </div>
         <div class="profile">
-            <img src="../img/pic-1.jpg" class="image" alt="">
+            <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
             <h3 class="name">
                 <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
             </h3>
@@ -82,7 +82,7 @@ $idCursoPreseleccionado = isset($_GET['id_curso']) ? $_GET['id_curso'] : '';
 <div class="side-bar">
     <div id="close-btn"><i class="fas fa-times"></i></div>
     <div class="profile">
-        <img src="../img/pic-1.jpg" class="image" alt="">
+        <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
         <h3 class="name">
             <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
         </h3>

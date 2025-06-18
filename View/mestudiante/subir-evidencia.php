@@ -233,7 +233,7 @@ $evidencias = mysqli_query($conexion, "
       </div>
 
       <div class="profile d-flex flex-column align-items-center ms-3">
-         <img src="../img/icon1.png" class="image" alt="imagen de estudiante">
+         <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
          <h3 class="name mb-0"><?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?></h3>
          <p class="role mb-2">Estudiante</p>
          <a href="../perfil.php" class="btn">ver perfil</a>
@@ -250,7 +250,7 @@ $evidencias = mysqli_query($conexion, "
    </div>
 
    <div class="profile text-center mb-4">
-      <img src="../img/icon1.png" class="image" alt="">
+      <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
       <h3 class="name mb-0"><?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?></h3>
       <p class="role mb-2">Estudiante</p>
       <a href="../perfil.php" class="btn btn-outline-primary btn-sm">ver perfil</a>

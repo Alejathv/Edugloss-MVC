@@ -57,7 +57,7 @@ if (isset($_GET['id_modulo'])) {
 
       <!-- Perfil del usuario, muestra la imagen, nombre y rol -->
       <div class="profile">
-         <img src="../img/icon1.png" class="image" alt="">
+         <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
          <h3 class="name">
          <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
          </h3>
@@ -81,7 +81,7 @@ if (isset($_GET['id_modulo'])) {
    </div>
 
    <div class="profile">
-            <img src="../img/icon1.png" class="image" alt="">
+            <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
       <h3 class="name">
       <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
       </h3>
