@@ -52,11 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <a href="docente_panel.php" class="logo">
             <img src="../img/LogoEGm.png" alt="EduGloss" style="height: 80px;">
         </a>
-      
-      <form action="search.html" method="post" class="search-form">
-         <input type="text" name="search_box" required placeholder="buscar cursos..." maxlength="100">
-         <button type="submit" class="fas fa-search"></button>
-      </form>
 
       <div class="icons">
          <div id="menu-btn" class="fas fa-bars"></div>
@@ -98,14 +93,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    </div>
 
    <nav class="navbar">
-
-      <a href="home.php"><i class="fas fa-home"></i><span>Inicio</span></a>
-      <a href="../ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
-      <a href="ver_materiales.php"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
-
-      <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Docentes</span></a>
-      <a href="contact.html"><i class="fas fa-headset"></i><span>Contáctanos</span></a>
-   </nav>
+        <a href="docente_panel.php"><i class="fas fa-home"></i><span>Inicio</span></a>
+        <a href="../ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
+        <a href="TablasCM.php"><i class="fas fa-graduation-cap"></i><span>Gestión de Aprendizaje</span></a>
+        <a href="Contenido.php"><i class="fas fa-chalkboard-user"></i><span>Contenido</span></a>
+        <a href="evidencias.php"><i class="fas fa-user-graduate"></i><span>Evidencias</span></a>
+    </nav>
 
 </div>
 <h2 class="heading">Editar Curso</h2>
