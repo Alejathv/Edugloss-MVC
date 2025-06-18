@@ -37,12 +37,7 @@ class CursoModel {
     $this->db->query("DELETE FROM modulo WHERE id_curso = $id_curso");
     return $this->db->query("DELETE FROM curso WHERE id_curso = $id_curso");
     }
-    public function obtenerCursoPorId($id) {
-    $stmt = $this->db->prepare("SELECT * FROM curso WHERE id_curso = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    return $stmt->get_result()->fetch_assoc();
-    }
+
 
     public function actualizarCurso($data) {
         $stmt = $this->db->prepare("UPDATE curso SET nombre = ?, descripcion = ?, precio = ?, fecha_inicio = ?, fecha_fin = ?, estado = ? WHERE id_curso = ?");
@@ -57,7 +52,26 @@ class CursoModel {
         );
         return $stmt->execute();
     }
+    public function obtenerCursosDisponibles() {
+        $stmt = $this->db->prepare("SELECT id_curso, nombre, descripcion, precio FROM curso WHERE estado = 'disponible'");
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        $cursos = $resultado->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        
+        return $cursos;
+    }
 
+    public function obtenerCursoPorId($id_curso) {
+        $stmt = $this->db->prepare("SELECT id_curso, nombre, descripcion, precio FROM curso WHERE id_curso = ?");
+        $stmt->bind_param("i", $id_curso);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        $curso = $resultado->fetch_assoc();
+        $stmt->close();
+        
+        return $curso;
+    }
 
 }
 

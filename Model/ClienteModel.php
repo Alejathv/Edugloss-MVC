@@ -49,5 +49,24 @@ class ClienteModel {
         
         return $resultado;
     }
+     public function buscarClientePorEmail($correo) {
+        $stmt = $this->db->prepare("SELECT * FROM usuarios WHERE correo = ?");
+        $stmt->bind_param("s", $correo);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        $stmt->close();
+        
+        return $resultado->fetch_assoc();
+    }
+
+    public function actualizarCliente($id_cliente, $nombre, $apellido, $telefono) {
+        $stmt = $this->db->prepare("UPDATE usuarios SET nombre = ?, apellido = ?, telefono = ? WHERE id_usuario = ?");
+        $stmt->bind_param("sssi", $nombre, $apellido, $telefono, $id_cliente);
+        
+        $resultado = $stmt->execute();
+        $stmt->close();
+        
+        return $resultado;
+    }
 }
 ?>

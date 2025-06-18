@@ -55,10 +55,6 @@ $idCursoPreseleccionado = isset($_GET['id_curso']) ? $_GET['id_curso'] : '';
         <a href="docente_panel.php" class="logo">
             <img src="../img/LogoEGm.png" alt="EduGloss" style="height: 80px;">
         </a>
-        <form action="search.html" method="post" class="search-form">
-            <input type="text" name="search_box" required placeholder="Buscar cursos..." maxlength="100">
-            <button type="submit" class="fas fa-search"></button>
-        </form>
         <div class="icons">
             <div id="menu-btn" class="fas fa-bars"></div>
             <div id="search-btn" class="fas fa-search"></div>
@@ -90,11 +86,11 @@ $idCursoPreseleccionado = isset($_GET['id_curso']) ? $_GET['id_curso'] : '';
         <a href="../perfil.php" class="btn">Ver Perfil</a>
     </div>
     <nav class="navbar">
-        <a href="home.html"><i class="fas fa-home"></i><span>Inicio</span></a>
+        <a href="docente_panel.php"><i class="fas fa-home"></i><span>Inicio</span></a>
         <a href="../ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
-        <a href="TablasCM.php"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
+        <a href="TablasCM.php"><i class="fas fa-graduation-cap"></i><span>Gestión de Aprendizaje</span></a>
         <a href="Contenido.php"><i class="fas fa-chalkboard-user"></i><span>Contenido</span></a>
-        <a href="estudiantes.html"><i class="fas fa-user-graduate"></i><span>Estudiantes</span></a>
+        <a href="evidencias.php"><i class="fas fa-user-graduate"></i><span>Evidencias</span></a>
     </nav>
 </div>
 

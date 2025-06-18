@@ -1,5 +1,26 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+//Llama a los modelos 
+require_once __DIR__ . '/Model/database.php';
+require_once __DIR__ . '/Model/CursoModel.php';
+require_once __DIR__ . '/Model/ModuloModel.php';
+
+//Espara la sesión de php 
 session_start();
+// Crear conexión
+$db = new Database();
+$conn = $db->getConnection();
+// modelos 
+$cursoModel = new CursoModel($conn);
+$moduloModel = new ModuloModel($conn);
+// Obtener cursos y módulos disponibles
+$cursos = $cursoModel->obtenerCursosDisponibles();
+$modulos = $moduloModel->obtenerModulosDisponibles();
+
+//Manejo de mensajes (éxito o error)
 $mensaje = '';
 $tipo = ''; // "exito" o "error"
 
@@ -12,7 +33,7 @@ if (isset($_SESSION['mensaje'])) {
     $tipo = 'danger';
     unset($_SESSION['error']);
 }
-
+//Mostrar el mensaje con JavaScript:
 if (!empty($mensaje)) {
     echo "<script>
         window.addEventListener('DOMContentLoaded', () => {
@@ -87,18 +108,14 @@ if (!empty($mensaje)) {
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav mx-0 mx-lg-auto">
                         <a href="index.php" class="nav-item nav-link active">Inicio</a>
-                        <a href="View/planes.html" class="nav-item nav-link active">Planes</a>
+                        <a href="View/planes.php" class="nav-item nav-link active">Planes</a>
                         <a href="View/team.html" class="nav-item nav-link active">Equipo</a>
                         <a href="#contacto" class="nav-item nav-link active">Contacto</a>
                     </div>
 
                     <!-- Botones con margen pequeño -->
                 <div class="d-flex">
-                    <a href="View/carrito.php" class="btn btn-carrito rounded-pill py-2 px-4 flex-shrink-0 ms-2" style="background-color: #87a2fb; color: white; box-shadow: none;">
-                        <i class="fa fa-shopping-cart"></i> Carrito
-                    </a>
-                    
-                     
+                <!--Boton para ir al CAMPUS VIRTUAL O LOGIN-->
                      <a href="View/login.php" class="btn btn-primary rounded-pill py-2 px-4 flex-shrink-0 ms-2">
                         <i class="fa fa-graduation-cap"></i> Campus Virtual
                     </a>
@@ -215,87 +232,88 @@ if (!empty($mensaje)) {
 
 
         
-        <!-- Service Start -->
-        <div class="container-fluid service py-5">
-            <div class="container py-5">
-                <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-                    <h1 class="display-4 mb-4">Descubre nuestros cursos</h1>
-                    <p class="mb-0">Brindamos los mejores cursos de manicure y pedicure, diseñados para todos los niveles. Aprende técnicas profesionales con material actualizado y formación práctica, adaptada a tus necesidades.
+        <!-- SECCIÓN PLANES  -->
+        <div class="container-fluid service pb-5">
+            <div class="container pb-5">
+                <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;"> <br> <br>
+                    <h1 class="display-4 mb-4">Descubre el plan ideal para ti</h1>
+                    <p class="mb-0">Brindamos los mejores cursos de manicure, diseñados para todos los niveles. Aprende técnicas profesionales con material actualizado y formación práctica, adaptada a tus necesidades.
                     </p>
                 </div>
+
+                <!-- Sección de Cursos Disponibles -->
+                <h2 class="text-center mb-4 wow fadeInUp" data-wow-delay="0.3s">Nuestros Cursos</h2>
                 <div class="row g-4 justify-content-center">
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
+                    <?php $i = 0; ?>
+                    <?php foreach ($cursos as $curso): ?>
+                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="<?= (($i % 4) + 2) * 0.1 ?>s">
+
                         <div class="service-item">
                             <div class="service-img">
-                                <img src="View/img/servicio-1.jpg" class="img-fluid rounded-top w-100" alt="">
+                                <img src="View/img/servicio-<?= ($curso['id_curso'] % 4) + 1 ?>.jpg" class="img-fluid rounded-top w-100" alt="<?= htmlspecialchars($curso['nombre']) ?>">
                                 <div class="service-icon p-3">
                                     <i class="fa-solid fa-graduation-cap"></i>
                                 </div>
                             </div>
                             <div class="service-content p-4">
                                 <div class="service-content-inner">
-                                    <a href="#" class="d-inline-block h4 mb-4">Curso Completo de Manicure y Pedicure Profesional</a>
-                                    <p class="mb-4">Curso completo de manicure y pedicure, donde aprenderás técnicas esenciales y cuidado profesional de uñas.</p>
-                                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Saber más</a>
+                                    <h4 class="mb-4">Curso: <?= htmlspecialchars($curso['nombre']) ?></h4>
+                                    <p class="mb-4"><?= htmlspecialchars($curso['descripcion']) ?></p>
+                                    <p class="text-primary fw-bold mb-3">$<?= number_format($curso['precio'], 2) ?></p>
+                                    <form action="procesar_pago.php" method="POST">
+                                        <input type="hidden" name="tipo_producto" value="curso">
+                                        <input type="hidden" name="id_producto" value="<?= $curso['id_curso'] ?>">
+                                        <input type="hidden" name="nombre_producto" value="<?= htmlspecialchars($curso['nombre']) ?>">
+                                        <input type="hidden" name="precio_producto" value="<?= $curso['precio'] ?>">
+                                        <button type="submit" class="btn btn-primary rounded-pill py-2 px-4 w-100">Comprar ahora</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.4s">
-                        <div class="service-item">
-                            <div class="service-img">
-                                <img src="View/img/servicio-2.jpg" class="img-fluid rounded-top w-100" alt="">
-                                <div class="service-icon p-3">
-                                    <i class="fa-solid fa-graduation-cap"></i>
-                                </div>
-                            </div>
-                            <div class="service-content p-4">
-                                <div class="service-content-inner">
-                                    <a href="#" class="d-inline-block h4 mb-4">Introducción y Cuidado Básico de Uñas</a>
-                                    <p class="mb-4">Aprende técnicas básicas de cuidado de uñas y piel, incluyendo cortes, hidratación y limpieza.</p>
-                                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Saber más</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
-                        <div class="service-item">
-                            <div class="service-img">
-                                <img src="View/img/servicio-3.jpg" class="img-fluid rounded-top w-100" alt="">
-                                <div class="service-icon p-3">
-                                    <i class="fa-solid fa-graduation-cap"></i>
-                                </div>
-                            </div>
-                            <div class="service-content p-4">
-                                <div class="service-content-inner">
-                                    <a href="#" class="d-inline-block h4 mb-4">Técnicas Avanzadas y Diseño de Uñas</a>
-                                    <p class="mb-4">Domina el esmaltado, el diseño artístico y la aplicación de gel o acrílico para resultados perfectos y duraderos en las uñas</p>
-                                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Saber más</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
-                        <div class="service-item">
-                            <div class="service-img">
-                                <img src="View/img/servicio-4.jpg" class="img-fluid rounded-top w-100" alt="">
-                                <div class="service-icon p-3">
-                                    <i class="fa-solid fa-graduation-cap"></i>
-                                </div>
-                            </div>
-                            <div class="service-content p-4">
-                                <div class="service-content-inner">
-                                    <a href="#" class="d-inline-block h4 mb-4">Herramientas y Equipos Profesionales</a>
-                                    <p class="mb-4">Conoce las herramientas y equipos esenciales para realizar un trabajo profesional de manicure, además de cómo mantenerlos correctamente.</p>
-                                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Saber más</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php $i++; ?>
+                    <?php endforeach; ?>
                 </div>
+
+                <!-- Sección de Módulos Disponibles -->
+                <?php if (!empty($modulos)): ?>
+                <h2 class="text-center mt-5 mb-4 wow fadeInUp" data-wow-delay="0.3s">Módulos Individuales</h2>
+                <div class="row g-4 justify-content-center">
+                    <?php $j = 0; ?>
+                    <?php foreach ($modulos as $modulo): ?>
+                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="<?= (($j % 4) + 2) * 0.1 ?>s">
+                        <div class="service-item">
+                            <div class="service-img">
+                                <img src="View/img/servicio-<?= ($modulo['id_modulo'] % 4) + 1 ?>.jpg" class="img-fluid rounded-top w-100" alt="<?= htmlspecialchars($modulo['nombre']) ?>">
+                                <div class="service-icon p-3">
+                                    <i class="fa-solid fa-book-open"></i>
+                                </div>
+                            </div>
+                            <div class="service-content p-4">
+                                <div class="service-content-inner">
+                                    <h4 class="mb-4">Módulo: <?= htmlspecialchars($modulo['nombre']) ?></h4>
+                                    <p class="mb-4"><?= htmlspecialchars($modulo['descripcion'] ?? 'Módulo especializado') ?></p>
+                                    <p class="text-primary fw-bold mb-3">$<?= number_format($modulo['precio'], 2) ?></p>
+                                    <form action="procesar_pago.php" method="POST">
+                                        <input type="hidden" name="tipo_producto" value="modulo">
+                                        <input type="hidden" name="id_producto" value="<?= $modulo['id_modulo'] ?>">
+                                        <input type="hidden" name="nombre_producto" value="<?= htmlspecialchars($modulo['nombre']) ?>">
+                                        <input type="hidden" name="precio_producto" value="<?= $modulo['precio'] ?>">
+                                        <button type="submit" class="btn btn-primary rounded-pill py-2 px-4 w-100">Comprar ahora</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php $j++; ?>
+                    <?php endforeach; ?>
+                </div>
+                <?php endif; ?>
             </div>
         </div>
 
+    <!-- SECCIÓN PLANES  -->
+     <!-- SECCIÓN PLANES  -->
     <section id="equipo">
          <div class="container-fluid team pb-5">
             <div class="container pb-5">
