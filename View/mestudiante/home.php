@@ -84,8 +84,7 @@ $controller = new EstudianteController($db);
       <p class="role">estudiante</p>
       <a href="../perfil.php" class="btn">ver perfil</a>
    </div>
-
-   <nav class="navbar">
+<nav class="navbar">
    <a href="home.php"><i class="fas fa-home"></i><span>Inicio</span></a>
    <a href="../ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
    
@@ -97,9 +96,9 @@ $controller = new EstudianteController($db);
       
       <?php } elseif ($_SESSION['rol_nombre'] == 'docente') { ?>
          <!-- Enlaces para docentes -->
-         <a href="gestion_cursos.php"><i class="fas fa-book"></i><span>Mis Cursos</span></a>
-         <a href="crear_contenido.php"><i class="fas fa-edit"></i><span>Crear Contenido</span></a>
-         <a href="estudiantes_inscritos.php"><i class="fas fa-users"></i><span>Estudiantes</span></a>
+         <a href="./TablasCM.php"><i class="fas fa-book"></i><span>Gestion De Aprendizaje</span></a>
+         <a href="./Contenido.php"><i class="fas fa-edit"></i><span>Contenido</span></a>
+         <a href="./evidencias.php"><i class="fas fa-users"></i><span>Evidencias</span></a>
       
       <?php } elseif ($_SESSION['rol_nombre'] == 'administrador') { ?>
          <!-- Enlaces para administradores -->

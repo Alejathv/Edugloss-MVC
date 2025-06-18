@@ -97,9 +97,9 @@ $idCursoPreseleccionado = isset($_GET['id_curso']) ? $_GET['id_curso'] : '';
       
       <?php } elseif ($_SESSION['rol_nombre'] == 'docente') { ?>
          <!-- Enlaces para docentes -->
-         <a href="gestion_cursos.php"><i class="fas fa-book"></i><span>Gestion De Aprendizaje</span></a>
-         <a href="crear_contenido.php"><i class="fas fa-edit"></i><span>Contenido</span></a>
-         <a href="estudiantes_inscritos.php"><i class="fas fa-users"></i><span>Evidencias</span></a>
+         <a href="./TablasCM.php"><i class="fas fa-book"></i><span>Gestion De Aprendizaje</span></a>
+         <a href="./Contenido.php"><i class="fas fa-edit"></i><span>Contenido</span></a>
+         <a href="./evidencias.php"><i class="fas fa-users"></i><span>Evidencias</span></a>
       
       <?php } elseif ($_SESSION['rol_nombre'] == 'administrador') { ?>
          <!-- Enlaces para administradores -->

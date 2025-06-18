@@ -256,23 +256,36 @@ $evidencias = mysqli_query($conexion, "
       <a href="../perfil.php" class="btn btn-outline-primary btn-sm">ver perfil</a>
    </div>
 
-   <nav class="navbar d-flex flex-column gap-3 px-3">
-      <a href="home.php" class="d-flex align-items-center gap-2 text-decoration-none text-dark">
-         <i class="fas fa-home fs-5"></i><span>Inicio</span>
-      </a>
-      <a href="../ForoGeneral.php" class="d-flex align-items-center gap-2 text-decoration-none text-dark">
-         <i class="fas fa-comments fs-5"></i><span>Foro General</span>
-      </a>
-      <a href="courses.html" class="d-flex align-items-center gap-2 text-decoration-none text-dark">
-         <i class="fas fa-graduation-cap fs-5"></i><span>Cursos</span>
-      </a>
-      <a href="teachers.html" class="d-flex align-items-center gap-2 text-decoration-none text-dark">
-         <i class="fas fa-chalkboard-user fs-5"></i><span>Docentes</span>
-      </a>
-      <a href="contact.html" class="d-flex align-items-center gap-2 text-decoration-none text-dark">
-         <i class="fas fa-headset fs-5"></i><span>Contáctanos</span>
-      </a>
-   </nav>
+   <nav class="navbar">
+   <a href="home.php"><i class="fas fa-home"></i><span>Inicio</span></a>
+   <a href="../ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
+   
+   <?php if (isset($_SESSION['rol_nombre'])) { ?>
+      <?php if ($_SESSION['rol_nombre'] == 'estudiante') { ?>
+         <!-- Enlaces para estudiantes -->
+         <a href="ver_materiales.php"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
+         <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Docentes</span></a>
+      
+      <?php } elseif ($_SESSION['rol_nombre'] == 'docente') { ?>
+         <!-- Enlaces para docentes -->
+         <a href="./TablasCM.php"><i class="fas fa-book"></i><span>Gestion De Aprendizaje</span></a>
+         <a href="./Contenido.php"><i class="fas fa-edit"></i><span>Contenido</span></a>
+         <a href="./evidencias.php"><i class="fas fa-users"></i><span>Evidencias</span></a>
+      
+      <?php } elseif ($_SESSION['rol_nombre'] == 'administrador') { ?>
+         <!-- Enlaces para administradores -->
+         <a href="gestion_usuarios.php"><i class="fas fa-user-cog"></i><span>Gestión de Usuarios</span></a>
+         <a href="gestion_cursos_admin.php"><i class="fas fa-book"></i><span>Gestión de Cursos</span></a>
+         <a href="reportes.php"><i class="fas fa-chart-bar"></i><span>Reportes</span></a>
+      <?php } ?>
+   <?php } else { ?>
+      <!-- Enlace para invitados/no logueados -->
+      <a href="login.php"><i class="fas fa-sign-in-alt"></i><span>Iniciar Sesión</span></a>
+   <?php } ?>
+   
+   <!-- Enlace común para todos -->
+   <a href="contact.html"><i class="fas fa-headset"></i><span>Contáctanos</span></a>
+</nav>
 </div>
 
 <!-- CONTENIDO PRINCIPAL -->
