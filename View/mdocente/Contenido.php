@@ -89,7 +89,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'subir') {
             <div id="toggle-btn" class="fas fa-sun"></div>
         </div>
         <div class="profile">
-            <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
+            <img src="../img/pic-1.jpg" class="image" alt="">
             <h3 class="name">
                 <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
             </h3>
@@ -105,99 +105,138 @@ if (isset($_GET['m']) && $_GET['m'] == 'subir') {
 <div class="side-bar">
     <div id="close-btn"><i class="fas fa-times"></i></div>
     <div class="profile">
-        <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
+        <img src="../img/pic-1.jpg" class="image" alt="">
         <h3 class="name">
             <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
         </h3>
         <p class="role">Docente</p>
         <a href="../perfil.php" class="btn">Ver Perfil</a>
     </div>
-<nav class="navbar">
-   <a href="home.php"><i class="fas fa-home"></i><span>Inicio</span></a>
-   <a href="../ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
-   
-   <?php if (isset($_SESSION['rol_nombre'])) { ?>
-      <?php if ($_SESSION['rol_nombre'] == 'estudiante') { ?>
-         <!-- Enlaces para estudiantes -->
-         <a href="ver_materiales.php"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
-         <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Docentes</span></a>
-      
-      <?php } elseif ($_SESSION['rol_nombre'] == 'docente') { ?>
-         <!-- Enlaces para docentes -->
-         <a href="./TablasCM.php"><i class="fas fa-book"></i><span>Gestion De Aprendizaje</span></a>
-         <a href="./Contenido.php"><i class="fas fa-edit"></i><span>Contenido</span></a>
-         <a href="./evidencias.php"><i class="fas fa-users"></i><span>Evidencias</span></a>
-      
-      <?php } elseif ($_SESSION['rol_nombre'] == 'administrador') { ?>
-         <!-- Enlaces para administradores -->
-         <a href="gestion_usuarios.php"><i class="fas fa-user-cog"></i><span>Gestión de Usuarios</span></a>
-         <a href="gestion_cursos_admin.php"><i class="fas fa-book"></i><span>Gestión de Cursos</span></a>
-         <a href="reportes.php"><i class="fas fa-chart-bar"></i><span>Reportes</span></a>
-      <?php } ?>
-   <?php } else { ?>
-      <!-- Enlace para invitados/no logueados -->
-      <a href="login.php"><i class="fas fa-sign-in-alt"></i><span>Iniciar Sesión</span></a>
-   <?php } ?>
-   
-   <!-- Enlace común para todos -->
-   <a href="contact.html"><i class="fas fa-headset"></i><span>Contáctanos</span></a>
-</nav>
+    <nav class="navbar">
+        <a href="home.html"><i class="fas fa-home"></i><span>Inicio</span></a>
+        <a href="../ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
+        <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
+        <a href="subir_material.php"><i class="fas fa-chalkboard-user"></i><span>Contenido</span></a>
+        <a href="estudiantes.html"><i class="fas fa-user-graduate"></i><span>Estudiantes</span></a>
+    </nav>
 </div>
 
 <section class="home-grid">
 
-<H2>Subir por MODULO</H2> 
+<div class="form-material">
+    <h2><strong>Subir por Módulo</strong></h2>
     <form method="POST" action="" enctype="multipart/form-data">
-
-        <select name="id_modulo" required>
+        <label for="id_modulo">Módulo:</label>
+        <select name="id_modulo" id="id_modulo" required>
             <?php foreach ($modulos as $modulo): ?>
                 <option value="<?= $modulo['id_modulo'] ?>"><?= $modulo['nombre'] ?></option>
             <?php endforeach; ?>
         </select>
-        <input name="nombre" placeholder="Nombre del material" required>
 
-        <input name="url" placeholder="URL del material (YouTube o PDF)" required>
+        <label for="nombre">Nombre del material:</label>
+        <input type="text" name="nombre" id="nombre" placeholder="Nombre del material" required>
 
-        <select name="tipo" required>
+        <label for="url">URL del material:</label>
+        <input type="url" name="url" id="url" placeholder="URL del material (YouTube o PDF)" required>
+
+        <label for="tipo">Tipo:</label>
+        <select name="tipo" id="tipo" required>
             <option value="video">Video</option>
             <option value="pdf">PDF</option>
         </select>
 
         <button type="submit">Subir</button>
     </form>
+</div>
 
 
 
-<h3>Contenido:</h3>
-<?php foreach ($cursos as $curso): ?>
-    <h3>Curso: <?= htmlspecialchars($curso['nombre']) ?></h3>
-
-    <?php
-    // Obtener módulos de este curso
-    $modulosDelCurso = array_filter($modulos, function($m) use ($curso) {
-        return $m['id_curso'] == $curso['id_curso'];
-    });
-    ?>
-
-    <?php foreach ($modulosDelCurso as $modulo): ?>
-        <h4>Módulo: <?= htmlspecialchars($modulo['nombre']) ?></h4>
-        <ul>
-            <?php
-            $matDelModulo = $materiales[$modulo['id_modulo']] ?? [];
-            foreach ($matDelModulo as $material):
-            ?>
-                <li>
-                    <?= htmlspecialchars($material['nombre']) ?> |
-                    <a href="<?= htmlspecialchars($material['url_video']) ?>" target="_blank">Ver</a>
-                    (<?= strtoupper(htmlspecialchars($material['tipo'])) ?>)
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    <?php endforeach; ?>
-
-<?php endforeach; ?>
 </section>
 
+<section class="materials-table">
+    <h2><strong>Materiales Disponibles</strong></h2>
+    
+    <?php
+    // Obtener todos los módulos con sus cursos y materiales
+    $modulosConCursos = $moduloCtrl->obtenerModulosConCursos(); // Necesitarás implementar este método
+    
+    foreach ($modulosConCursos as $modulo) {
+        echo '<div class="module-section">';
+        echo '<h3>Curso: ' . htmlspecialchars($modulo['curso_nombre']) . ' - Módulo: ' . htmlspecialchars($modulo['modulo_nombre']) . '</h3>';
+        
+        $materiales = $controller->listarMateriales($modulo['id_modulo']);
+        
+        if (!empty($materiales)) {
+            echo '<table class="material-table">';
+            echo '<thead><tr><th>Nombre</th><th>Tipo</th><th>Acción</th></tr></thead>';
+            echo '<tbody>';
+            
+            foreach ($materiales as $material) {
+                echo '<tr>';
+                echo '<td>' . htmlspecialchars($material['nombre']) . '</td>';
+                echo '<td>' . htmlspecialchars($material['tipo']) . '</td>';
+                echo '<td>';
+                
+                if ($material['tipo'] === 'video') {
+                    // Extraer ID de YouTube si es una URL de YouTube
+                    if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $material['url_material'], $matches)) {
+                        $videoId = $matches[1];
+                        echo '<button class="preview-btn" onclick="showVideoPreview(\'' . $videoId . '\')">Previsualizar</button>';
+                    }
+                    echo '<a href="' . htmlspecialchars($material['url_material']) . '" target="_blank" class="view-link">Ver en YouTube</a>';
+                } else { // PDF
+                    echo '<a href="' . htmlspecialchars($material['url_material']) . '" target="_blank" class="view-link">Ver PDF</a>';
+                }
+                
+                echo '</td>';
+                echo '</tr>';
+            }
+            
+            echo '</tbody>';
+            echo '</table>';
+        } else {
+            echo '<p>No hay materiales disponibles para este módulo.</p>';
+        }
+        
+        echo '</div>';
+    }
+    ?>
+</section>
+
+<!-- Modal para previsualización de videos -->
+<div id="videoModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeVideoModal()">&times;</span>
+        <div id="videoContainer"></div>
+    </div>
+</div>
+
+<script>
+    function showVideoPreview(videoId) {
+        const modal = document.getElementById('videoModal');
+        const videoContainer = document.getElementById('videoContainer');
+        
+        videoContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        
+        modal.style.display = 'block';
+    }
+    
+    function closeVideoModal() {
+        const modal = document.getElementById('videoModal');
+        const videoContainer = document.getElementById('videoContainer');
+        
+        videoContainer.innerHTML = '';
+        modal.style.display = 'none';
+    }
+    
+    // Cerrar modal al hacer clic fuera del contenido
+    window.onclick = function(event) {
+        const modal = document.getElementById('videoModal');
+        if (event.target == modal) {
+            closeVideoModal();
+        }
+    }
+</script>
 <footer class="footer">
 
    &copy; copyright  2024 <span>EduGloss</span> | Todos los derechos reservados!
@@ -211,4 +250,3 @@ if (isset($_GET['m']) && $_GET['m'] == 'subir') {
    
 </body>
 </html>
-

@@ -10,7 +10,7 @@ class PagoController {
 
     public function __construct($conn) {
         $this->pagoModel = new PagoModel($conn);
-        $this->clienteModel = new ClienteModel($conn);
+        $this->clienteModel = new ClienteModel();
     }
 
     public function procesarPago() {
