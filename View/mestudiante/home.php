@@ -142,6 +142,46 @@ $controller = new EstudianteController($db);
       </div>
    </div>
 </section>
+<div class="dashboard-container">
+
+   <div class="welcome-section">
+      <h2>Bienvenido, <?= htmlspecialchars($_SESSION['nombre']) ?></h2>
+      <p>Revisa tus cursos, docentes y temas desde este panel</p>
+   </div>
+
+   <!-- Resumen rápido -->
+   <div class="quick-stats">
+
+      <div class="stat-card">
+         <h4>Temas Populares</h4>
+         <p class="stat-number">4</p>
+      </div>
+   </div>
+
+   <!-- Tarjetas principales -->
+   <div class="cards-grid">
+      <a href="ver_materiales.php" class="dashboard-card">
+         <div class="card-icon"><i class="fas fa-book-open"></i></div>
+         <h3>Mis Cursos</h3>
+         <p>Accede a tus clases y contenidos</p>
+      </a>
+      <a href="teachers.html" class="dashboard-card">
+         <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+         <h3>Docentes</h3>
+         <p>Conoce a tus instructores</p>
+      </a>
+      <a href="../ForoGeneral.php" class="dashboard-card">
+         <div class="card-icon"><i class="fas fa-comments"></i></div>
+         <h3>Foro General</h3>
+         <p>Haz preguntas o comenta tus dudas</p>
+      </a>
+      <a href="contact.html" class="dashboard-card">
+         <div class="card-icon"><i class="fas fa-envelope"></i></div>
+         <h3>Contacto</h3>
+         <p>Comunícate con el equipo</p>
+      </a>
+   </div>
+</div>
 
 <footer class="footer">
 

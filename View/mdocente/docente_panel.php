@@ -12,6 +12,21 @@ require_once "../../Model/database.php";
 // Aquí se crea la instancia correctamente
 $database = new Database();
 $conn = $database->getConnection();
+// TOTAL DE ESTUDIANTES
+$sqlEstudiantes = "SELECT COUNT(*) AS total FROM usuarios WHERE rol = 'estudiante'";
+$resultado = $conn->query($sqlEstudiantes);
+$estudiantes = ($resultado && $row = $resultado->fetch_assoc()) ? $row['total'] : 0;
+
+// CURSOS ACTIVOS
+$sqlCursos = "SELECT COUNT(*) AS total FROM curso WHERE estado = 'disponible'";
+$resultado = $conn->query($sqlCursos);
+$cursos = ($resultado && $row = $resultado->fetch_assoc()) ? $row['total'] : 0;
+
+// EVIDENCIAS PENDIENTES
+$sqlTareas = "SELECT COUNT(*) AS total FROM evidencias WHERE estado = 'pendiente'";
+$resultado = $conn->query($sqlTareas);
+$tareas = ($resultado && $row = $resultado->fetch_assoc()) ? $row['total'] : 0;
+
 ?>
 
 <!DOCTYPE html>
@@ -90,9 +105,59 @@ $conn = $database->getConnection();
    <a href="contact.html"><i class="fas fa-headset"></i><span>Contáctanos</span></a>
 </nav>
 </div>
-<section class="main-content">
-    <h2>CREAR PANEL DE DOCENTE</h2>
-</section>
+<div class="dashboard-container">
+    <!-- Bienvenida -->
+    <div class="welcome-section">
+        <h2>Bienvenida, Profesora <?= htmlspecialchars($_SESSION['nombre']) . ' ' . htmlspecialchars($_SESSION['apellido']) ?></h2>
+        <p>Gestiona tus estudiantes y recursos desde este panel</p>
+    </div>
+<!-- Resumen Rápido -->
+    <div class="quick-stats">
+        <div class="stat-card">
+            <h4>Cursos Activos</h4>
+            <p class="stat-number"><?= $cursos ?></p>
+        </div>
+        <div class="stat-card">
+            <h4>Estudiantes</h4>
+            <p class="stat-number"><?= $estudiantes ?></p>
+        </div>
+        <div class="stat-card">
+            <h4>Tareas Pendientes</h4>
+            <p class="stat-number"><?= $tareas ?></p>
+        </div>
+    </div>
+    <!-- Tarjetas de Acceso Rápido (sin duplicar lo del sidebar) -->
+    <div class="cards-grid">
+        <!-- Acceso directo a evidencias -->
+        <a href="evidencias.php" class="dashboard-card">
+            <div class="card-icon">
+                <i class="fas fa-clipboard-check"></i>
+            </div>
+            <h3>Evidencias</h3>
+            <p>Revisa trabajos y actividades</p>
+            
+        </a>
+
+        <!-- Acceso a contacto -->
+        <a href="contacto.php" class="dashboard-card">
+            <div class="card-icon">
+                <i class="fas fa-envelope"></i>
+            </div>
+            <h3>Contacto</h3>
+            <p>Comunicación con estudiantes</p>
+        </a>
+
+        <!-- Acceso al perfil -->
+        <a href="../perfil.php" class="dashboard-card">
+            <div class="card-icon">
+                <i class="fas fa-user"></i>
+            </div>
+            <h3>Mi Perfil</h3>
+            <p>Consulta y edita tu información</p>
+        </a>
+    </div>
+
+</div>
 
 
 <script src="../js/script.js"></script>
