@@ -1,6 +1,7 @@
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
+
 error_reporting(E_ALL);
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -164,7 +165,7 @@ $comentarios = $foroModel->getComentariosAnidados() ?? [];
             <div id="toggle-btn" class="fas fa-sun"></div>
         </div>
         <div class="profile">
-            <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
+            <img src="./img<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
             <h3 class="name"><?= htmlspecialchars($_SESSION['nombre']) ?></h3>
             <p class="role"><?= htmlspecialchars($_SESSION['rol_nombre']) ?></p>
             <a href="./perfil.php" class="btn">Ver Perfil</a>
@@ -178,8 +179,8 @@ $comentarios = $foroModel->getComentariosAnidados() ?? [];
 <div class="side-bar">
     <div id="close-btn"><i class="fas fa-times"></i></div>
     <div class="profile">
-        <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
-        <h3 class="name"><?= htmlspecialchars($_SESSION['nombre']) ?></h3>
+<img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">        
+<h3 class="name"><?= htmlspecialchars($_SESSION['nombre']) ?></h3>
         <p class="role"><?= htmlspecialchars($_SESSION['rol_nombre']) ?></p>
         <a href="./perfil.php" class="btn">Ver Perfil</a>
     </div>
