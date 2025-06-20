@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 require_once __DIR__ . '/../../Controller/PagoController.php';
 require_once __DIR__ . '/../../Model/database.php';
 
@@ -6,6 +8,32 @@ session_start();
 
 $db = new Database();
 $pagoController = new PagoController($db->getConnection());
+
+// Procesar inscripción
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['accion']) && $_GET['accion'] === 'inscribir') {
+    $idPago = $_GET['id'];
+    
+    // Obtener datos del pago
+    $pago = $pagoController->obtenerPagoPorId($idPago);
+    
+    if ($pago['estado'] !== 'completado') {
+        $_SESSION['mensaje'] = "No se puede inscribir: el pago no está completado.";
+    } else {
+        require_once __DIR__ . '/../../Controller/inscripcioncontroller.php';
+        $inscripcionController = new InscripcionController($db->getConnection());
+        
+        $resultado = $inscripcionController->procesarInscripcion($idPago, [
+            'id_usuario' => $pago['id_usuario'],
+            'id_curso' => $pago['id_curso'],
+            'id_modulo' => $pago['id_modulo']
+        ]);
+        
+        $_SESSION['mensaje'] = $resultado['message'];
+    }
+    
+    header("Location: admin_pagos.php");
+    exit();
+}
 
 // Procesar cambio de estado
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['accion'])) {
@@ -24,9 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['accion'])) {
     exit();
 }
 
+
 // Obtener pagos con filtro
 $estadoFiltro = $_GET['estado'] ?? null;
 $pagos = $pagoController->obtenerPagosAdmin($estadoFiltro);
+
 ?>
 
 <!DOCTYPE html>
@@ -168,15 +198,23 @@ $pagos = $pagoController->obtenerPagosAdmin($estadoFiltro);
                                     <td>
                                         <?php if ($pago['estado'] === 'pendiente'): ?>
                                             <a href="admin_pagos.php?accion=aprobar&id=<?= $pago['id_pago'] ?>" 
-                                               class="btn btn-sm btn-success"
-                                               onclick="return confirm('¿Confirmas que deseas aprobar este pago?')">
-                                               <i class="fas fa-check"></i> Aprobar
+                                            class="btn btn-sm btn-success"
+                                            onclick="return confirm('¿Confirmas que deseas aprobar este pago?')">
+                                            <i class="fas fa-check"></i> Aprobar
                                             </a>
                                             <a href="admin_pagos.php?accion=rechazar&id=<?= $pago['id_pago'] ?>" 
-                                               class="btn btn-sm btn-danger"
-                                               onclick="return confirm('¿Confirmas que deseas rechazar este pago?')">
-                                               <i class="fas fa-times"></i> Rechazar
+                                            class="btn btn-sm btn-danger"
+                                            onclick="return confirm('¿Confirmas que deseas rechazar este pago?')">
+                                            <i class="fas fa-times"></i> Rechazar
                                             </a>
+                                        <?php elseif ($pago['estado'] === 'completado' && empty($pago['id_inscripcion'])): ?>
+                                            <a href="admin_pagos.php?accion=inscribir&id=<?= $pago['id_pago'] ?>" 
+                                            class="btn btn-sm btn-primary"
+                                            onclick="return confirm('¿Confirmas que deseas inscribir a este usuario?')">
+                                            <i class="fas fa-user-graduate"></i> Inscribir
+                                            </a>
+                                        <?php elseif ($pago['estado'] === 'completado'): ?>
+                                            <span class="badge bg-success">Inscrito</span>
                                         <?php endif; ?>
                                     </td>
                                 </tr>
