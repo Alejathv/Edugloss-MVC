@@ -139,16 +139,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <input type="number" name="precio" step="0.01" value="<?= htmlspecialchars($curso['precio']) ?>" required>
 
     <label>Fecha Inicio:</label>
-    <input type="date" name="fecha_inicio" value="<?= htmlspecialchars($curso['fecha_inicio']) ?>" required>
+    <input type="date" name="fecha_inicio" value="<?= htmlspecialchars($curso['fecha_inicio'] ?? '') ?>" required>
+
 
     <label>Fecha Fin:</label>
-    <input type="date" name="fecha_fin" value="<?= htmlspecialchars($curso['fecha_fin']) ?>" required>
+    <input type="date" name="fecha_fin" value="<?= htmlspecialchars($curso['fecha_fin'] ?? '') ?>" required>
+
 
     <label>Estado:</label>
-    <select name="estado">
-        <option value="disponible" <?= $curso['estado'] == 'disponible' ? 'selected' : '' ?>>Disponible</option>
-        <option value="cerrado" <?= $curso['estado'] == 'cerrado' ? 'selected' : '' ?>>Cerrado</option>
-    </select>
+      <select name="estado">
+         <option value="Disponible" <?= ($curso['estado'] ?? '') == 'Disponible' ? 'selected' : '' ?>>Disponible</option>
+         <option value="Cerrado" <?= ($curso['estado'] ?? '') == 'Cerrado' ? 'selected' : '' ?>>Cerrado</option>
+      </select>
+
 
     <button type="submit">Actualizar Curso</button>
 </form>

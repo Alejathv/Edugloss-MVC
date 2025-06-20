@@ -65,188 +65,409 @@ $pagos = $pagoController->obtenerPagosAdmin($estadoFiltro);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Pagos - Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style_panel.css">
     <style>
-        .estado-badge {
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        .estado-pendiente {
-            background-color: #fff3cd;
-            color: #856404;
-        }
-        .estado-completado {
-            background-color: #d4edda;
-            color: #155724;
-        }
-        .estado-cancelado {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-        .table-responsive {
-            margin-top: 20px;
-        }
-        .filtros {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-        .comprobante-preview {
-            max-width: 150px;
-            max-height: 100px;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-        .comprobante-preview:hover {
-            transform: scale(1.5);
-            z-index: 1000;
-        }
-        .modal-comprobante {
-            max-width: 90%;
-        }
+        /* ====== FILTROS AJUSTADOS ====== */
+.filtros {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    background: #f5eaff;
+    border: 1px solid #d9bfff;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(108, 48, 194, 0.08);
+    max-width: 1000px;
+    margin: 0 auto 25px auto;
+    padding: 15px 20px;
+}
+
+.filtros label {
+    color: #6c30c2;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+.filtros .form-select {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 13px;
+    height: 34px;
+}
+
+.filtros .btn {
+    padding: 6px 10px;
+    font-size: 13px;
+    border-radius: 6px;
+    font-weight: 500;
+    border: none;
+    height: 34px;
+    line-height: 1;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.filtros .btn-primary {
+    background-color: #8e4de6;
+    color: white;
+}
+
+.filtros .btn-primary:hover {
+    background-color: #732ec4;
+}
+
+.filtros .btn-secondary {
+    background-color: #5abaff;
+    color: white;
+}
+
+.filtros .btn-secondary:hover {
+    background-color: #389ee0;
+}
+/* ====== TABLA DE PAGOS ====== */
+.table-responsive {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #f5eaff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 3px 10px rgba(108, 48, 194, 0.1);
+    border: 1px solid #d9bfff;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: white;
+}
+
+.table thead {
+    background-color: #8e4de6;
+    color: white;
+}
+
+.table th, .table td {
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+/* ====== BOTONES EN TABLA ====== */
+.table .btn {
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    margin: 3px 4px 3px 0;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.btn-inscribir {
+    background-color: #5abaff;
+    color: white;
+}
+
+.btn-inscribir:hover {
+    background-color: #389ee0;
+}
+
+.btn-aprobar {
+    background-color: #5dd39e;
+    color: white;
+}
+
+.btn-aprobar:hover {
+    background-color: #47b584;
+}
+
+.btn-rechazar {
+    background-color: #f55c5c;
+    color: white;
+}
+
+.btn-rechazar:hover {
+    background-color: #d94040;
+}
+
+
+/* Dos botones en línea */
+.acciones {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+/* ====== ESTADOS ====== */
+.estado-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    color: white;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.estado-pendiente { background-color: #f1c40f; }
+.estado-completado { background-color: #2ecc71; }
+.estado-cancelado { background-color: #e74c3c; }
+
+/* ====== COMPROBANTE ====== */
+.comprobante-preview {
+    max-width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    border: 2px solid #d2b4f2;
+}
+
+.comprobante-preview:hover {
+    transform: scale(1.05);
+}
+
+.btn-outline-primary {
+    background-color: #8e4de6;
+    color: white;
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 6px;
+}
+
+.btn-outline-primary:hover {
+    background-color: #6c30c2;
+}
+
+/* ====== MODAL ====== */
+
+#modalComprobante .modal-dialog {
+    position: fixed;
+    top: 50px;
+    right: 50px;
+    margin: 0;
+    max-width: 600px;
+    width: 90%;
+}
+
+#modalComprobante .modal-content {
+    border-radius: 15px;
+    border: 1px solid #d2b4f2;
+    box-shadow: 0 4px 12px rgba(108, 48, 194, 0.25);
+    background-color: white;
+}
+
+#modalComprobante .modal-title {
+    color: #6c30c2;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+#modalComprobante .modal-body {
+    text-align: center;
+    padding: 20px;
+}
+
+#modalComprobante img#imgComprobante {
+    width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(108, 48, 194, 0.2);
+}
+
     </style>
+    
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <h2 class="my-4">Gestión de Pagos</h2>
-                
-                <!-- Mostrar mensajes -->
-                <?php if (isset($_SESSION['mensaje'])): ?>
-                    <div class="alert alert-info"><?= $_SESSION['mensaje'] ?></div>
-                    <?php unset($_SESSION['mensaje']); ?>
-                <?php endif; ?>
-
-                <!-- Filtros -->
-                <div class="filtros">
-                    <form method="get" class="row g-3">
-                        <div class="col-md-4">
-                            <label class="form-label">Filtrar por estado:</label>
-                            <select name="estado" class="form-select">
-                                <option value="">Todos los estados</option>
-                                <option value="pendiente" <?= ($estadoFiltro === 'pendiente') ? 'selected' : '' ?>>Pendientes</option>
-                                <option value="completado" <?= ($estadoFiltro === 'completado') ? 'selected' : '' ?>>Completados</option>
-                                <option value="cancelado" <?= ($estadoFiltro === 'cancelado') ? 'selected' : '' ?>>Cancelados</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2 align-self-end">
-                            <button type="submit" class="btn btn-primary">Filtrar</button>
-                            <a href="admin_pagos.php" class="btn btn-secondary">Limpiar</a>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Tabla de pagos -->
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>ID</th>
-                                <th>Usuario</th>
-                                <th>Producto</th>
-                                <th>Comprobante</th>
-                                <th>Fecha</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($pagos as $pago): 
-                                // Obtener detalles del pago (incluyendo comprobante)
-                                $detalles = json_decode($pago['detalles_pago'] ?? '{}', true);
-                                $comprobante = $detalles['comprobante'] ?? null;
-                            ?>
-                                <tr>
-                                    <td><?= htmlspecialchars($pago['id_pago']) ?></td>
-                                    <td><?= htmlspecialchars($pago['nombre'] . ' ' . $pago['apellido']) ?></td>
-                                    <td><?= htmlspecialchars($pago['nombre_producto']) ?></td>
-<td>
-    <?php if ($comprobante): ?>
-        <?php $extension = pathinfo($comprobante, PATHINFO_EXTENSION); ?>
-        
-        <?php if (in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif'])): ?>
-            <img src="../../documentos/<?= htmlspecialchars($comprobante) ?>"
-                 class="img-thumbnail comprobante-preview"
-                 alt="Comprobante"
-                 data-bs-toggle="modal"
-                 data-bs-target="#modalComprobante"
-                 data-img-src="../../documentos/<?= htmlspecialchars($comprobante) ?>">
-        <?php else: ?>
-            <a href="../../documentos/<?= htmlspecialchars($comprobante) ?>"
-               target="_blank"
-               class="btn btn-sm btn-outline-primary">
-                <i class="fas fa-file-alt"></i> Ver PDF
+    <header class="header">
+        <section class="flex">
+            <a href="admin_panel.php" class="logo">
+                <img src="../img/LogoEGm.png" alt="EduGloss" style="height: 80px;">
             </a>
-        <?php endif; ?>
-        
-    <?php else: ?>
-        <span class="text-muted">Sin comprobante</span>
-    <?php endif; ?>
-</td>
+            <div class="icons">
+                <div id="menu-btn" class="fas fa-bars"></div>
+                <div id="user-btn" class="fas fa-user"></div>
+                <div id="toggle-btn" class="fas fa-sun"></div>
+            </div>
+            <div class="profile">
+                <img src="../img/icon1.png" class="image" alt="">
+                <h3 class="name">
+                    <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido'] ?? 'Administrador') ?>
+                </h3>
+                <p class="role">Administrador</p>
+                <div class="flex-btn">
+                    <a href="../../logout.php" class="option-btn">Cerrar Sesión</a>
+                </div>
+            </div>
+        </section>
+    </header>
 
-                                    <td><?= date('d/m/Y H:i', strtotime($pago['fecha_pago'])) ?></td>
-                                    <td>
-                                        <span class="estado-badge estado-<?= $pago['estado'] ?>">
-                                            <?= ucfirst($pago['estado']) ?>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <?php if ($pago['estado'] === 'pendiente'): ?>
-                                            <a href="admin_pagos.php?accion=aprobar&id=<?= $pago['id_pago'] ?>" 
-                                            class="btn btn-sm btn-success"
-                                            onclick="return confirm('¿Confirmas que deseas aprobar este pago?')">
-                                            <i class="fas fa-check"></i> Aprobar
-                                            </a>
-                                            <a href="admin_pagos.php?accion=rechazar&id=<?= $pago['id_pago'] ?>" 
-                                            class="btn btn-sm btn-danger"
-                                            onclick="return confirm('¿Confirmas que deseas rechazar este pago?')">
-                                            <i class="fas fa-times"></i> Rechazar
-                                            </a>
-                                        <?php elseif ($pago['estado'] === 'completado' && empty($pago['id_inscripcion'])): ?>
-                                            <a href="admin_pagos.php?accion=inscribir&id=<?= $pago['id_pago'] ?>" 
-                                            class="btn btn-sm btn-primary"
-                                            onclick="return confirm('¿Confirmas que deseas inscribir a este usuario?')">
-                                            <i class="fas fa-user-graduate"></i> Inscribir
-                                            </a>
-                                        <?php elseif ($pago['estado'] === 'completado'): ?>
-                                            <span class="badge bg-success">Inscrito</span>
-                                        <?php endif; ?>
-                                    </td>
+    <div class="side-bar">
+        <div id="close-btn"><i class="fas fa-times"></i></div>
+        <div class="profile">
+            <img src="../img/icon1.png" class="image" alt="">
+            <h3 class="name">
+                <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido'] ?? 'Administrador') ?>
+            </h3>
+            <p class="role">Administrador</p>
+        </div>
+        <nav class="navbar">
+            <a href="admin_panel.php"><i class="fas fa-home"></i><span>Inicio</span></a>
+            <a href="admin_pagos.php"><i class="fas fa-money-bill-wave"></i><span>Pagos</span></a>
+            <a href="userlist.php"><i class="fas fa-users"></i><span>Usuarios</span></a>
+            <a href="cursos.php"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
+        </nav>
+    </div>
+    <section class="main-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="my-4">Gestión de Pagos</h2>
+                    
+                    <!-- Mostrar mensajes -->
+                    <?php if (isset($_SESSION['mensaje'])): ?>
+                        <div class="alert alert-info"><?= $_SESSION['mensaje'] ?></div>
+                        <?php unset($_SESSION['mensaje']); ?>
+                    <?php endif; ?>
+
+                    <!-- Filtros -->
+                    <div class="filtros">
+                        <form method="get" class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Filtrar por estado:</label>
+                                <select name="estado" class="form-select">
+                                    <option value="">Todos los estados</option>
+                                    <option value="pendiente" <?= ($estadoFiltro === 'pendiente') ? 'selected' : '' ?>>Pendientes</option>
+                                    <option value="completado" <?= ($estadoFiltro === 'completado') ? 'selected' : '' ?>>Completados</option>
+                                    <option value="cancelado" <?= ($estadoFiltro === 'cancelado') ? 'selected' : '' ?>>Cancelados</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 align-self-end">
+                                <button type="submit" class="btn btn-primary">Filtrar</button>
+                                <a href="admin_pagos.php" class="btn btn-secondary">Limpiar</a>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Tabla de pagos -->
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Usuario</th>
+                                    <th>Producto</th>
+                                    <th>Comprobante</th>
+                                    <th>Fecha</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
                                 </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($pagos as $pago): 
+                                    // Obtener detalles del pago (incluyendo comprobante)
+                                    $detalles = json_decode($pago['detalles_pago'] ?? '{}', true);
+                                    $comprobante = $detalles['comprobante'] ?? null;
+                                ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($pago['id_pago']) ?></td>
+                                        <td><?= htmlspecialchars($pago['nombre'] . ' ' . $pago['apellido']) ?></td>
+                                        <td><?= htmlspecialchars($pago['nombre_producto']) ?></td>
+                                        <td>
+                                            <?php if ($comprobante): ?>
+                                                <?php $extension = pathinfo($comprobante, PATHINFO_EXTENSION); ?>
+                                                
+                                                <?php if (in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif'])): ?>
+                                                    <img src="../../documentos/<?= htmlspecialchars($comprobante) ?>"
+                                                        class="img-thumbnail comprobante-preview"
+                                                        alt="Comprobante"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modalComprobante"
+                                                        data-img-src="../../documentos/<?= htmlspecialchars($comprobante) ?>">
+                                                <?php else: ?>
+                                                    <a href="../../documentos/<?= htmlspecialchars($comprobante) ?>"
+                                                    target="_blank"
+                                                    class="btn btn-sm btn-outline-primary">
+                                                        <i class="fas fa-file-alt"></i> Ver PDF
+                                                    </a>
+                                                <?php endif; ?>
+                                                
+                                            <?php else: ?>
+                                                <span class="text-muted">Sin comprobante</span>
+                                            <?php endif; ?>
+                                        </td>
+
+                                        <td><?= date('d/m/Y H:i', strtotime($pago['fecha_pago'])) ?></td>
+                                        <td>
+                                            <span class="estado-badge estado-<?= $pago['estado'] ?>">
+                                                <?= ucfirst($pago['estado']) ?>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="acciones">
+                                                <?php if ($pago['estado'] === 'pendiente'): ?>
+                                                    <a href="admin_pagos.php?accion=aprobar&id=<?= $pago['id_pago'] ?>" 
+                                                    class="btn btn-sm btn-success"
+                                                    onclick="return confirm('¿Confirmas que deseas aprobar este pago?')">
+                                                    <i class="fas fa-check"></i> Aprobar
+                                                    </a>
+                                                    <a href="admin_pagos.php?accion=rechazar&id=<?= $pago['id_pago'] ?>" 
+                                                    class="btn btn-sm btn-danger"
+                                                    onclick="return confirm('¿Confirmas que deseas rechazar este pago?')">
+                                                    <i class="fas fa-times"></i> Rechazar
+                                                    </a>
+                                                <?php elseif ($pago['estado'] === 'completado' && empty($pago['id_inscripcion'])): ?>
+                                                    <a href="admin_pagos.php?accion=inscribir&id=<?= $pago['id_pago'] ?>" 
+                                                    class="btn btn-sm btn-primary"
+                                                    onclick="return confirm('¿Confirmas que deseas inscribir a este usuario?')">
+                                                    <i class="fas fa-user-graduate"></i> Inscribir
+                                                    </a>
+                                                <?php elseif ($pago['estado'] === 'completado'): ?>
+                                                    <span class="badge bg-success">Inscrito</span>
+                                                <?php endif; ?>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
     <!-- Modal para visualización de comprobantes -->
-    <div class="modal fade" id="modalComprobante" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Comprobante de Pago</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <img id="imgComprobante" src="" class="img-fluid" style="max-height: 70vh;">
-                </div>
-                <div class="modal-footer">
-                    <a id="downloadComprobante" href="#" class="btn btn-primary" download>
-                        <i class="fas fa-download"></i> Descargar
-                    </a>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <div class="modal fade" id="modalComprobante" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Comprobante de Pago</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img id="imgComprobante" src="" class="img-fluid" style="max-height: 70vh;">
+                    </div>
+                    <div class="modal-footer">
+                        <a id="downloadComprobante" href="#" class="btn btn-primary" download>
+                            <i class="fas fa-download"></i> Descargar
+                        </a>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
+    </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Configurar modal para mostrar comprobante
@@ -271,5 +492,7 @@ $pagos = $pagoController->obtenerPagosAdmin($estadoFiltro);
             });
         });
     </script>
+    <script src="../js/script.js"></script>
+    <script src="../js/mensajes.js"></script>
 </body>
 </html>
