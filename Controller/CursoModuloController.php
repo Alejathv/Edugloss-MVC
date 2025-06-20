@@ -9,12 +9,11 @@ class CursoController {
     private $model;
 
     public function __construct($db) {
-        $this->model = new CursoModel ($db);
+        $this->model = new CursoModel($db);
     }
+
     public function crearCurso() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crear_curso'])) {
-            // Verificamos los datos
-            var_dump($_POST); // Esto para ver que lleguen los datos del formulario
             $nombre = $_POST['nombre'];
             $descripcion = $_POST['descripcion'];
             $precio = $_POST['precio'];
@@ -23,7 +22,6 @@ class CursoController {
             $estado = $_POST['estado'];
 
             $resultado = $this->model->crearCurso($nombre, $descripcion, $precio, $fecha_inicio, $fecha_fin, $estado);
-            var_dump($resultado); // Para ver si devolvió true o false
 
             if ($resultado) {
                 header("Location: TablasCM.php?success=curso");
@@ -33,11 +31,11 @@ class CursoController {
             }
         }
     }
-    
 
     public function obtenerCursos() {
         return $this->model->obtenerCursos();
     }
+
     public function eliminarCurso() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['accion'] === 'eliminar_curso') {
             $id_curso = $_POST['id_curso'];
@@ -46,22 +44,22 @@ class CursoController {
             exit;
         }
     }
+
     public function obtenerCursoPorId($id) {
-    return $this->model->obtenerCursoPorId($id);
+        return $this->model->obtenerCursoPorId($id);
     }
 
     public function actualizarCurso($data) {
         $this->model->actualizarCurso($data);
     }
-
 }
-
-
 
 class ModuloController {
     private $model;
+    private $db;
 
     public function __construct($db) {
+        $this->db = $db;
         $this->model = new ModuloModel($db);
     }
 
@@ -76,9 +74,8 @@ class ModuloController {
             if (!empty($id_curso) && !empty($nombre) && !empty($descripcion)) {
                 $resultado = $this->model->crearModulo($id_curso, $nombre, $descripcion, $precio);
                 if ($resultado) {
-                    // Redirige después de crear para evitar repost
                     header("Location: TablasCM.php?success=modulo_creado");
-                    exit;  // Importante para detener el script
+                    exit;
                 } else {
                     echo "Error al crear módulo.";
                 }
@@ -96,30 +93,51 @@ class ModuloController {
             exit;
         }
     }
-    public function obtenerModulosPorCurso($idCurso){
-        return $this-> model->obtenerModulosPorCurso($idCurso);
+
+    public function obtenerModulosPorCurso($idCurso) {
+        return $this->model->obtenerModulosPorCurso($idCurso);
     }
 
     public function obtenerModulos() {
         return $this->model->obtenerModulos();
     }
+
     public function obtenerModuloPorId($id) {
-    return $this->model->obtenerModuloPorId($id);
+        return $this->model->obtenerModuloPorId($id);
     }
 
     public function actualizarModulo($data) {
         $this->model->actualizarModulo($data);
     }
 
-
     public function mostrarFormulario() {
-    require_once __DIR__ . '/../Model/CursoModel.php';
-    $cursoModel = new CursoModel($db);
-    $cursos = $cursoModel->obtenerCursos(); // Trae los cursos desde el modelo
+        require_once __DIR__ . '/../Model/CursoModel.php';
+        $cursoModel = new CursoModel($this->db);
+        $cursos = $cursoModel->obtenerCursos();
 
-    // Carga la vista y le pasa los cursos disponibles
-    require_once __DIR__ . '/../View/mdocente/CursoModulo.php';
+        require_once __DIR__ . '/../View/mdocente/CursoModulo.php';
+    }
 
-    
-}
+    public function obtenerModulosConCursos() {
+        $stmt = $this->db->prepare("SELECT m.id_modulo, m.nombre AS modulo_nombre, 
+                                  c.nombre AS curso_nombre, c.id_curso
+                                  FROM modulo m 
+                                  JOIN curso c ON m.id_curso = c.id_curso 
+                                  ORDER BY c.nombre, m.nombre");
+        
+        if (!$stmt) {
+            throw new Exception("Error en la preparación de la consulta: " . $this->db->error);
+        }
+        
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $modulosConCursos = [];
+        while ($row = $result->fetch_assoc()) {
+            $modulosConCursos[] = $row;
+        }
+        
+        $stmt->close();
+        return $modulosConCursos;
+    }
 }
