@@ -5,12 +5,14 @@ document.addEventListener("DOMContentLoaded", function () {
    let darkMode = localStorage.getItem('dark-mode');
 
    const enableDarkMode = () => {
+      if (!toggleBtn) return;
       toggleBtn.classList.replace('fa-sun', 'fa-moon');
       body.classList.add('dark');
       localStorage.setItem('dark-mode', 'enabled');
    }
 
    const disableDarkMode = () => {
+      if (!toggleBtn) return;
       toggleBtn.classList.replace('fa-moon', 'fa-sun');
       body.classList.remove('dark');
       localStorage.setItem('dark-mode', 'disabled');
@@ -20,22 +22,22 @@ document.addEventListener("DOMContentLoaded", function () {
       enableDarkMode();
    }
 
-   toggleBtn.onclick = () => {
-      darkMode = localStorage.getItem('dark-mode');
-      if (darkMode === 'disabled') {
-         enableDarkMode();
-      } else {
-         disableDarkMode();
+   if (toggleBtn) {
+      toggleBtn.onclick = () => {
+         darkMode = localStorage.getItem('dark-mode');
+         if (darkMode === 'disabled') {
+            enableDarkMode();
+         } else {
+            disableDarkMode();
+         }
       }
    }
 
    let profile = document.querySelector('.header .flex .profile');
-   let search = document.querySelector('.header .flex .search-form');
    let sideBar = document.querySelector('.side-bar');
 
    document.querySelector('#user-btn').onclick = () => {
       profile.classList.toggle('active');
-      if (search) search.classList.remove('active');
    }
 
    document.querySelector('#menu-btn').onclick = () => {
@@ -50,7 +52,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
    window.onscroll = () => {
       profile.classList.remove('active');
-      if (search) search.classList.remove('active');
 
       if (window.innerWidth < 1200) {
          sideBar.classList.remove('active');
