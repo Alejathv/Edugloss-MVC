@@ -111,7 +111,8 @@ $modulos = $moduloModel->obtenerModulosDisponibles();
 
                         <div class="service-item">
                             <div class="service-img">
-                                <img src="View/img/servicio-<?= ($curso['id_curso'] % 4) + 1 ?>.jpg" class="img-fluid rounded-top w-100" alt="<?= htmlspecialchars($curso['nombre']) ?>">
+                                <img src="img/servicio-<?= ($i % 4) + 1 ?>.jpg" class="img-fluid rounded-top w-100" alt="<?= htmlspecialchars($curso['nombre']) ?>">
+
                                 <div class="service-icon p-3">
                                     <i class="fa-solid fa-graduation-cap"></i>
                                 </div>
@@ -145,7 +146,7 @@ $modulos = $moduloModel->obtenerModulosDisponibles();
                     <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="<?= (($j % 4) + 2) * 0.1 ?>s">
                         <div class="service-item">
                             <div class="service-img">
-                                <img src="View/img/servicio-<?= ($modulo['id_modulo'] % 4) + 1 ?>.jpg" class="img-fluid rounded-top w-100" alt="<?= htmlspecialchars($modulo['nombre']) ?>">
+                                <img src="img/servicio-<?= ($modulo['id_modulo'] % 4) + 1 ?>.jpg" class="img-fluid rounded-top w-100" alt="<?= htmlspecialchars($modulo['nombre']) ?>">
                                 <div class="service-icon p-3">
                                     <i class="fa-solid fa-book-open"></i>
                                 </div>
@@ -216,14 +217,6 @@ $modulos = $moduloModel->obtenerModulosDisponibles();
                                     <p class="text-white">❌ D y F: Cerrado</p>
                                 </div>
                             </div>
-                            <!-- Métodos de Pago -->
-                            <div class="col-6 col-md-3">
-                                <div class="footer-item text-start">
-                                    <h4 class="text-white mb-2">Métodos de Pago</h4>
-                                    <p class="text-white mb-1">💳 Tarjetas: Visa, Mastercard</p>
-                                    <p class="text-white mb-1">📲 Transferencias Bancarias</p>
-                                    <p class="text-white">🪙 Efectivo</p>
-                                </div>
                             </div>
                         </div>
                     </div>

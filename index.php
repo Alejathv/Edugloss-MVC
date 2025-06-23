@@ -260,7 +260,7 @@ if (!empty($mensaje)) {
                                     <h4 class="mb-4">Curso: <?= htmlspecialchars($curso['nombre']) ?></h4>
                                     <p class="mb-4"><?= htmlspecialchars($curso['descripcion']) ?></p>
                                     <p class="text-primary fw-bold mb-3">$<?= number_format($curso['precio'], 2) ?></p>
-                                    <form action="procesar_pago.php" method="POST">
+                                    <form action="View/procesar_pago.php" method="POST">
                                         <input type="hidden" name="tipo_producto" value="curso">
                                         <input type="hidden" name="id_producto" value="<?= $curso['id_curso'] ?>">
                                         <input type="hidden" name="nombre_producto" value="<?= htmlspecialchars($curso['nombre']) ?>">
@@ -294,7 +294,7 @@ if (!empty($mensaje)) {
                                     <h4 class="mb-4">Módulo: <?= htmlspecialchars($modulo['nombre']) ?></h4>
                                     <p class="mb-4"><?= htmlspecialchars($modulo['descripcion'] ?? 'Módulo especializado') ?></p>
                                     <p class="text-primary fw-bold mb-3">$<?= number_format($modulo['precio'], 2) ?></p>
-                                    <form action="procesar_pago.php" method="POST">
+                                    <form action="View/procesar_pago.php" method="POST">
                                         <input type="hidden" name="tipo_producto" value="modulo">
                                         <input type="hidden" name="id_producto" value="<?= $modulo['id_modulo'] ?>">
                                         <input type="hidden" name="nombre_producto" value="<?= htmlspecialchars($modulo['nombre']) ?>">

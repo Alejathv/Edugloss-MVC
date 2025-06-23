@@ -214,20 +214,8 @@ $evidencias = mysqli_query($conexion, "
       <a href="home.html" class="logo">
          <img src="../img/LogoEGm.png" alt="EduGloss" style="height: 80px;" />
       </a>
-      <form action="search.html" method="post" class="search-form d-none d-md-flex">
-         <input
-            type="text"
-            name="search_box"
-            required
-            placeholder="buscar cursos..."
-            maxlength="100"
-            class="form-control"
-         />
-         <button type="submit" class="btn btn-primary ms-2"><i class="fas fa-search"></i></button>
-      </form>
       <div class="icons d-flex align-items-center gap-3">
          <div id="menu-btn" class="fas fa-bars fs-4"></div>
-         <div id="search-btn" class="fas fa-search fs-4 d-md-none"></div>
          <div id="user-btn" class="fas fa-user fs-4"></div>
          <div id="toggle-btn" class="fas fa-sun fs-4"></div>
       </div>

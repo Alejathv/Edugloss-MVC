@@ -71,15 +71,8 @@ $usuarios = $adminController->listarUsuarios();
         <a href="docente_panel.php" class="logo">
             <img src="../img/LogoEGm.png" alt="EduGloss" style="height: 80px;">
         </a>
-      
-      <form action="search.html" method="post" class="search-form">
-         <input type="text" name="search_box" required placeholder="buscar cursos..." maxlength="100">
-         <button type="submit" class="fas fa-search"></button>
-      </form>
-
       <div class="icons">
          <div id="menu-btn" class="fas fa-bars"></div>
-         <div id="search-btn" class="fas fa-search"></div>
          <div id="user-btn" class="fas fa-user"></div>
          <div id="toggle-btn" class="fas fa-sun"></div>
       </div>

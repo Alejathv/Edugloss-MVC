@@ -32,24 +32,27 @@ class ClienteModel {
      * @param string $apellido
      * @param string $correo
      * @param string $telefono
-     * @return bool
+     * @return int|false ID insertado o false si falla
      */
     public function registrarCliente($nombre, $apellido, $correo, $telefono) {
-        // Definir rol como 'cliente'
         $rol = 'cliente';
         $estado = 'activo';
         $fecha_creacion = date('Y-m-d');
-        
-        // La contraseña será NULL
+
         $stmt = $this->db->prepare("INSERT INTO usuarios (nombre, apellido, telefono, correo, contraseña, rol, fecha_creacion, estado) VALUES (?, ?, ?, ?, NULL, ?, ?, ?)");
         $stmt->bind_param("sssssss", $nombre, $apellido, $telefono, $correo, $rol, $fecha_creacion, $estado);
-        
-        $resultado = $stmt->execute();
-        $stmt->close();
-        
-        return $resultado;
+
+        if ($stmt->execute()) {
+            $id_insertado = $this->db->insert_id;
+            $stmt->close();
+            return $id_insertado;
+        } else {
+            $stmt->close();
+            return false;
+        }
     }
-     public function buscarClientePorEmail($correo) {
+
+    public function buscarClientePorEmail($correo) {
         $stmt = $this->db->prepare("SELECT * FROM usuarios WHERE correo = ?");
         $stmt->bind_param("s", $correo);
         $stmt->execute();
