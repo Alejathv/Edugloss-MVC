@@ -2054,3 +2054,375 @@ form.boton-estilo button:hover {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
+/* foro */
+.foro-container {
+          max-width: 800px;
+          margin: 40px auto;
+          background: #fff;
+          padding: 30px;
+          border-radius: 16px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+       }
+
+       .foro-container h2 {
+          font-size: 28px;
+          color: #6610f2;
+          margin-bottom: 20px;
+          text-align: center;
+       }
+
+       .comentario {
+          background-color: #f8f8ff;
+          border-radius: 12px;
+          padding: 15px 20px;
+          margin-bottom: 16px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+       }
+
+       .comentario strong {
+          font-size: 20px;
+          color: #4c00b4;
+       }
+
+       .contenido-mensaje {
+          font-size: 18px;
+          color: #333;
+          margin-top: 8px;
+          line-height: 1.5;
+       }
+
+       .fecha-mensaje {
+          font-size: 13px;
+          color: #777;
+          text-align: right;
+          display: block;
+          margin-top: 6px;
+          font-style: italic;
+       }
+
+       .info-usuario {
+          font-size: 16px;
+          font-weight: bold;
+          color: #444;
+          margin-bottom: 20px;
+       }
+
+       textarea[name="contenido"], textarea[name="contenido_respuesta"] {
+          width: 100%;
+          height: 120px;
+          padding: 15px;
+          font-size: 16px;
+          border: 1px solid #ccc;
+          border-radius: 10px;
+          margin-bottom: 12px;
+          background: #fdfdfd;
+          box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+          resize: vertical;
+       }
+
+       .btn-enviar {
+          display: inline-block;
+          background: #6610f2;
+          color: white;
+          padding: 12px 24px;
+          border: none;
+          border-radius: 10px;
+          font-size: 16px;
+          cursor: pointer;
+          transition: background 0.3s;
+       }
+
+       .btn-enviar:hover {
+          background: #510ebd;
+       }
+
+       form {
+          margin-top: 30px;
+       }
+
+       /* Estilos para comentarios anidados */
+       .respuesta {
+          margin-left: 40px;
+          border-left: 3px solid #6610f2;
+          padding-left: 15px;
+          margin-top: 10px;
+       }
+       .btn-responder {
+          background: none;
+          border: none;
+          color: #6610f2;
+          cursor: pointer;
+          font-size: 14px;
+          margin-top: 5px;
+       }
+       .form-respuesta {
+          display: none;
+          margin-top: 10px;
+       }
+/* evidencias */
+.contenedor-centro {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f0f0f5;
+}
+
+.tabla-evidencias {
+    background-color: #f9f7fd;
+    border: 1px solid #c9bdf0;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    width: 100%;
+}
+
+.tabla-evidencias h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #5c3fa3;
+    margin-bottom: 25px;
+}
+
+.tablaevidencia {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    font-size: 16px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.tablaevidencia thead {
+    background-color: #e9defb;
+    color: #4b2e83;
+    font-weight: bold;
+}
+
+.tablaevidencia th,
+.tablaevidencia td {
+    padding: 14px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #e3d7f7;
+}
+
+.tablaevidencia img {
+    max-width: 120px;
+    max-height: 80px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.estado-aprobado {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.estado-reprobado {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.estado-pendiente {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.btn-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: white;
+}
+
+.btn-icon.aprobar {
+    background-color: #8656e9;
+}
+
+.btn-icon.aprobar:hover {
+    background-color: #734bd1;
+}
+
+.btn-icon.reprobar {
+    background-color: #ff6b6b;
+}
+
+.btn-icon.reprobar:hover {
+    background-color: #d94a4a;
+}
+       /* FORMULARIO DE SUBIDA DE EVIDENCIA */
+.formulario-subida {
+    background-color: #f5edff;
+    border: 1px solid #a875e7;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+}
+
+.formulario-subida h2 {
+    color: #5e3ea1;
+    font-weight: 600;
+}
+
+.formulario-subida select,
+.formulario-subida input[type="file"] {
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 100%; /* Esto hace que se vea más largo */
+    box-sizing: border-box; /* Para que el padding no desborde */
+}
+
+.formulario-subida .btn-primary {
+    background-color: #8656e9;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 18px;
+}
+
+.formulario-subida .btn-primary:hover {
+    background-color: #734bd1;
+}
+.contenedor-centro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50px; /* 100% alto de la pantalla */
+    background-color: #f0f0f5; /* color de fondo opcional */
+    padding: 20px;
+}
+/* Contenedor general de la tabla */
+.tabla-evidencias {
+    background-color: #f9f7fd;
+    border: 1px solid #c9bdf0;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Título */
+.tabla-evidencias h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #5c3fa3;
+    margin-bottom: 25px;
+}
+
+/* Tabla */
+.tablaevidencia {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    font-size: 16px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Encabezado */
+.tablaevidencia thead {
+    background-color: #e9defb;
+    color: #4b2e83;
+    font-weight: bold;
+}
+
+.tablaevidencia th,
+.tablaevidencia td {
+    padding: 14px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #e3d7f7;
+}
+
+/* Imagen de archivo */
+.tablaevidencia img {
+    max-width: 120px;
+    max-height: 80px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Estado */
+.tablaevidencia td:nth-child(5) {
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+/* Botón Eliminar */
+.delete-btn {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #d94a4a;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .tablaevidencia th,
+    .tablaevidencia td {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .tablaevidencia img {
+        max-width: 90px;
+        max-height: 60px;
+    }
+}
+/* Estados visuales */
+.estado-aprobado {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.estado-reprobado {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.estado-pendiente {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+
