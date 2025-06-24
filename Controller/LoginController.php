@@ -25,9 +25,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["btnlogin"])) {
         header("Location: ../View/login.php");
         exit();
     }
+    // Verificar si el estado del usuario es 'inactivo'
+    if (isset($user['estado']) && strtolower($user['estado']) !== 'activo') {
+        $_SESSION['error'] = "Tu cuenta está inactiva. Contacta al administrador.";
+        header("Location: ../View/login.php");
+        exit();
+    }
+    
+    // Verificar contraseña 
+    if (!password_verify($password, $user["contraseña"])){
 
-    // Verificar contraseña (idealmente con password_verify si usas hash)
-    if ($password !== $user["contraseña"]) {
         $_SESSION['error'] = "Credenciales incorrectas. Intenta de nuevo.";
         header("Location: ../View/login.php");
         exit();

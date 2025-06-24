@@ -120,4 +120,13 @@ class PagoController {
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
+    public function obtenerPagoPorId($idPago) {
+        $query = "SELECT * FROM pago WHERE id_pago = ?";
+        $stmt = $this->pagoModel->getDb()->prepare($query);
+        $stmt->bind_param("i", $idPago);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        return $result->fetch_assoc();
+    }
 }
