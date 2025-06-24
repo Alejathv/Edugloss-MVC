@@ -16,14 +16,14 @@ if (!$id_usuario) {
 
 $msg = "";
 
-// Obtiene datos actuales (contraseña en texto plano)
+// Obtener datos del usuario (sin guardar contraseña en texto plano en la variable)
 $stmt = $conn->prepare("SELECT nombre, correo, contraseña, rol FROM usuarios WHERE id_usuario = ?");
 if (!$stmt) {
     die("Error en la consulta: " . $conn->error);
 }
 $stmt->bind_param("i", $id_usuario);
 $stmt->execute();
-$stmt->bind_result($nombre_actual, $correo_actual, $pass_actual, $rol_actual);
+$stmt->bind_result($nombre_actual, $correo_actual, $hash_actual, $rol_actual);
 $stmt->fetch();
 $stmt->close();
 
@@ -34,22 +34,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
     $correo = $_POST['email'] ?? '';
     $old_pass = $_POST['old_pass'] ?? '';
     $new_pass = $_POST['new_pass'] ?? '';
-    $c_pass = $_POST['c_pass'] ?? '';
+    $c_pass   = $_POST['c_pass'] ?? '';
 
     if (empty($nombre) || empty($correo)) {
         $msg = "El nombre y el correo son obligatorios.";
     } else {
-        $nuevo_pass = $pass_actual; // por defecto mantiene la misma contraseña
+        $nuevo_pass = $hash_actual; // Por defecto se mantiene la contraseña actual (hasheada)
 
         if (!empty($new_pass)) {
             if (empty($old_pass)) {
                 $msg = "Debe ingresar la contraseña anterior para cambiar la contraseña.";
-            } elseif ($old_pass !== $pass_actual) {  // comparación simple texto plano
+            } elseif (!password_verify($old_pass, $hash_actual)) {
                 $msg = "La contraseña anterior no coincide.";
             } elseif ($new_pass !== $c_pass) {
                 $msg = "Las nuevas contraseñas no coinciden.";
             } else {
-                $nuevo_pass = $new_pass; // actualiza la contraseña con texto plano
+                $nuevo_pass = password_hash($new_pass, PASSWORD_DEFAULT); // Hashea la nueva contraseña
             }
         } else {
             if (!empty($old_pass)) {
@@ -58,21 +58,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit'])) {
         }
 
         if (empty($msg)) {
-            $foto_perfil = $_POST['foto_perfil']; // Obtiene 'icon1.png' o 'icon2.png'
-            
-            // Actualiza la BD incluyendo foto_perfil
+            $foto_perfil = $_POST['foto_perfil']; // 'icon1.png' o 'icon2.png'
+
             $stmt = $conn->prepare("UPDATE usuarios SET nombre = ?, correo = ?, contraseña = ?, foto_perfil = ? WHERE id_usuario = ?");
             $stmt->bind_param("ssssi", $nombre, $correo, $nuevo_pass, $foto_perfil, $id_usuario);
-            
+
             if ($stmt->execute()) {
-                // Actualiza la sesión para reflejar cambios al instante
+                // Actualiza sesión
                 $_SESSION['foto_perfil'] = $foto_perfil;
                 $_SESSION['nombre'] = $nombre;
+
                 $msg = "Perfil actualizado correctamente.";
+
+                // Actualiza las variables actuales
                 $foto_actual = $foto_perfil;
                 $nombre_actual = $nombre;
                 $correo_actual = $correo;
-                $pass_actual = $nuevo_pass;
+                $hash_actual = $nuevo_pass;
             } else {
                 $msg = "Error al actualizar el perfil.";
             }
