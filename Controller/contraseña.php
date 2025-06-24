@@ -41,8 +41,12 @@ if (!in_array(strtolower($user['rol']), $rolesPermitidos)) {
 
 // Generar nueva clave
 $clave = substr(md5(microtime()), 0, 8);
+
+// Hashear la clave antes de guardarla
+$claveHash = password_hash($clave, PASSWORD_DEFAULT);
+
 // Actualizar clave en la base de datos
-if ($userModel->updatePassword($correo, $clave)) {
+if ($userModel->updatePassword($correo, $claveHash)) {
 
     // Enviar correo con PHPMailer
     $mail = new PHPMailer(true);
