@@ -137,10 +137,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <input type="number" name="precio" step="0.01" value="<?= htmlspecialchars($modulo['precio']) ?>" required>
 
     <label>Estado:</label>
-    <select name="estado">
-        <option value="disponible" <?= $modulo['estado'] == 'disponible' ? 'selected' : '' ?>>Disponible</option>
-        <option value="cerrado" <?= $modulo['estado'] == 'cerrado' ? 'selected' : '' ?>>Cerrado</option>
-    </select>
+      <select name="estado">
+         <option value="disponible" <?= ($modulo['estado'] ?? '') == 'disponible' ? 'selected' : '' ?>>Disponible</option>
+         <option value="cerrado" <?= ($modulo['estado'] ?? '') == 'cerrado' ? 'selected' : '' ?>>Cerrado</option>
+      </select>
 
     <button type="submit">Actualizar Módulo</button>
 </form>
