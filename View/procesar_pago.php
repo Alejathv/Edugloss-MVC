@@ -5,6 +5,29 @@ require_once '../Model/database.php';
 require_once '../Model/PagoModel.php';
 require_once '../Model/ClienteModel.php';
 
+if (isset($_POST['ajax']) && $_POST['ajax'] === 'buscar_cliente' && isset($_POST['email'])) {
+    require_once '../Model/database.php';
+    require_once '../Model/ClienteModel.php';
+
+    $db = new Database();
+    $conn = $db->getConnection();
+    $clienteModel = new ClienteModel($conn);
+
+    $cliente = $clienteModel->buscarClientePorEmail($_POST['email']);
+
+    if ($cliente) {
+        echo json_encode([
+            'success' => true,
+            'nombre' => $cliente['nombre'],
+            'apellido' => $cliente['apellido'],
+            'telefono' => $cliente['telefono']
+        ]);
+    } else {
+        echo json_encode(['success' => false]);
+    }
+    exit(); // Finaliza si fue una solicitud AJAX
+}
+
 // Procesar cuando se envía el formulario completo
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_pago'])) {
     $db = new Database();
@@ -21,38 +44,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_pago'])) {
         $idCliente = $clienteModel->registrarCliente($_POST['nombre'], $_POST['apellido'], $_POST['email'], $_POST['telefono']);
     }
 
-    // 2. Guardar pago y comprobante
-    $pagoModel = new PagoModel($conn);
-    
-    // Procesar archivo subido
-    $nombreArchivo = 'comprobante_'.time().'.'.pathinfo($_FILES['comprobante']['name'], PATHINFO_EXTENSION);
-    $rutaDestino = "../documentos".$nombreArchivo;
-    move_uploaded_file($_FILES['comprobante']['tmp_name'], $rutaDestino);
+// 2. Guardar pago y comprobante
+$pagoModel = new PagoModel($conn);
 
-    if ($_POST['tipo_producto'] === 'curso') {
-$referencia = $_POST['referencia'] ?? null; // Valor por defecto null si no existe
-$idPago = $pagoModel->crearPagoCurso(
-    $idCliente,
-    $_POST['id_producto'],
-    $_POST['precio_producto'],
-    'transferencia',
-    $referencia,  // <-- Ahora es seguro
-    $nombreArchivo
-);
-    } else {
-        $idPago = $pagoModel->crearPagoModulo(
-            $idCliente,
-            $_POST['id_producto'],
-            $_POST['precio_producto'],
-            'transferencia',
-            $_POST['referencia'],
-            $nombreArchivo
-        );
-    }
+// Validar archivo subido
+$nombreOriginal = $_FILES['comprobante']['name'];
+$extension = strtolower(pathinfo($nombreOriginal, PATHINFO_EXTENSION));
+$permitidos = ['pdf', 'jpg', 'jpeg', 'png'];
 
-    // Redirigir a confirmación
-    header("Location: confirmacion_pago.php?id=".$idPago);
-    exit();
+if (!in_array($extension, $permitidos)) {
+    die("Error: Solo se permiten archivos PDF o imágenes (JPG, JPEG, PNG).");
+}
+
+$mime = mime_content_type($_FILES['comprobante']['tmp_name']);
+$mime_permitidos = ['application/pdf', 'image/jpeg', 'image/png'];
+
+if (!in_array($mime, $mime_permitidos)) {
+    die("Error: El tipo MIME del archivo no es válido.");
+}
+
+// Si pasa la validación, mover archivo
+$nombreArchivo = 'comprobante_'.time().'.'.$extension;
+$rutaDestino = "../documentos/" . $nombreArchivo;
+move_uploaded_file($_FILES['comprobante']['tmp_name'], $rutaDestino);
+
+// Registrar pago
+if ($_POST['tipo_producto'] === 'curso') {
+    $referencia = $_POST['referencia'] ?? null;
+    $idPago = $pagoModel->crearPagoCurso(
+        $idCliente,
+        $_POST['id_producto'],
+        $_POST['precio_producto'],
+        'transferencia',
+        $referencia,
+        $nombreArchivo
+    );
+} else {
+    $idPago = $pagoModel->crearPagoModulo(
+        $idCliente,
+        $_POST['id_producto'],
+        $_POST['precio_producto'],
+        'transferencia',
+        $_POST['referencia'],
+        $nombreArchivo
+    );
+}
+
+// Redirigir a confirmación
+sleep(1); 
+header("Location: confirmacion_pago.php?id=" . $idPago);
+exit();
+
 }
 
 // Si viene de planes.php (primer paso)
@@ -264,6 +306,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_producto'])) {
     </div>
 
     <script src="../View/js/bootstrap.bundle.min.js"></script>
+    <script>
+document.querySelector('input[name="email"]').addEventListener('blur', function () {
+    const email = this.value.trim();
+    if (!email) return;
+
+    fetch('', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'ajax=buscar_cliente&email=' + encodeURIComponent(email)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.querySelector('input[name="nombre"]').value = data.nombre;
+            document.querySelector('input[name="apellido"]').value = data.apellido;
+            document.querySelector('input[name="telefono"]').value = data.telefono;
+
+            document.querySelector('input[name="nombre"]').readOnly = true;
+            document.querySelector('input[name="apellido"]').readOnly = true;
+            document.querySelector('input[name="telefono"]').readOnly = true;
+        } else {
+            document.querySelectorAll('.campo-input').forEach(el => el.readOnly = false);
+        }
+    });
+});
+</script>
 </body>
 </html>
 <?php

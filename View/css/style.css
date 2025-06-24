@@ -1,12 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
-html{
-    scroll-behavior: smooth;
-    box-sizing: border-box;
+:root {
+  --main-color: #6f38c5;
 }
 
-/* Aplica "Prompt" a todos los textos en el contenedor */
+/* Asegúrate de aplicarlo globalmente */
+* {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: var(--main-color) transparent; /* Firefox */
+}
+
+/* Ancho de la barra de desplazamiento */
+::-webkit-scrollbar {
+  width: 10px; /* solo barra vertical */
+}
+
+/* Color del fondo de la pista */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Color y estilo del pulgar (el bloque que se arrastra) */
+::-webkit-scrollbar-thumb {
+  background-color: #6f38c5;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
 
 .header-carousel {
     font-family: "Prompt", sans-serif;
