@@ -89,7 +89,7 @@ class InscripcionModel {
      * @return bool True si la actualización fue exitosa
      */
     private function actualizarContraseña($id_usuario, $clave) {
-        $stmt = $this->conn->prepare("UPDATE usuarios SET clave = ? WHERE id_usuario = ?");
+        $stmt = $this->conn->prepare("UPDATE usuarios SET contraseña = ? WHERE id_usuario = ?");
         $hashedPassword = password_hash($clave, PASSWORD_DEFAULT);
         $stmt->bind_param("si", $hashedPassword, $id_usuario);
         return $stmt->execute();
