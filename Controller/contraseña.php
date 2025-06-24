@@ -80,7 +80,7 @@ if ($userModel->updatePassword($correo, $claveHash)) {
 
         $mail->send();
         $_SESSION['mensaje'] = "Clave actualizada correctamente. Se ha enviado un correo a <strong>$correo</strong> con la nueva contraseña.";
-        header("Location: ../recovery.php?mensaje=");
+        header("Location: ../View/recovery.php?mensaje=");
 
     } catch (Exception $e) {
         if ($_ENV['ENV'] === 'development') {
