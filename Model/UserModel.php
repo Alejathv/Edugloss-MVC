@@ -56,16 +56,15 @@ class UserModel {
     }
 
     public function updateUser($date) {
-        $sql = "UPDATE usuarios SET nombre=?, apellido=?, telefono=?, correo=?, rol=?, estado=?, especialidad=? WHERE id_usuario=?";
+        $sql = "UPDATE usuarios SET nombre=?, apellido=?, telefono=?, correo=?, rol=?, estado=? WHERE id_usuario=?";
         $stmt = $this->db->prepare($sql);
-        $stmt->bind_param("sssssssi",
+        $stmt->bind_param("ssssssi",
             $date['nombre'],
             $date['apellido'],
             $date['telefono'],
             $date['correo'],
             $date['rol'],
             $date['estado'],
-            $date['especialidad'],
             $date['id_usuario']
         );
         $stmt->execute();

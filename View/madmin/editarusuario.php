@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+    ini_set('display_errors', 1);
 require_once __DIR__ . '/../../Controller/AdminController.php';
 
 $adminController = new AdminController();
@@ -119,10 +121,6 @@ if (!$usuario) {
             <option value="activo" <?= $usuario['estado'] === 'activo' ? 'selected' : '' ?>>Activo</option>
             <option value="inactivo" <?= $usuario['estado'] === 'inactivo' ? 'selected' : '' ?>>Inactivo</option>
         </select><br>
-
-        <label>Especialidad:</label>
-        <input type="text" name="especialidad" value="<?= $usuario['especialidad'] ?>"><br><br>
-
         <button type="submit">Actualizar Usuario</button>
     </form>
 <footer class="footer">
