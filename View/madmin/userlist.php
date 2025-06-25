@@ -79,14 +79,14 @@ $usuarios = $adminController->listarUsuarios();
 
       <!-- Perfil del usuario, muestra la imagen, nombre y rol -->
       <div class="profile">
-         <img src="./View/img/icon1.png" class="image" alt="imagen de estudiante">
+         <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
          <h3 class="name">
          <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
          </h3>
          <p class="role">Administrador</p>
-         <a href="./View/perfil.php" class="btn">ver perfil</a>
+         <a href="../perfil.php" class="btn">ver perfil</a>
          <div class="flex-btn">
-         <a href="logout.php" class="option-btn">Cerrar Sesión</a>
+         <a href="../../logout.php" class="option-btn">Cerrar Sesión</a>
          </div>
       </div>   
 
@@ -101,7 +101,7 @@ $usuarios = $adminController->listarUsuarios();
    </div>
 
    <div class="profile">
-      <img src="./View/img/icon1.png" class="image" alt="">
+      <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
       <h3 class="name">
       <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
       </h3>
@@ -112,8 +112,7 @@ $usuarios = $adminController->listarUsuarios();
    <nav class="navbar">
         <a href="admin_panel.php"><i class="fas fa-home"></i><span>Inicio</span></a>
         <a href="admin_pagos.php"><i class="fas fa-money-bill-wave"></i><span>Pagos</span></a>
-        <a href="userlist.php"><i class="fas fa-users"></i><span>Usuarios</span></a>
-        <a href="cursos.php"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
+        <a href="userlist.php"><i class="fas fa-users"></i><span>Gestión de Usuarios</span></a>
     </nav>
 
 </div>

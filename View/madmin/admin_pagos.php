@@ -82,11 +82,11 @@ $pagos = $pagoController->obtenerPagosAdmin($estadoFiltro);
                 <div id="toggle-btn" class="fas fa-sun"></div>
             </div>
             <div class="profile">
-                <img src="../img/icon1.png" class="image" alt="">
-                <h3 class="name">
+                <img src="../img/icon1.png" class="image" alt=""><img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil"><h3 class="name">
                     <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido'] ?? 'Administrador') ?>
                 </h3>
                 <p class="role">Administrador</p>
+                <a href="../perfil.php" class="btn">ver perfil</a>
                 <div class="flex-btn">
                     <a href="../../logout.php" class="option-btn">Cerrar Sesión</a>
                 </div>
@@ -97,17 +97,18 @@ $pagos = $pagoController->obtenerPagosAdmin($estadoFiltro);
     <div class="side-bar">
         <div id="close-btn"><i class="fas fa-times"></i></div>
         <div class="profile">
-            <img src="../img/icon1.png" class="image" alt="">
+            <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
             <h3 class="name">
                 <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido'] ?? 'Administrador') ?>
             </h3>
             <p class="role">Administrador</p>
+                  <a href="../perfil.php" class="btn">Ver perfil</a>
+
         </div>
         <nav class="navbar">
             <a href="admin_panel.php"><i class="fas fa-home"></i><span>Inicio</span></a>
             <a href="admin_pagos.php"><i class="fas fa-money-bill-wave"></i><span>Pagos</span></a>
-            <a href="userlist.php"><i class="fas fa-users"></i><span>Usuarios</span></a>
-            <a href="cursos.php"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
+            <a href="userlist.php"><i class="fas fa-users"></i><span>Gestión de Usuarios</span></a>
         </nav>
     </div>
     <section class="main-content">

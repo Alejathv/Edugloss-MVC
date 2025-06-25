@@ -70,7 +70,7 @@ $evidencias = $result->fetch_all(MYSQLI_ASSOC);
         <a href="../perfil.php" class="btn">Ver Perfil</a>
     </div>
     <nav class="navbar">
-   <a href="home.php"><i class="fas fa-home"></i><span>Inicio</span></a>
+   <a href="./docente_panel.php"><i class="fas fa-home"></i><span>Inicio</span></a>
    <a href="../ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
    
    <?php if (isset($_SESSION['rol_nombre'])) { ?>
@@ -82,8 +82,8 @@ $evidencias = $result->fetch_all(MYSQLI_ASSOC);
       <?php } elseif ($_SESSION['rol_nombre'] == 'docente') { ?>
          <!-- Enlaces para docentes -->
          <a href="./TablasCM.php"><i class="fas fa-book"></i><span>Gestion De Aprendizaje</span></a>
-         <a href="./Contenido.php"><i class="fas fa-edit"></i><span>Contenido</span></a>
-         <a href="./evidencias.php"><i class="fas fa-users"></i><span>Evidencias</span></a>
+         <a href="./Contenido.php"><i class="fas fa-upload"></i><span>Subir Material</span></a>
+         <a href="./evidencias.php"><i class="fas fa-file-alt"></i><span>Evidencias</span></a>
       
       <?php } elseif ($_SESSION['rol_nombre'] == 'administrador') { ?>
          <!-- Enlaces para administradores -->
@@ -95,9 +95,7 @@ $evidencias = $result->fetch_all(MYSQLI_ASSOC);
       <!-- Enlace para invitados/no logueados -->
       <a href="login.php"><i class="fas fa-sign-in-alt"></i><span>Iniciar Sesión</span></a>
    <?php } ?>
-   
-   <!-- Enlace común para todos -->
-   <a href="contact.html"><i class="fas fa-headset"></i><span>Contáctanos</span></a>
+
 </nav>
 </div>
 <section class="main-content">

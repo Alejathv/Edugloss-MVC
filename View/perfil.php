@@ -86,7 +86,6 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'ico
       <div class="profile">
          <div class="profile-image-container">
            <img src="../View/img/<?php echo htmlspecialchars($foto_perfil); ?>" class="image" alt="Foto de perfil" />
-           <a href="cambiar_foto.php" class="edit-icon" title="Cambiar foto de perfil"><i class="fas fa-pencil"></i></a>
          </div>
          <h3 class="name"><?php echo htmlspecialchars($nombre); ?></h3>
          <p class="role"><?php echo htmlspecialchars($rol); ?></p>
@@ -102,7 +101,6 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'ico
 </header>
 
 <div class="side-bar">
-
    <div id="close-btn">
       <i class="fas fa-times"></i>
    </div>
@@ -115,13 +113,33 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'ico
    </div>
 
    <nav class="navbar">
-      <a href="home.html"><i class="fas fa-home"></i><span>home</span></a>
-      <a href="about.html"><i class="fas fa-question"></i><span>about</span></a>
-      <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>courses</span></a>
-      <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>teachers</span></a>
-      <a href="contact.html"><i class="fas fa-headset"></i><span>Preguntas Frecuentes</span></a>
+      <?php if ($rol == 'estudiante'): ?>
+         <!-- Menú para estudiantes -->
+         <a href="../View/mestudiante/home.php"><i class="fas fa-home"></i><span>Inicio</span></a>
+         <a href="cursos.php"><i class="fas fa-book"></i><span>Mis Cursos</span></a>
+         <a href="calificaciones.php"><i class="fas fa-star"></i><span>Calificaciones</span></a>
+         <a href="tareas.php"><i class="fas fa-tasks"></i><span>Tareas</span></a>
+         <a href="foro.php"><i class="fas fa-comments"></i><span>Foro Estudiantil</span></a>
+         
+      <?php elseif ($rol == 'docente'): ?>
+         <!-- Menú para docentes -->
+         <a href="../View/mdocente/docente_panel.php"><i class="fas fa-home"></i><span>Inicio</span></a>
+         <a href="./ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
+         <a href="../View/mdocente/TablasCM.php"><i class="fas fa-book"></i><span>Gestión de Aprendizaje</span></a>
+         <a href="../View/mdocente/Contenido.php"><i class="fas fa-upload"></i><span>Subir Material</span></a>
+         <a href="evidencias.php"><i class="fas fa-file-alt"></i><span>Evidencias</span></a>
+         
+      <?php elseif ($rol == 'administrador'): ?>
+         <!-- Menú para administradores -->
+         <a href="../View/madmin/admin_panel.php"><i class="fas fa-home"></i><span>Inicio</span></a>
+         <a href="../View/madmin/admin_pagos.php"><i class="fas fa-money-bill-wave"></i><span>Pagos</span></a>
+         <a href="../View/madmin/userlist.php"><i class="fas fa-users-cog"></i><span>Gestión de Usuarios</span></a>
+         
+      <?php else: ?>
+         <!-- Menú por defecto (si no coincide ningún rol) -->
+         <a href="../View/login.php"><i class="fas fa-question"></i><span>Iniciar Sesion o registrarse</span></a>
+      <?php endif; ?>
    </nav>
-
 </div>
 
 <section class="user-profile">

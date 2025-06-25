@@ -51,7 +51,7 @@ if (!$usuario) {
 
       <!-- Perfil del usuario, muestra la imagen, nombre y rol -->
       <div class="profile">
-         <img src="./View/img/icon1.png" class="image" alt="imagen de estudiante">
+         <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
          <h3 class="name">
          <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
          </h3>
@@ -73,8 +73,7 @@ if (!$usuario) {
    </div>
 
    <div class="profile">
-      <img src="./View/img/icon1.png" class="image" alt="">
-      <h3 class="name">
+<img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">      <h3 class="name">
       <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
       </h3>
       <p class="role">Administrador</p>
@@ -83,12 +82,9 @@ if (!$usuario) {
 
    <nav class="navbar">
 
-      <a href="home.php"><i class="fas fa-home"></i><span>Inicio</span></a>
-      <a href="../ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
-      <a href="ver_materiales.php"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
-
-      <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Docentes</span></a>
-      <a href="contact.html"><i class="fas fa-headset"></i><span>Contáctanos</span></a>
+      <a href="./admin_panel.php"><i class="fas fa-home"></i><span>Inicio</span></a>
+      <a href="./admin_pagos.php"><i class="fas fa-comments"></i><span>Pagos</span></a>
+      <a href="./userlist.php"><i class="fas fa-graduation-cap"></i><span>Gestión de Usuarios</span></a>
    </nav>
 
 </div>
