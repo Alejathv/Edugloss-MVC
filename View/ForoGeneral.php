@@ -155,7 +155,7 @@ $comentarios = $foroModel->getComentariosAnidados() ?? [];
         <?php elseif ($_SESSION['rol_nombre'] == 'docente'): ?>
             <!-- Menú para docentes -->
             <a href="../View/mdocente/docente_panel.php"><i class="fas fa-home"></i><span>Inicio</span></a>
-            <a href="/View/ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
+            <a href="./ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
             <a href="../View/mdocente/TablasCM.php"><i class="fas fa-book"></i><span>Gestión de Aprendizaje</span></a>
             <a href="../View/mdocente/Contenido.php"><i class="fas fa-upload"></i><span>Subir Material</span></a>
             <a href="../View/mdocente/evidencias.php"><i class="fas fa-file-alt"></i><span>Evidencias</span></a>
