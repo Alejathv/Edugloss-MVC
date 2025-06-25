@@ -9,8 +9,8 @@ $database = new Database();
 $db = $database->getConnection();
 $controller = new EstudianteController($db);
 
-$inscripcionesHtml = $controller->mostrarInscripciones();
-$hayInscripciones = strpos($inscripcionesHtml, '<a ') !== false;
+$redireccionCurso = $controller->mostrarInscripciones();
+$hayInscripciones = !empty($redireccionCurso);
 ?>
 
 <!DOCTYPE html>
@@ -54,13 +54,15 @@ $hayInscripciones = strpos($inscripcionesHtml, '<a ') !== false;
       <p class="role">estudiante</p>
       <a href="../perfil.php" class="btn">ver perfil</a>
    </div>
-   <nav class="navbar">
-      <a href="home.php"><i class="fas fa-home"></i><span>Inicio</span></a>
-      <a href="../ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
-      <a href="ver_materiales.php"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
-      <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Docentes</span></a>
-      <a href="contact.html"><i class="fas fa-headset"></i><span>Contáctanos</span></a>
-   </nav>
+   <?php if ($hayInscripciones): ?>
+      <nav class="navbar">
+         <a href="home.php"><i class="fas fa-home"></i><span>Inicio</span></a>
+         <a href="../ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
+         <a href="<?= htmlspecialchars($redireccionCurso) ?>"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
+         <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Docentes</span></a>
+         <a href="contact.html"><i class="fas fa-headset"></i><span>Contáctanos</span></a>
+      </nav>
+   <?php endif; ?>
 </div>
 
 <div class="dashboard-container">
@@ -68,39 +70,32 @@ $hayInscripciones = strpos($inscripcionesHtml, '<a ') !== false;
       <h2>Bienvenido, <?= htmlspecialchars($_SESSION['nombre']) ?></h2>
       <p>Revisa tus cursos, docentes y temas desde este panel</p>
    </div>
-   <?php if ($hayInscripciones): ?>
-   <div class="box-container" style="margin-top: 40px;">
-      <div class="box">
-         <h3 class="title">Tus Cursos</h3>
-         <div class="flex">
-            <?= $inscripcionesHtml ?>
-         </div>
-      </div>
-   </div>
-   <?php endif; ?>
 
-   <div class="cards-grid">
-      <a href="ver_materiales.php" class="dashboard-card">
-         <div class="card-icon"><i class="fas fa-book-open"></i></div>
-         <h3>Mis Cursos</h3>
-         <p>Accede a tus clases y contenidos</p>
-      </a>
-      <a href="teachers.html" class="dashboard-card">
-         <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
-         <h3>Docentes</h3>
-         <p>Conoce a tus instructores</p>
-      </a>
-      <a href="../ForoGeneral.php" class="dashboard-card">
-         <div class="card-icon"><i class="fas fa-comments"></i></div>
-         <h3>Foro General</h3>
-         <p>Haz preguntas o comenta tus dudas</p>
-      </a>
-      <a href="contact.html" class="dashboard-card">
-         <div class="card-icon"><i class="fas fa-envelope"></i></div>
-         <h3>Contacto</h3>
-         <p>Comunícate con el equipo</p>
-      </a>
-   </div>
+   <?php if ($hayInscripciones): ?>
+      <div class="cards-grid">
+         <a href="<?= htmlspecialchars($redireccionCurso) ?>" class="dashboard-card">
+            <div class="card-icon"><i class="fas fa-book-open"></i></div>
+            <h3>Mis Cursos</h3>
+            <p>Accede a tus clases y contenidos</p>
+         </a>
+         <a href="teachers.html" class="dashboard-card">
+            <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+            <h3>Docentes</h3>
+            <p>Conoce a tus instructores</p>
+         </a>
+         <a href="../ForoGeneral.php" class="dashboard-card">
+            <div class="card-icon"><i class="fas fa-comments"></i></div>
+            <h3>Foro General</h3>
+            <p>Haz preguntas o comenta tus dudas</p>
+         </a>
+         <a href="contact.html" class="dashboard-card">
+            <div class="card-icon"><i class="fas fa-envelope"></i></div>
+            <h3>Contacto</h3>
+            <p>Comunícate con el equipo</p>
+         </a>
+      </div>
+   <?php endif; ?>
+   
    
    <div class="quick-stats">
       <div class="stat-card">

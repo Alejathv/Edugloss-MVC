@@ -13,52 +13,42 @@ class EstudianteController {
     $this->db = $db;
     }
     public function mostrarInscripciones() {
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
-
     if (!isset($_SESSION['user_id'])) {
-        return "Error: No has iniciado sesión.";
+        return null;
     }
 
     $id_estudiante = $_SESSION['user_id'];
 
-    // Consulta: obtener inscripciones y unir con curso o módulo según cuál esté presente
     $stmt = $this->db->prepare("
         SELECT 
+            i.id_inscripcion,
             i.id_modulo,
             i.id_curso,
             m.nombre AS nombre_modulo,
-            c.nombre AS nombre_curso
+            c.nombre AS nombre_curso,
+            c.id_curso AS curso_id
         FROM inscripcion i
         LEFT JOIN modulo m ON i.id_modulo = m.id_modulo
-        LEFT JOIN curso c ON i.id_curso = c.id_curso
-        WHERE i.id_usuario = ?
+        LEFT JOIN curso c ON i.id_curso = c.id_curso OR m.id_curso = c.id_curso
+        WHERE i.id_usuario = ? AND i.estado = 'activa'
+        LIMIT 1
     ");
     $stmt->bind_param("i", $id_estudiante);
     $stmt->execute();
     $result = $stmt->get_result();
-    $inscripciones = $result->fetch_all(MYSQLI_ASSOC);
+    $row = $result->fetch_assoc();
 
-    if (empty($inscripciones)) {
-        return "<p>No estás inscrito en ningún curso o módulo.</p>";
+    if (!$row) {
+        return null;
     }
 
-    $html = "<ul>";
-    foreach ($inscripciones as $row) {
-       if (!empty($row['id_modulo'])) {
-            $html .= '<a href="ver_materiales.php?id_modulo=' . urlencode($row['id_modulo']) .'"><i class="fa-solid fa-book"></i><span>' 
-                  . htmlspecialchars($row['nombre_modulo']) 
-                  . '</span></a>';
-        } elseif (!empty($row['id_curso'])) {
-            $html .= '<a href="ver_materiales.php?id_curso=' . urlencode($row['id_curso']) . '">
-                        <i class="fa-solid fa-book"></i><span>' 
-                        . htmlspecialchars($row['nombre_curso']) 
-                        . '</span></a>';
-        }
+    // Retorna solo la URL que debe usarse en el href
+    if (!empty($row['id_modulo'])) {
+        return 'ver_materiales.php?id_modulo=' . $row['id_modulo'];
+    } elseif (!empty($row['curso_id'])) {
+        return 'modulos_curso.php?id_curso=' . $row['curso_id'];
     }
-    return $html;
 
+    return null;
 }
-
 }
