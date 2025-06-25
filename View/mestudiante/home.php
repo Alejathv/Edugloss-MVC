@@ -78,9 +78,6 @@ $hayInscripciones = !empty($redireccionCurso);
             <h3>Mis Cursos</h3>
             <p>Accede a tus clases y contenidos</p>
          </a>
-      </div>
-   <?php endif; ?>
-      <div class="cards-grid">
          <a href="teachers.html" class="dashboard-card">
             <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
             <h3>Docentes</h3>
@@ -97,6 +94,7 @@ $hayInscripciones = !empty($redireccionCurso);
             <p>Comunícate con el equipo</p>
          </a>
       </div>
+   <?php endif; ?>
    
    
    <div class="quick-stats">
