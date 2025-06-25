@@ -41,14 +41,32 @@ class InscripcionModel {
             $mail->isHTML(true);
             $mail->Subject = 'Bienvenido como Estudiante - GlizCraft';
             $mail->Body    = "
-                <h2>¡Bienvenido a nuestra plataforma educativa!</h2>
-                <p>Tu registro como estudiante ha sido exitoso.</p>
-                <p>Tus credenciales para acceder al sistema son:</p>
-                <p><strong>Usuario:</strong> $correo</p>
-                <p><strong>Contraseña:</strong> $clave</p>
-                <p>Por seguridad, te recomendamos cambiar esta contraseña después de iniciar sesión.</p>
+            <div style='font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;'>
+                <div style='max-width: 600px; margin: auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);'>
+                    <h2 style='color: #6f42c1;'>¡Bienvenido a nuestra plataforma educativa!</h2>
+                    <p style='font-size: 16px; color: #333;'>
+                        Tu registro como estudiante ha sido exitoso.
+                    </p>
+                    <p style='font-size: 16px; color: #333;'>
+                        Estas son tus credenciales de acceso:
+                    </p>
+                    <p style='font-size: 16px; color: #333;'>
+                        <strong>Usuario:</strong> $correo<br>
+                        <strong>Contraseña:</strong> $clave
+                    </p>
+                    <p style='font-size: 16px; color: #333;'>
+                        Por seguridad, te recomendamos cambiar esta contraseña después de iniciar sesión.
+                    </p>
+                    <hr style='margin: 30px 0;'>
+                    <p style='font-size: 12px; color: #bbb;'>
+                        Este correo fue generado automáticamente. No respondas directamente a este mensaje.<br>
+                        &copy; " . date('Y') . " GlizCraft. Todos los derechos reservados.
+                    </p>
+                </div>
+            </div>
             ";
-            $mail->AltBody = "Tus credenciales:\nUsuario: $correo\nContraseña: $clave";
+            $mail->AltBody = "Tus credenciales:\nUsuario: $correo\nContraseña: $clave\nPor seguridad, cambia esta contraseña después de iniciar sesión.";
+
 
             return $mail->send();
         } catch (Exception $e) {

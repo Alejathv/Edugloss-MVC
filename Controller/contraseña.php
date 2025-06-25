@@ -70,13 +70,30 @@ if ($userModel->updatePassword($correo, $claveHash)) {
         // Contenido del correo
         $mail->isHTML(true);
         $mail->Subject = 'Recuperación de Contraseña - GlizCraft';
+        
         $mail->Body    = "
-            <h2>Recuperación de Contraseña</h2>
-            <p>Hola,</p>
-            <p>Tu nueva clave para acceder al sistema es: <strong>$clave</strong></p>
-            <p>Por seguridad, cambia esta contraseña después de iniciar sesión.</p>
+        <div style='font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;'>
+            <div style='max-width: 600px; margin: auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);'>
+                <h2 style='color: #6f42c1;'>Recuperación de Contraseña</h2>
+                <p style='font-size: 16px; color: #333;'>Hola {$user['nombre']},</p>
+                <p style='font-size: 16px; color: #333;'>
+                    Hemos generado una nueva contraseña temporal para que puedas acceder a tu cuenta.
+                </p>
+                <p style='font-size: 16px; color: #333;'>
+                    Tu nueva clave es: <strong style='color: #0dcaf0;'>$clave</strong>
+                </p>
+                <p style='font-size: 16px; color: #333;'>
+                    Por seguridad, te recomendamos cambiar esta contraseña después de iniciar sesión.
+                </p>
+                <hr style='margin: 30px 0;'>
+                <p style='font-size: 12px; color: #bbb;'>
+                    Este correo fue generado automáticamente. No respondas directamente a este mensaje.<br>
+                    &copy; " . date('Y') . " GlizCraft. Todos los derechos reservados.
+                </p>
+            </div>
+        </div>
         ";
-        $mail->AltBody = "Tu nueva clave es: $clave";
+        $mail->AltBody = "Hola {$user['nombre']}, tu nueva clave es: $clave. Por seguridad, cambia esta contraseña después de iniciar sesión.";
 
         $mail->send();
         $_SESSION['mensaje'] = "Clave actualizada correctamente. Se ha enviado un correo a <strong>$correo</strong> con la nueva contraseña.";
