@@ -6,7 +6,6 @@ session_start();
 require_once "../../Model/database.php";
 require_once "../../Controller/DocenteController.php";
 require_once '../../Controller/CursoModuloController.php';
-require_once '../../Model/database.php';
 
 $db = new Database();
 $conn = $db->getConnection();

@@ -1,26 +1,27 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-session_start();
-// playlist.php
-require_once "../../Model/database.php";
-require_once "../../Model/MaterialModel.php";
- require_once "../../Model/ModuloModel.php";
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    session_start();
 
- $id_modulo = isset($_GET['id_modulo']) ? intval($_GET['id_modulo']) : null;
+    require_once "../../Model/ModuloModel.php";
+    require_once "../../Model/database.php";
 
-if (!$id_modulo) {
-    die("Error: ID de módulo no especificado.");
-}
+    $database = new Database();
+    $conn = $database->getConnection();
+    $moduloModel = new ModuloModel($conn);
 
-$db = new Database();
-$conn = $db->getConnection();
-$materialModel = new MaterialModel($conn);
-$moduloModel = new ModuloModel($conn);
+    $idCurso = isset($_GET['id_curso']) ? (int)$_GET['id_curso'] : null;
+    $modulos = [];
 
-$modulo = $moduloModel->obtenerModuloPorId($id_modulo);
-$materiales = $materialModel->obtenerMaterialPorModulo($id_modulo); // Usamos tu función exacta
+    if ($idCurso) {
+        $modulos = $moduloModel->obtenerModulosPorCurso($idCurso);
+    } else {
+        echo "<p>Error: no se especificó un curso.</p>";
+    }
+
+
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -35,21 +36,46 @@ $materiales = $materialModel->obtenerMaterialPorModulo($id_modulo); // Usamos tu
    <!-- custom css file link  -->
    <link rel="stylesheet" href="../css/style_panel.css">
    <style>
-      .material { 
-            margin: 20px 0; padding: 15px; 
-            background: #f9f9f9; border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        h1 { color: #2c3e50; }
-        h3 { color: #3498db; }
-        iframe, embed { 
-            width: 100%; 
-            height: 500px; 
-            border: 1px solid #ddd;
-            margin-top: 10px;
-        }
-        .pdf-container { height: 600px; }
-   </style>
+    .card-modulo {
+   display: flex;
+   align-items: flex-start;
+   background: #fff;
+   border-left: 5px solid #7b3df0; /* morado como en la imagen */
+   border-radius: 12px;
+   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+   padding: 20px;
+   margin: 15px 0;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   max-width: 200px;
+}
+
+.card-modulo:hover {
+   box-shadow: 0 6px 14px rgba(123, 61, 240, 0.2);
+   transform: translateY(-2px);
+}
+
+.card-modulo .icono {
+   font-size: 2rem;
+   color: #7b3df0;
+   margin-right: 15px;
+}
+
+.card-modulo .contenido h3 {
+   margin: 0;
+   font-size: 1.2rem;
+   color: #333;
+   font-weight: 600;
+}
+
+.card-modulo .contenido p {
+   margin-top: 5px;
+   font-size: 0.95rem;
+   color: #666;
+}
+
+</style>
+
 
 </head>
 <body>
@@ -136,41 +162,23 @@ $materiales = $materialModel->obtenerMaterialPorModulo($id_modulo); // Usamos tu
 
 <section class="playlist-videos">
 
-   <h1 class="heading">Lista de Reproducción</h1>
+    <h1>Módulos del Curso</h1>
+    <div class="card-modulo">
+        <?php if (empty($modulos)): ?>
+        <p>No hay módulos disponibles para este curso.</p>
+        <?php else: ?>
+            <div id="lista-modulos">
+                <?php foreach ($modulos as $modulo): ?>
+                    <div class="modulo" onclick="abrirMaterial(<?= $modulo['id_modulo'] ?>)">
+                        <div class="icono"><i class="fas fa-book"></i></div>
 
-   <div class="box-container">
-
-      <h1><?= htmlspecialchars($modulo['nombre']) ?></h1>
-      <p><?= htmlspecialchars($modulo['descripcion']) ?></p>
-
-<h2>Materiales</h2>
-
-<?php if (empty($materiales)): ?>
-    <p>No hay materiales disponibles para este módulo.</p>
-<?php else: ?>
-    <div class="box-container">
-        <?php foreach ($materiales as $material): ?>
-            <a class="box" href="mostrar.php?id=<?= urlencode($material['id_material']) ?>" >
-                <i class="fas fa-play"></i>
-                <?php if ($material['tipo'] === 'video'): ?>
-                    <img class="rotar-preview" src="<?= (function() { $imagenes = glob("../img/videos/*.jpg"); return $imagenes ? $imagenes[array_rand($imagenes)] : '../img/videos/default.jpg'; })() ?>" alt="Vista previa aleatoria">
-
-                <?php elseif ($material['tipo'] === 'pdf'): ?>
-                    <img class="rotar-preview" src="<?= (function() { $imagenes = glob("../img/pdf/*.jpg"); return $imagenes ? $imagenes[array_rand($imagenes)] : '../img/videos/default.jpg'; })() ?>" alt="Vista previa aleatoria">
-                <?php else: ?>
-                    <img src="images/post-unknown.png" alt="Material">
-                <?php endif; ?>
-                <h3><?= htmlspecialchars($material['nombre']) ?></h3>
-            </a>
-        <?php endforeach; ?>
+                        <h3><?= htmlspecialchars($modulo['nombre']) ?></h3>
+                        <p><?= htmlspecialchars($modulo['descripcion']) ?></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
     </div>
-<?php endif; ?>
-
-   </div>
-   <div style="text-align: right; margin: 10px;">
-      <a href="subir-evidencia.php" class="btn btn-primary">Subir Evidencia</a>
-   </div>
-
 </section>
 
 
@@ -182,9 +190,14 @@ $materiales = $materialModel->obtenerMaterialPorModulo($id_modulo); // Usamos tu
 
 <!-- custom js file link  -->
 <script src="../js/script.js"></script>
+<script>
+    function abrirMaterial(id_modulo) {
+        // Abre en la misma pestaña
+        window.location.href = `ver_materiales.php?id_modulo=${id_modulo}`;
+    }
+</script>
 
 
    
 </body>
 </html>
-
