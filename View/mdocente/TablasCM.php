@@ -54,6 +54,82 @@ $materiales = $controller->listarMateriales($id_modulo);
    <!-- custom css file link  -->
    <link rel="stylesheet" href="../css/style_panel.css">
    
+   <style>
+      /* Estilos para los botones de acción */
+      .acciones {
+         display: flex;
+         gap: 5px;
+         justify-content: center;
+      }
+      
+      .boton-estilo {
+         margin: 0;
+         padding: 0;
+         border: none;
+         background: none;
+      }
+      
+      .boton-estilo button, .boton-estilo a {
+         padding: 5px 10px;
+         border-radius: 4px;
+         color: white;
+         cursor: pointer;
+         display: inline-flex;
+         align-items: center;
+         justify-content: center;
+         text-decoration: none;
+         font-size: 14px;
+      }
+      
+      /* Botón verde (+) */
+.acciones form:first-child button {
+   background-color: #28a745 !important;
+}
+      
+      /* Botón azul (editar) */
+      .boton-estilo a {
+         background-color: #007bff;
+      }
+      
+      /* Botón rojo (borrar) */
+      .boton-estilo button[type="submit"]:last-child {
+         background-color: #dc3545;
+      }
+      
+      .boton-estilo button:hover, .boton-estilo a:hover {
+         opacity: 0.8;
+         transform: scale(1.05);
+      }
+      
+      .boton-estilo i {
+         margin: 0;
+      }
+      
+      .tabla-contenedor {
+         overflow-x: auto;
+         margin: 20px 0;
+      }
+      
+      table {
+         width: 100%;
+         border-collapse: collapse;
+      }
+      
+      th, td {
+         padding: 12px 15px;
+         text-align: left;
+         border-bottom: 1px solid #ddd;
+      }
+      
+      th {
+         background-color: #f8f9fa;
+         font-weight: bold;
+      }
+      
+      tr:hover {
+         background-color: #f5f5f5;
+      }
+   </style>
 </head>
 <body>
 
@@ -144,12 +220,11 @@ $materiales = $controller->listarMateriales($id_modulo);
                     <td><?= ucfirst($curso['estado']) ?></td>
                     <td>
                         <div class="acciones">
-                            <form method="GET" action="CursoModulo.php"class="boton-estilo">
+                            <form method="GET" action="CursoModulo.php" class="boton-estilo">
                                 <input type="hidden" name="id_curso" value="<?= $curso['id_curso'] ?>">
                                 <button type="submit"><i class="fa-solid fa-plus"></i></button>
                             </form>
                             <a href="editar_curso.php?id=<?= $curso['id_curso'] ?>" class="boton-estilo"><i class="fas fa-edit"></i></a>
-
                             <form method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar este curso y sus módulos?')" class="boton-estilo">
                                 <input type="hidden" name="accion" value="eliminar_curso">
                                 <input type="hidden" name="id_curso" value="<?= $curso['id_curso'] ?>">
@@ -192,20 +267,17 @@ $materiales = $controller->listarMateriales($id_modulo);
                         <td><?= ucfirst($modulo['estado']) ?></td>
                         <td>
                             <div class="acciones">
-                               <form method="GET" action="CursoModulo.php"class="boton-estilo">
-                                <input type="hidden" name="id_modulo" value="<?= $modulo['id_modulo'] ?>">
-                                <button type="submit"><i class="fa-solid fa-plus"></i></button>
-                            </form>
-
-                            <a href="editar_modulo.php?id=<?= $modulo['id_modulo'] ?>"class="boton-estilo"><i class="fas fa-edit"></i></a>
-
-                            <form method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar este módulo?')"class="boton-estilo">
-                                <input type="hidden" name="accion" value="eliminar_modulo">
-                                <input type="hidden" name="id_modulo" value="<?= $modulo['id_modulo'] ?>">
-                                <button type="submit"><i class="fas fa-trash"></i></button>
-                            </form> 
+                               <form method="GET" action="CursoModulo.php" class="boton-estilo">
+                                    <input type="hidden" name="id_modulo" value="<?= $modulo['id_modulo'] ?>">
+                                    <button type="submit"><i class="fa-solid fa-plus"></i></button>
+                                </form>
+                                <a href="editar_modulo.php?id=<?= $modulo['id_modulo'] ?>" class="boton-estilo"><i class="fas fa-edit"></i></a>
+                                <form method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar este módulo?')" class="boton-estilo">
+                                    <input type="hidden" name="accion" value="eliminar_modulo">
+                                    <input type="hidden" name="id_modulo" value="<?= $modulo['id_modulo'] ?>">
+                                    <button type="submit"><i class="fas fa-trash"></i></button>
+                                </form> 
                             </div>
-                            
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -214,19 +286,12 @@ $materiales = $controller->listarMateriales($id_modulo);
     </table>
 </div>
 
-
-</section>
-
 <footer class="footer">
-
    &copy; copyright  2024 <span>EduGloss</span> | Todos los derechos reservados!
-
 </footer>
 
 <!-- custom js file link  -->
 <script src="../js/script.js"></script>
-
-
    
 </body>
 </html>
