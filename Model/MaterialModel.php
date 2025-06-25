@@ -17,4 +17,29 @@ class MaterialModel {
         $stmt->bind_param("isss", $id_modulo, $nombre, $url, $tipo);
         return $stmt->execute();
     }
+    public function actualizarMaterial($id_material, $nombre, $url_material, $tipo, $id_modulo) {
+        $stmt = $this->conn->prepare("UPDATE material SET 
+                                    nombre = ?,
+                                    url_material = ?,
+                                    tipo = ?,
+                                    id_modulo = ?
+                                    WHERE id_material = ?");
+        $stmt->bind_param("sssii", $nombre, $url_material, $tipo, $id_modulo, $id_material);
+        return $stmt->execute();
+    }
+
+    public function eliminarMaterial($id_material) {
+        $stmt = $this->conn->prepare("DELETE FROM material WHERE id_material = ?");
+        $stmt->bind_param("i", $id_material);
+        return $stmt->execute();
+    }
+
+    public function obtenerMaterialPorId($id_material) {
+        $stmt = $this->conn->prepare("SELECT * FROM material WHERE id_material = ?");
+        $stmt->bind_param("i", $id_material);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+
 }
