@@ -154,7 +154,7 @@ $materiales = $materialModel->obtenerMaterialPorModulo($id_modulo); // Usamos tu
                 <i class="fas fa-play"></i>
                 <?php if ($material['tipo'] === 'video'): ?>
                     <img class="rotar-preview" src="<?= (function() { $imagenes = glob("../img/videos/*.jpg"); return $imagenes ? $imagenes[array_rand($imagenes)] : '../img/videos/default.jpg'; })() ?>" alt="Vista previa aleatoria">
-
+                 <i class="fas fa-file"></i>   
                 <?php elseif ($material['tipo'] === 'pdf'): ?>
                     <img class="rotar-preview" src="<?= (function() { $imagenes = glob("../img/pdf/*.jpg"); return $imagenes ? $imagenes[array_rand($imagenes)] : '../img/videos/default.jpg'; })() ?>" alt="Vista previa aleatoria">
                 <?php else: ?>
