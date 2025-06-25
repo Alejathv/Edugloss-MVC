@@ -32,5 +32,23 @@ class DocenteController {
     }
     return ['success' => false, 'message' => 'Método no permitido'];
 }
+// Agrega estos métodos a tu DocenteController
+public function editarMaterial($id_material, $nuevosDatos) {
+    return $this->materialModel->actualizarMaterial(
+        $id_material,
+        $nuevosDatos['nombre'],
+        $nuevosDatos['url_material'],
+        $nuevosDatos['tipo'],
+        $nuevosDatos['id_modulo']
+    );
+}
+
+public function eliminarMaterial($id_material) {
+    return $this->materialModel->eliminarMaterial($id_material);
+}
+
+public function obtenerMaterialPorId($id_material) {
+    return $this->materialModel->obtenerMaterialPorId($id_material);
+}
 
 }

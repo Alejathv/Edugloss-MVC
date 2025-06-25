@@ -157,7 +157,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'subir') {
     
     <?php
     // Obtener todos los módulos con sus cursos y materiales
-    $modulosConCursos = $moduloCtrl->obtenerModulosConCursos(); // Necesitarás implementar este método
+    $modulosConCursos = $moduloCtrl->obtenerModulosConCursos();
     
     foreach ($modulosConCursos as $modulo) {
         echo '<div class="module-section">';
@@ -167,7 +167,7 @@ if (isset($_GET['m']) && $_GET['m'] == 'subir') {
         
         if (!empty($materiales)) {
             echo '<table class="material-table">';
-            echo '<thead><tr><th>Nombre</th><th>Tipo</th><th>Acción</th></tr></thead>';
+            echo '<thead><tr><th>Nombre</th><th>Tipo</th><th>Acceso</th><th>Acciones</th></tr></thead>';
             echo '<tbody>';
             
             foreach ($materiales as $material) {
@@ -177,7 +177,6 @@ if (isset($_GET['m']) && $_GET['m'] == 'subir') {
                 echo '<td>';
                 
                 if ($material['tipo'] === 'video') {
-                    // Extraer ID de YouTube si es una URL de YouTube
                     if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $material['url_material'], $matches)) {
                         $videoId = $matches[1];
                         echo '<button class="preview-btn" onclick="showVideoPreview(\'' . $videoId . '\')">Previsualizar</button>';
@@ -187,8 +186,18 @@ if (isset($_GET['m']) && $_GET['m'] == 'subir') {
                     echo '<a href="' . htmlspecialchars($material['url_material']) . '" target="_blank" class="view-link">Ver PDF</a>';
                 }
                 
-                echo '</td>';
-                echo '</tr>';
+echo '<td class="acciones-material">';
+
+// Botón de editar
+echo '<a href="editar_material.php?id=' . $material['id_material'] . '" class="btn-accion btn-editar"><i class="fas fa-pencil-alt"></i> Editar</a>';
+
+// Botón de eliminar
+echo '<form method="POST" action="eliminar_material.php" style="display:inline;" onsubmit="return confirm(\'¿Estás seguro de eliminar este material?\')">';
+echo '<input type="hidden" name="id_material" value="' . $material['id_material'] . '">';
+echo '<button type="submit" class="btn-accion btn-eliminar"><i class="far fa-trash-alt"></i></button>';
+echo '</form>';
+
+echo '</td>';
             }
             
             echo '</tbody>';
@@ -201,6 +210,106 @@ if (isset($_GET['m']) && $_GET['m'] == 'subir') {
     }
     ?>
 </section>
+
+<style>
+    /* Estilos premium para los botones de acción */
+    .acciones-material {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .btn-accion {
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        text-decoration: none;
+        cursor: pointer;
+        border: none;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .btn-accion::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255,255,255,0.1);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+    
+    .btn-accion:hover::after {
+        opacity: 1;
+    }
+    
+    .btn-accion i {
+        font-size: 13px;
+    }
+    
+    /* Botón Editar - Estilo premium */
+    .btn-editar {
+        background: linear-gradient(135deg, #4a6bff 0%, #6a5acd 100%);
+        color: white;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .btn-editar:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(74, 107, 255, 0.2);
+    }
+    
+    /* Botón Eliminar - Estilo premium */
+    .btn-eliminar {
+        background: linear-gradient(135deg, #ff4a4a 0%, #d23369 100%);
+        color: white;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .btn-eliminar:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(255, 74, 74, 0.2);
+    }
+    
+    /* Botón Previsualizar - Estilo premium */
+    .btn-preview {
+        background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+        color: white;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .btn-preview:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(40, 167, 69, 0.2);
+    }
+    
+    /* Botón Ver - Estilo premium */
+    .btn-ver {
+        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+        color: white;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .btn-ver:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(23, 162, 184, 0.2);
+    }
+    
+    /* Efecto de click */
+    .btn-accion:active {
+        transform: translateY(1px);
+    }
+</style>
 
 <!-- Modal para previsualización de videos -->
 <div id="videoModal" class="modal">
