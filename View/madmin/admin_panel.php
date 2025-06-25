@@ -55,10 +55,9 @@ if (!isset($_SESSION['rol_nombre']) || $_SESSION['rol_nombre'] !== 'administrado
    </div>
 
    <nav class="navbar">
-      <a href="admin_panel.php"><i class="fas fa-home"></i><span>Inicio</span></a>
-      <a href="userlist.php"><i class="fas fa-user-cog"></i><span>Gestión de Usuarios</span></a>
-      <a href="pagos.php"><i class="fas fa-money-check-alt"></i><span>Pagos</span></a>
-      <a href="contact.html"><i class="fas fa-headset"></i><span>Contáctanos</span></a>
+      <a href="./admin_panel.php"><i class="fas fa-home"></i><span>Inicio</span></a>
+       <a href="./admin_pagos.php"><i class="fas fa-money-check-alt"></i><span>Pagos</span></a>
+       <a href="userlist.php"><i class="fas fa-user-cog"></i><span>Gestión de Usuarios</span></a>
    </nav>
 </div>
 

@@ -1,7 +1,6 @@
 <?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-
 error_reporting(E_ALL);
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -43,11 +42,81 @@ $comentarios = $foroModel->getComentariosAnidados() ?? [];
     <title>Foro General</title>
     <link rel="stylesheet" href="css/style_panel.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Estilos existentes del foro */
+        .foro-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .comentario {
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            border-left: 4px solid #5c3fa3;
+        }
+        
+        .respuesta {
+            margin-left: 30px;
+            border-left-color: #8656e9;
+        }
+        
+        .fecha-mensaje {
+            color: #666;
+            font-size: 0.8em;
+        }
+        
+        .btn-responder {
+            background-color: #5c3fa3;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        
+        .form-respuesta {
+            display: none;
+            margin-top: 10px;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .btn-enviar {
+            background-color: #5c3fa3;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .info-usuario {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #e9e1ff;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
 <header class="header">
     <section class="flex">
-        <a href="./img/LogoEGm.png" class="logo"></a>
+        <a href="home.php" class="logo">
+            <img src="../View/img/LogoEGm.png" alt="EduGloss" style="height: 80px;">
+        </a>
         <div class="icons">
             <div id="menu-btn" class="fas fa-bars"></div>
             <div id="user-btn" class="fas fa-user"></div>
@@ -65,20 +134,42 @@ $comentarios = $foroModel->getComentariosAnidados() ?? [];
     </section>
 </header>
 
+<!-- Sidebar dinámico según rol -->
 <div class="side-bar">
     <div id="close-btn"><i class="fas fa-times"></i></div>
     <div class="profile">
-<img src="img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
-<h3 class="name"><?= htmlspecialchars($_SESSION['nombre']) ?></h3>
+        <img src="img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
+        <h3 class="name"><?= htmlspecialchars($_SESSION['nombre']) ?></h3>
         <p class="role"><?= htmlspecialchars($_SESSION['rol_nombre']) ?></p>
         <a href="./perfil.php" class="btn">Ver Perfil</a>
     </div>
     <nav class="navbar">
-        <a href="home.html"><i class="fas fa-home"></i><span>Inicio</span></a>
-        <a href="ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
-        <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
-        <a href="contenido.html"><i class="fas fa-chalkboard-user"></i><span>Contenido</span></a>
-        <a href="estudiantes.html"><i class="fas fa-user-graduate"></i><span>Estudiantes</span></a>
+        <?php if ($_SESSION['rol_nombre'] == 'estudiante'): ?>
+            <!-- Menú para estudiantes -->
+            <a href="home.php"><i class="fas fa-home"></i><span>Inicio</span></a>
+            <a href="cursos.php"><i class="fas fa-book"></i><span>Mis Cursos</span></a>
+            <a href="calificaciones.php"><i class="fas fa-star"></i><span>Calificaciones</span></a>
+            <a href="tareas.php"><i class="fas fa-tasks"></i><span>Tareas</span></a>
+            <a href="ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro Estudiantil</span></a>
+            
+        <?php elseif ($_SESSION['rol_nombre'] == 'docente'): ?>
+            <!-- Menú para docentes -->
+            <a href="../View/mdocente/docente_panel.php"><i class="fas fa-home"></i><span>Inicio</span></a>
+            <a href="/View/ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
+            <a href="../View/mdocente/TablasCM.php"><i class="fas fa-book"></i><span>Gestión de Aprendizaje</span></a>
+            <a href="../View/mdocente/Contenido.php"><i class="fas fa-upload"></i><span>Subir Material</span></a>
+            <a href="../View/mdocente/evidencias.php"><i class="fas fa-file-alt"></i><span>Evidencias</span></a>
+            
+        <?php elseif ($_SESSION['rol_nombre'] == 'administrador'): ?>
+            <!-- Menú para administradores -->
+            <a href="../View/madmin/admin_panel.php"><i class="fas fa-home"></i><span>Inicio</span></a>
+            <a href="../View/madmin/admin_pagos.php"><i class="fas fa-money-bill-wave"></i><span>Pagos</span></a>
+            <a href="../View/madmin/userlist.php"><i class="fas fa-users-cog"></i><span>Gestión de Usuarios</span></a>
+            
+        <?php else: ?>
+            <!-- Menú por defecto (si no coincide ningún rol) -->
+            <a href="../View/login.php"><i class="fas fa-question"></i><span>Iniciar Sesión</span></a>
+        <?php endif; ?>
     </nav>
 </div>
 
