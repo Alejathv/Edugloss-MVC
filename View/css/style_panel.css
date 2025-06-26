@@ -1487,10 +1487,18 @@ section{
   padding: 0.25rem 0.5rem;
   font-size: 0.85rem;
 }
-/*TABLA CONTENEDOR*/
+/*TABLA CONTENEDOR para curso y modulo en tablas cm*/
 .tabla-contenedor{
    overflow-x: auto;
    padding: 0 5rem;
+}
+.tabla-contenedor th{
+    font-size: 16px;
+    font-weight: 700;
+    padding: 12px 15px;
+    text-align: left;
+       background-color: #8e4de6;
+    color: #fff;
 }
 /*BOTONES DEL CRUD DE CURSO Y MODULO*/
 .acciones {
@@ -1710,21 +1718,6 @@ form.boton-estilo button:hover {
    object-fit: cover;
 }
 
-.edit-icon {
-   position: absolute;
-   bottom: 8px;
-   right: 8px;
-   background-color: #fff;
-   border-radius: 50%;
-   padding: 6px;
-   cursor: pointer;
-   border: 1px solid #ccc;
-   color: #333;
-   font-size: 14px;
-}
-.edit-icon:hover {
-   background-color: #f0f0f0;
-}
 
 /*subir material modulo*/
 .form-material {
@@ -1740,16 +1733,20 @@ form.boton-estilo button:hover {
 
 .form-material h2 {
     text-align: center;
-    color: #6c30c2;
+ color: #6c2bd9;
+background-color: #e2cfff;/* el de .titulo-morado */
     margin-bottom: 25px;
     font-size: 2.5rem;
+padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-weight: bold;
 }
 
 .form-material form label {
     display: block;
     margin-bottom: 6px;
-    font-size: 14px;
     color: #333;
+    font-size: 1.5rem;
 }
 
 .form-material form input,
@@ -1802,23 +1799,32 @@ form.boton-estilo button:hover {
     box-shadow: 0 2px 8px rgba(108, 48, 194, 0.15);
     transition: transform 0.2s;
 }
-
+.module-section p {
+   font-size: 1.5rem;
+}
 .module-section:hover {
     transform: scale(1.01);
 }
 .materials-table h2{
-  font-size: 2.5rem; 
-  text-align: center;
+text-align: center;
+ color: #6c2bd9;
+background-color: #e2cfff;/* el de .titulo-morado */
+    margin-bottom: 25px;
+    font-size: 2.5rem;
+padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-weight: bold;
 }
 
 .materials-table h2,
 .module-section h3 {
     color: #6c30c2;
     margin-bottom: 15px;
+
 }
 
 .module-section h3 {
-    font-size: 18px;
+    font-size: 2rem;
     border-left: 5px solid #8e4de6;
     padding-left: 10px;
 }
@@ -1876,7 +1882,7 @@ form.boton-estilo button:hover {
 
 /* Azul claro en lugar de verde */
 .view-link {
-    background-color: #5abaff;
+    background-color: #5abafa;
     color: white;
 }
 
@@ -2164,12 +2170,9 @@ form.boton-estilo button:hover {
     display: flex;
     justify-content: center;
     padding: 20px;
-    background-color: #f0f0f5;
 }
 
 .tabla-evidencias {
-    background-color: #f9f7fd;
-    border: 1px solid #c9bdf0;
     border-radius: 16px;
     padding: 30px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
@@ -2193,8 +2196,8 @@ form.boton-estilo button:hover {
 }
 
 .tablaevidencia thead {
-    background-color: #e9defb;
-    color: #4b2e83;
+    color: #e9defb;
+    background-color: #4b2e83;
     font-weight: bold;
 }
 
@@ -2204,6 +2207,7 @@ form.boton-estilo button:hover {
     text-align: center;
     vertical-align: middle;
     border: 1px solid #e3d7f7;
+    
 }
 
 .tablaevidencia img {
@@ -2316,7 +2320,6 @@ form.boton-estilo button:hover {
 /* Contenedor general de la tabla */
 .tabla-evidencias {
     background-color: #f9f7fd;
-    border: 1px solid #c9bdf0;
     border-radius: 16px;
     padding: 30px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
@@ -2325,7 +2328,7 @@ form.boton-estilo button:hover {
 /* Título */
 .tabla-evidencias h2 {
     text-align: center;
-    font-size: 24px;
+    font-size: 2.5rem;
     color: #5c3fa3;
     margin-bottom: 25px;
 }
@@ -2340,7 +2343,7 @@ form.boton-estilo button:hover {
     overflow: hidden;
 }
 
-/* Encabezado */
+/* Encabezado tabla evdeincias docente*/ 
 .tablaevidencia thead {
     background-color: #e9defb;
     color: #4b2e83;
@@ -2353,6 +2356,17 @@ form.boton-estilo button:hover {
     text-align: center;
     vertical-align: middle;
     border: 1px solid #e3d7f7;
+   color: #ffffff;
+    background-color: #8e4de6;
+}
+.tablaevidencia td {
+    padding: 14px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #e3d7f7;
+   color: #000;
+    background-color: #fff;
+
 }
 
 /* Imagen de archivo */
