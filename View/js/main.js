@@ -11,11 +11,9 @@
     };
     spinner(0);
     
-    
-    // Initiate the wowjs
+    // WOW.js
     new WOW().init();
     
-
     // Sticky Navbar
     $(window).scroll(function () {
         if ($(this).scrollTop() > 45) {
@@ -25,27 +23,7 @@
         }
     });
 
-
-    // Header carousel
-    // $(".header-carousel").owlCarousel({
-    //     animateOut: 'fadeOut',
-    //     items: 1,
-    //     margin: 0,
-    //     stagePadding: 0,
-    //     autoplay: true,
-    //     smartSpeed: 500,
-    //     dots: true,
-    //     loop: true,
-    //     nav : true,
-    //     navText : [
-    //         '<i class="bi bi-arrow-left"></i>',
-    //         '<i class="bi bi-arrow-right"></i>'
-    //     ],
-    // });
-
-
-
-    // testimonial carousel
+    // Testimonial carousel
     $(".testimonial-carousel").owlCarousel({
         autoplay: true,
         smartSpeed: 1500,
@@ -60,45 +38,51 @@
         ],
         responsiveClass: true,
         responsive: {
-            0:{
-                items:1
-            },
-            576:{
-                items:1
-            },
-            768:{
-                items:2
-            },
-            992:{
-                items:2
-            },
-            1200:{
-                items:2
-            }
+            0:{ items:1 },
+            576:{ items:1 },
+            768:{ items:2 },
+            992:{ items:2 },
+            1200:{ items:2 }
         }
     });
 
-
-    // Facts counter
+    // Counter
     $('[data-toggle="counter-up"]').counterUp({
         delay: 5,
         time: 2000
     });
 
-
-   // Back to top button
-   $(window).scroll(function () {
-    if ($(this).scrollTop() > 300) {
-        $('.back-to-top').fadeIn('slow');
-    } else {
-        $('.back-to-top').fadeOut('slow');
-    }
+    // Back to top button
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 300) {
+            $('.back-to-top').fadeIn('slow');
+        } else {
+            $('.back-to-top').fadeOut('slow');
+        }
     });
+
     $('.back-to-top').click(function () {
         $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
         return false;
     });
 
+    // Modal functions
+    window.mostrarInfo = function (btn) {
+        const producto = btn.closest('.producto');
+        document.getElementById("info-nombre").innerText = producto.dataset.nombre;
+        document.getElementById("info-descripcion").innerText = producto.dataset.descripcion;
+        document.getElementById("modal-info").style.display = "block";
+    }
+
+    window.cerrarModal = function (id) {
+        document.getElementById(id).style.display = "none";
+    }
+
+    window.onclick = function (event) {
+        const modal = document.getElementById("modal-info");
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
 
 })(jQuery);
-

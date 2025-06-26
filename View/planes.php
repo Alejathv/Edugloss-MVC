@@ -45,7 +45,13 @@ $modulos = $moduloModel->obtenerModulosDisponibles();
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 </head>
-
+<div id="modal-info" class="modal-curso">
+        <div class="modal-contenido">
+            <span class="cerrar" onclick="cerrarModal('modal-info')">&times;</span>
+            <h3 class="titulo-modal" id="info-nombre"></h3>
+            <p class="info-modal" id="info-descripcion"></p>
+        </div>
+    </div>
 <body>
     <!-- Spinner Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -109,20 +115,34 @@ $modulos = $moduloModel->obtenerModulosDisponibles();
                     <?php foreach ($cursos as $curso): ?>
                     <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="<?= (($i % 4) + 2) * 0.1 ?>s">
 
-                        <div class="service-item">
-                            <div class="service-img">
-                                <img src="img/servicio-<?= ($i % 4) + 1 ?>.jpg" class="img-fluid rounded-top w-100" alt="<?= htmlspecialchars($curso['nombre']) ?>">
+                        <div class="service-item producto"
+                            data-nombre="<?= htmlspecialchars($curso['nombre']) ?>"
+                            data-descripcion="<?= htmlspecialchars($curso['descripcion']) ?>">
 
+                            <div class="service-img">
+                                <img src="img/servicio-<?= ($curso['id_curso'] % 4) + 1 ?>.jpg" class="img-fluid rounded-top w-100" alt="<?= htmlspecialchars($curso['nombre']) ?>">
                                 <div class="service-icon p-3">
                                     <i class="fa-solid fa-graduation-cap"></i>
                                 </div>
                             </div>
+
                             <div class="service-content p-4">
                                 <div class="service-content-inner">
                                     <h4 class="mb-4">Curso: <?= htmlspecialchars($curso['nombre']) ?></h4>
-                                    <p class="mb-4"><?= htmlspecialchars($curso['descripcion']) ?></p>
-                                    <p class="text-primary fw-bold mb-3">$<?= number_format($curso['precio'], 2) ?></p>
-                                    <form action="procesar_pago.php" method="POST">
+
+                                    <!-- Fila con precio y lupa al lado -->
+                                    <div class="d-flex align-items-center justify-content-between mb-3">
+                                        <p class="text-primary fw-bold mb-0">$<?= number_format($curso['precio'], 2) ?></p>
+                                        
+                                        <!-- Botón lupa -->
+                                        <button type="button" class="service-icon view-icon" onclick="mostrarInfo(this)" aria-label="Ver descripción del curso">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+
+
+                                    <!-- Formulario de compra -->
+                                    <form action="View/procesar_pago.php" method="POST">
                                         <input type="hidden" name="tipo_producto" value="curso">
                                         <input type="hidden" name="id_producto" value="<?= $curso['id_curso'] ?>">
                                         <input type="hidden" name="nombre_producto" value="<?= htmlspecialchars($curso['nombre']) ?>">
@@ -141,37 +161,56 @@ $modulos = $moduloModel->obtenerModulosDisponibles();
                 <?php if (!empty($modulos)): ?>
                 <h2 class="text-center mt-5 mb-4 wow fadeInUp" data-wow-delay="0.3s">Módulos Individuales</h2>
                 <div class="row g-4 justify-content-center">
-                    <?php $j = 0; ?>
-                    <?php foreach ($modulos as $modulo): ?>
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="<?= (($j % 4) + 2) * 0.1 ?>s">
-                        <div class="service-item">
-                            <div class="service-img">
-                                <img src="img/servicio-<?= ($modulo['id_modulo'] % 4) + 1 ?>.jpg" class="img-fluid rounded-top w-100" alt="<?= htmlspecialchars($modulo['nombre']) ?>">
-                                <div class="service-icon p-3">
-                                    <i class="fa-solid fa-book-open"></i>
+                        <?php $j = 0; ?>
+                        <?php foreach ($modulos as $modulo): ?>
+                        <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="<?= (($j % 4) + 2) * 0.1 ?>s">
+                            <div class="service-item producto"
+                                data-nombre="<?= htmlspecialchars($modulo['nombre']) ?>"
+                                data-descripcion="<?= htmlspecialchars($modulo['descripcion'] ?? 'Módulo especializado') ?>">
+
+                                <div class="service-img">
+                                    <img src="img/servicio-<?= ($modulo['id_modulo'] % 4) + 1 ?>.jpg"
+                                        class="img-fluid rounded-top w-100"
+                                        alt="<?= htmlspecialchars($modulo['nombre']) ?>">
+                                    <div class="service-icon p-3">
+                                        <i class="fa-solid fa-book-open"></i>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="service-content p-4">
-                                <div class="service-content-inner">
-                                    <h4 class="mb-4">Módulo: <?= htmlspecialchars($modulo['nombre']) ?></h4>
-                                    <p class="mb-4"><?= htmlspecialchars($modulo['descripcion'] ?? 'Módulo especializado') ?></p>
-                                    <p class="text-primary fw-bold mb-3">$<?= number_format($modulo['precio'], 2) ?></p>
-                                    <form action="procesar_pago.php" method="POST">
-                                        <input type="hidden" name="tipo_producto" value="modulo">
-                                        <input type="hidden" name="id_producto" value="<?= $modulo['id_modulo'] ?>">
-                                        <input type="hidden" name="nombre_producto" value="<?= htmlspecialchars($modulo['nombre']) ?>">
-                                        <input type="hidden" name="precio_producto" value="<?= $modulo['precio'] ?>">
-                                        <button type="submit" class="btn btn-primary rounded-pill py-2 px-4 w-100">Comprar ahora</button>
-                                    </form>
+
+                                <div class="service-content p-4">
+                                    <div class="service-content-inner">
+                                        <h4 class="mb-2">Módulo: <?= htmlspecialchars($modulo['nombre']) ?></h4>
+
+                                        <!-- Fila con precio y lupa -->
+                                        <div class="d-flex align-items-center justify-content-between mb-3">
+                                            <p class="text-primary fw-bold mb-0">$<?= number_format($modulo['precio'], 2) ?></p>
+
+                                            <!-- Botón lupa que abre el modal -->
+                                            <button type="button"
+                                                    class="service-icon view-icon"
+                                                    onclick="mostrarInfo(this)"
+                                                    aria-label="Ver descripción del módulo">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                        </div>
+
+                                        <form action="procesar_pago.php" method="POST">
+                                            <input type="hidden" name="tipo_producto" value="modulo">
+                                            <input type="hidden" name="id_producto" value="<?= $modulo['id_modulo'] ?>">
+                                            <input type="hidden" name="nombre_producto" value="<?= htmlspecialchars($modulo['nombre']) ?>">
+                                            <input type="hidden" name="precio_producto" value="<?= $modulo['precio'] ?>">
+                                            <button type="submit" class="btn btn-primary rounded-pill py-2 px-4 w-100">Comprar ahora</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <?php $j++; ?>
+                        <?php endforeach; ?>
                     </div>
-                    <?php $j++; ?>
-                    <?php endforeach; ?>
+
+                    <?php endif; ?>
                 </div>
-                <?php endif; ?>
-            </div>
         </div>
 
     <!-- SECCIÓN PLANES  -->

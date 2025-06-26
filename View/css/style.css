@@ -737,14 +737,110 @@ font-family: "Rubik", sans-serif;
     z-index: 9;
 }
 
+
 .service .service-item .service-content .service-content-inner .h4,
 .service .service-item .service-content .service-content-inner p {
     transition: 0.5s;
 }
 
+.service .service-item .service-content .service-content-inner h4 {
+    color: #000; /* El color que desees */
+}
+.service .service-item:hover .service-content .service-content-inner h4 {
+    color: #fff; /* O el color deseado al hacer hover */
+}
+/*BOTON LUPA INICIO*/
+.service-icon.view-icon {
+    background-color: #6f42c1;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.service-icon.view-icon:hover {
+    color: #59329c;
+    background-color: #dddddd;
+    font-size: 16px;
+    
+}
+/*BOTON LUPA INICIO*/
+
+.modal-curso {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+    font-weight: bold;
+}
+
+.modal-contenido {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px 30px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+    animation: fadeIn 0.3s ease;
+}
+
+.cerrar {
+    color: #ADDDD0;
+    position: absolute;
+    right: 20px;
+    top: 2px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cerrar:hover {
+    color: #000;
+}
+
+.titulo-modal {
+    font-weight: bold;
+    color: var(--main-color);
+    margin: 10px;
+}
+.info-modal {
+    font-weight: bold;
+    color: #000;
+    margin: 10px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+
 .service .service-item:hover .service-content .service-content-inner .h4,
 .service .service-item:hover .service-content .service-content-inner p {
     color: var(--bs-white);
+}
+.service-content .text-primary {
+    color: #000 !important; /* O el color que prefieras */
+}
+
+.service-item:hover .service-content .text-primary {
+    color: #fff !important;
 }
 
 .service .service-item:hover .service-content .service-content-inner .btn.btn-primary {
@@ -793,7 +889,7 @@ font-family: "Rubik", sans-serif;
     background: var(--bs-light);
 }
 
-
+/*** FAQs End ***/
 
 /*** Team Start ***/
 .team .team-item .team-img {
