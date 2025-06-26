@@ -2644,6 +2644,82 @@ form.boton-estilo button:hover {
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(108, 48, 194, 0.2);
 }
+/* confrimaciond e pago  */
 
-/*MADMIN PAGOS*/
+.contenedor-formulario {
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
 
+h2 {
+    color: #6c2bd9;
+    margin-bottom: 1rem;
+}
+
+.id-transaccion {
+    font-size: 18px;
+    color: #5c3fa3;
+}
+
+.datos-pago {
+    text-align: left;
+    background-color: #f9f5ff;
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid #d6c3f9;
+    margin: 1rem 0;
+}
+
+.datos-pago p {
+    margin: 0.5rem 0;
+    font-size: 16px;
+    color: #444;
+}
+
+.mensaje-confirmacion {
+    background-color: #e6d9ff;
+    color: #4b2597;
+    padding: 1rem;
+    border-radius: 12px;
+    font-size: 16px;
+    margin-bottom: 1.5rem;
+}
+
+.mensaje-confirmacion i {
+    font-size: 20px;
+    margin-right: 6px;
+}
+
+.boton-principal {
+    background-color: #6c2bd9;
+    color: white;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 16px;
+    display: inline-block;
+    transition: all 0.2s ease-in-out;
+}
+
+.boton-principal i {
+    margin-right: 6px;
+}
+
+.boton-principal:hover {
+    background-color: #5820b8;
+    transform: scale(1.05);
+}
+
+.debug-pago {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e0d6ff;
+    margin: 20px;
+    font-size: 14px;
+}

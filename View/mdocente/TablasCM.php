@@ -176,7 +176,7 @@ $materiales = $controller->listarMateriales($id_modulo);
          <p class="role">Docente</p>
          <a href="profile.html" class="btn">Ver Perfil</a>
          <div class="flex-btn">
-            <a href="../logout.php" class="option-btn">Cerrar sesión</a>
+            <a href="../../logout.php" class="option-btn">Cerrar sesión</a>
          </div>
       </div>
    </section>
