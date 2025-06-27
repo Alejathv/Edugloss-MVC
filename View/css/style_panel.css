@@ -44,7 +44,7 @@ html{
 
 
 body{
-   background-color: var(--light-bg);
+   background-color: #fff;
    padding-left: 30rem;
 }
 
@@ -1026,8 +1026,8 @@ section{
 }
 
 .user-profile .info .user img{
-   height: 10rem;
-   width: 10rem;
+   height: 20rem;
+   width: 20rem;
    border-radius: 50%;
    object-fit: cover;
    margin-bottom: 1rem;
@@ -1036,6 +1036,7 @@ section{
 .user-profile .info .user h3{
    font-size: 2rem;
    color: var(--black);
+   justify-content: center;
 }
 
 .user-profile .info .user p{
@@ -1351,96 +1352,97 @@ section{
 .formularioevidencia button:hover {
   background-color: #0b5ed7;
 }
-
-/* Estilos para el formulario Creación*/
-.formulario-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  padding: 2rem;
-  background-color: #f0f0f5;
-  border-radius: 16px;
+/* evidencias  */
+.main-content h2{
+text-align: center;
+ color: #6c2bd9;
+background-color: #e2cfff;/* el de .titulo-morado */
+    margin-bottom: 25px;
+    font-size: 2.5rem;
+padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-weight: bold;
+}
+.main-content {
+background-color: #f2e7fc;
+    border: 1px solid #d2b4f2;
+    border-radius: 15px;
+    max-width: 1000px; /* Igual que la tabla */
+    margin: 30px auto;
+    padding: 25px 30px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 2px 8px rgba(108, 48, 194, 0.2);
 }
 
+
 .formulario-contenedor {
-  font-family: 'Nunito', sans-serif;
-  border: 1px solid #c9bdf0;
-  border-radius: 16px;
-  max-width: 900px;
+  background-color: #f2e7fc;
+  border: 1px solid #d2b4f2;
+  border-radius: 15px;
+  max-width: 1000px;
   margin: 30px auto;
-  background-color: #fff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  font-family: Arial, sans-serif;
+  box-shadow: 0 2px 8px rgba(108, 48, 194, 0.2);
 }
 
 .formulario-titulo {
-  background-color: #5c3fa3;
-  color: white;
-  padding: 18px 30px;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
+  background-color: #e2cfff;
+  color: #6c2bd9;
+  padding: 1rem 1.5rem;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  font-size: 2.5rem;
   font-weight: bold;
-  font-size: 2.2rem;
   text-align: center;
 }
 
 .formulario-cuerpo {
-  padding: 30px;
+  padding: 25px 30px;
 }
 
 .formulario-cuerpo label {
-  font-weight: 700;
-  color: #4b2e83;
-  font-size: 1.6rem;
   display: block;
   margin-bottom: 6px;
+  color: #333;
+  font-size: 1.7rem;
 }
 
 .formulario-cuerpo input,
 .formulario-cuerpo select {
   width: 100%;
-  padding: 12px 14px;
-  margin-bottom: 20px;
-  border: 1.5px solid #c1b4e3;
-  border-radius: 10px;
-  font-size: 1.5rem;
-  color: #333;
-  background-color: #fafafa;
-  transition: border-color 0.3s ease;
-}
-
-.formulario-cuerpo input:focus,
-.formulario-cuerpo select:focus {
-  border-color: #8656e9;
-  outline: none;
-  background-color: #fefefe;
+  padding: 10px;
+  margin-bottom: 18px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1.7rem;
+  box-sizing: border-box;
 }
 
 .formulario-cuerpo button {
-  background-color: #8656e9;
+  width: 100%;
+  background-color: #8e4de6;
   color: white;
-  padding: 12px 25px;
   border: none;
+  padding: 12px;
   border-radius: 8px;
+  font-size: 16px;
   cursor: pointer;
-  font-weight: bold;
-  font-size: 1.5rem;
   transition: background-color 0.3s ease;
-  margin-top: 10px;
 }
 
 .formulario-cuerpo button:hover {
-  background-color: #734bd1;
+  background-color: #732ec4;
 }
 
 .btn-volver {
-  background-color: #8656e9 !important;
+  width: 100%;
+  background-color: #8e4de6 !important;
   color: white;
-  padding: 12px 25px;
   border: none;
+  padding: 12px;
   border-radius: 8px;
+  font-size: 16px;
   cursor: pointer;
-  font-weight: bold;
-  font-size: 1.5rem;
   transition: background-color 0.3s ease;
   margin-top: 10px;
 }
@@ -1448,6 +1450,41 @@ section{
 .btn-volver:hover {
   background-color: #5531a9;
 }
+
+.formulario-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 0;
+}
+
+.botones-flex {
+    display: flex;
+    justify-content: flex-end; /* o center si los quieres centrados */
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.botones-flex button,
+.botones-flex a.btn-volver {
+    background-color: #8656e9;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.botones-flex button:hover,
+.botones-flex a.btn-volver:hover {
+    background-color: #734bd1;
+}
+
 
 /* Estilos para la tabla */
 
@@ -1500,6 +1537,9 @@ section{
        background-color: #8e4de6;
     color: #fff;
 }
+
+/* agregar curso o modulo */
+
 /*BOTONES DEL CRUD DE CURSO Y MODULO*/
 .acciones {
   display: flex;
@@ -1648,16 +1688,27 @@ form.boton-estilo button:hover {
   background-color: #f9f7fd;
 }
 
-/*TABLA DE EDITAR*/
+/*TABLA DE EDITAR CURSO O MODULO*/
 .formulario-edicion {
-  max-width: 800px;
-  margin: 40px auto;
-  background-color: #fff;
-  border: 1px solid #c9bdf0;
-  border-radius: 16px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  font-family: 'Nunito', sans-serif;
-  padding: 30px;
+  max-width: 500px;
+  margin: 30px auto;
+  background-color: #f2e7fc;
+  border: 1px solid #d2b4f2;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(108, 48, 194, 0.2);
+  font-family: Arial, sans-serif;
+  padding: 25px 30px;
+}
+
+.formulario-edicion h2 {
+  text-align: center;
+  color: #6c2bd9;
+  background-color: #e2cfff;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 25px;
 }
 
 .formulario-edicion label {
@@ -1674,12 +1725,12 @@ form.boton-estilo button:hover {
 .formulario-edicion textarea,
 .formulario-edicion select {
   width: 100%;
-  padding: 12px 14px;
-  margin-bottom: 20px;
-  border: 1.5px solid #c1b4e3;
-  border-radius: 10px;
-  font-size: 1.5rem;
-  color: #333;
+  padding: 10px;
+  margin-bottom: 18px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box;
   background-color: #fafafa;
   transition: border-color 0.3s ease;
 }
@@ -1947,6 +1998,8 @@ padding: 1rem 1.5rem;
     flex-direction: column;
     justify-content: space-between;
     animation: fadeIn 0.4s ease-in-out;
+        max-width: 1200px;
+    margin: 0 auto; /* centra horizontalmente */
 }
 
 .welcome-section {
@@ -2018,31 +2071,28 @@ padding: 1rem 1.5rem;
 }
 
 .quick-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centra las tarjetas */
+    gap: 100px; /* Espacio entre ellas */
     margin-bottom: 20px;
-    max-width: 1000px;
-    width: 100%;
-    justify-items: center;
+    
 }
-
 .stat-card {
     background: linear-gradient(to top right, #f5f5f5, #ffffff);
     padding: 25px;
     border-radius: 12px;
     text-align: center;
-    width: 100%;
-    max-width: 300px;
+    width: 220px; /* Tamaño fijo */
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     border-left: 5px solid #6f38c5;
 }
-
 .stat-card:hover {
     transform: scale(1.04);
     box-shadow: 0 4px 14px rgba(0,0,0,0.1);
 }
+
 
 .stat-number {
     font-size: 50px;
@@ -2314,7 +2364,6 @@ padding: 1rem 1.5rem;
     justify-content: center;
     align-items: center;
     min-height: 50px; /* 100% alto de la pantalla */
-    background-color: #f0f0f5; /* color de fondo opcional */
     padding: 20px;
 }
 /* Contenedor general de la tabla */
@@ -2504,11 +2553,8 @@ padding: 1rem 1.5rem;
 .table-responsive {
     max-width: 1000px;
     margin: 0 auto;
-    background-color: #f5eaff;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 3px 10px rgba(108, 48, 194, 0.1);
-    border: 1px solid #d9bfff;
+
+
 }
 
 .table {
@@ -2736,4 +2782,239 @@ h2 {
     border: 1px solid #e0d6ff;
     margin: 20px;
     font-size: 14px;
+}
+
+/* formulario paar crear curso y modulo */
+.main-content-gestion h2{
+text-align: center;
+ color: #6c2bd9;
+background-color: #e2cfff;/* el de .titulo-morado */
+    margin-bottom: 25px;
+    font-size: 2.5rem;
+padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-weight: bold;
+}
+/* formulario paar crear curso y modulo */
+.main-content-gestion {
+background-color: #f2e7fc;
+    border: 1px solid #d2b4f2;
+    border-radius: 15px;
+    max-width: 1000px; /* Igual que la tabla */
+    margin: 30px auto;
+    padding: 25px 30px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 2px 8px rgba(108, 48, 194, 0.2);
+}
+
+form{
+   margin-top: 0px;
+} 
+
+/* TABLAS CM */
+/* Botones de acción */
+.acciones {
+   display: flex;
+   gap: 5px;
+   justify-content: center;
+}
+
+.boton-estilo {
+   margin: 0;
+   padding: 0;
+   border: none;
+   background: none;
+}
+
+.boton-estilo button,
+.boton-estilo a {
+   padding: 5px 10px;
+   border-radius: 4px;
+   color: white;
+   cursor: pointer;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   text-decoration: none;
+   font-size: 14px;
+}
+
+.acciones form:first-child button {
+   background-color: #28a745 !important;
+}
+
+.boton-estilo a {
+   background-color: #007bff;
+}
+
+.boton-estilo button[type="submit"]:last-child {
+   background-color: #dc3545;
+}
+
+.boton-estilo button:hover,
+.boton-estilo a:hover {
+   opacity: 0.8;
+   transform: scale(1.05);
+}
+
+.boton-estilo i {
+   margin: 0;
+}
+
+/* Contenedor estilo formulario */
+.contenedor-estilo {
+   max-width: 95%;
+   background-color: #f3e8ff;
+   border: 1px solid #d1b3ff;
+   border-radius: 16px;
+   padding: 2rem;
+   margin: 2rem auto;
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+   font-family: 'Nunito', sans-serif;
+}
+
+.titulo-morado {
+   background-color: #e2cfff;
+   color: #6c2bd9;
+   padding: 1rem 1.5rem;
+   border-radius: 12px;
+   font-size: 2rem;
+   text-align: center;
+   font-weight: bold;
+   margin-bottom: 1.5rem;
+}
+
+.tabla-contenedor {
+   overflow-x: auto;
+}
+
+table {
+   width: 100%;
+   border-collapse: collapse;
+   background-color: #fff;
+   border-radius: 12px;
+   overflow: hidden;
+   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+th {
+   background-color: #d5c5f4;
+   color: #44237a;
+   font-size: 16px;
+   font-weight: 700;
+   padding: 12px 15px;
+   text-align: left;
+}
+
+td {
+   padding: 12px 15px;
+   border-bottom: 1px solid #ddd;
+   text-align: left;
+   font-size: 16px;
+}
+
+tr:nth-child(even) {
+   background-color: #f9f5ff;
+}
+
+tr:hover {
+   background-color: #f2ecfd;
+}
+
+.boton-superior {
+   display: flex;
+   justify-content: flex-end;
+   margin-bottom: 15px;
+}
+
+.btn-nuevo-curso {
+   background-color: #6c2bd9;
+   color: white;
+   padding: 10px 16px;
+   border-radius: 8px;
+   font-size: 16px;
+   text-decoration: none;
+   display: inline-flex;
+   align-items: center;
+   gap: 8px;
+   transition: background-color 0.3s ease;
+   margin-right: 41px;
+}
+
+.btn-nuevo-curso:hover {
+   background-color: #5822b6;
+}
+
+.modal {
+   display: none;
+   position: fixed;
+   z-index: 9999;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100%;
+   overflow: auto;
+   background-color: rgba(0,0,0,0.5);
+}
+
+.modal-contenido {
+   background-color: #fff;
+   margin: 5% auto;
+   padding: 20px;
+   border-radius: 12px;
+   width: 90%;
+   max-width: 1000px;
+   position: relative;
+}
+
+.modal .cerrar {
+   position: absolute;
+   top: 10px;
+   right: 20px;
+   font-size: 28px;
+   font-weight: bold;
+   color: #333;
+   cursor: pointer;
+}
+/* filtro evidencias */
+.filtro-evidencias {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  background-color: #f4e9ff;
+  padding: 20px 25px;
+  border-radius: 12px;
+  border: 1px solid #d5c1f0;
+  margin: 25px 0;
+  box-shadow: 0 2px 6px rgba(108, 48, 194, 0.15);
+}
+
+.campo-filtro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 1.4rem;
+}
+
+.campo-filtro label {
+  font-weight: bold;
+  color: #5a2ea6;
+  margin-bottom: 5px;
+}
+
+.campo-filtro select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1.3rem;
+  background-color: #fff;
+  color: #333;
+  transition: border-color 0.3s ease;
+  min-width: 200px;
+}
+
+.campo-filtro select:focus {
+  border-color: #8656e9;
+  outline: none;
 }

@@ -13,7 +13,7 @@ class CursoController {
     }
 
     public function crearCurso() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crear_curso'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accion']) && $_POST['accion'] === 'crear_curso') {
             $nombre = $_POST['nombre'];
             $descripcion = $_POST['descripcion'];
             $precio = $_POST['precio'];

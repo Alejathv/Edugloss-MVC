@@ -47,116 +47,6 @@ $materiales = $controller->listarMateriales($id_modulo);
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
    <link rel="stylesheet" href="../css/style_panel.css">
 
-   <style>
-      /* Botones de acción */
-      .acciones {
-         display: flex;
-         gap: 5px;
-         justify-content: center;
-      }
-
-      .boton-estilo {
-         margin: 0;
-         padding: 0;
-         border: none;
-         background: none;
-      }
-
-      .boton-estilo button,
-      .boton-estilo a {
-         padding: 5px 10px;
-         border-radius: 4px;
-         color: white;
-         cursor: pointer;
-         display: inline-flex;
-         align-items: center;
-         justify-content: center;
-         text-decoration: none;
-         font-size: 14px;
-      }
-
-      .acciones form:first-child button {
-         background-color: #28a745 !important;
-      }
-
-      .boton-estilo a {
-         background-color: #007bff;
-      }
-
-      .boton-estilo button[type="submit"]:last-child {
-         background-color: #dc3545;
-      }
-
-      .boton-estilo button:hover,
-      .boton-estilo a:hover {
-         opacity: 0.8;
-         transform: scale(1.05);
-      }
-
-      .boton-estilo i {
-         margin: 0;
-      }
-
-      /* Contenedor estilo formulario */
-      .contenedor-estilo {
-         max-width: 95%;
-         background-color: #f3e8ff;
-         border: 1px solid #d1b3ff;
-         border-radius: 16px;
-         padding: 2rem;
-         margin: 2rem auto;
-         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-         font-family: 'Nunito', sans-serif;
-      }
-
-      .titulo-morado {
-         background-color: #e2cfff;
-         color: #6c2bd9;
-         padding: 1rem 1.5rem;
-         border-radius: 12px;
-         font-size: 2rem;
-         text-align: center;
-         font-weight: bold;
-         margin-bottom: 1.5rem;
-      }
-
-      .tabla-contenedor {
-         overflow-x: auto;
-      }
-
-      table {
-         width: 100%;
-         border-collapse: collapse;
-         background-color: #fff;
-         border-radius: 12px;
-         overflow: hidden;
-         box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      }
-
-      th {
-         background-color: #d5c5f4;
-         color: #44237a;
-         font-size: 16px;
-         font-weight: 700;
-         padding: 12px 15px;
-         text-align: left;
-      }
-
-      td {
-         padding: 12px 15px;
-         border-bottom: 1px solid #ddd;
-         text-align: left;
-         font-size: 16px;
-      }
-
-      tr:nth-child(even) {
-         background-color: #f9f5ff;
-      }
-
-      tr:hover {
-         background-color: #f2ecfd;
-      }
-   </style>
 </head>
 <body>
 
@@ -212,6 +102,11 @@ $materiales = $controller->listarMateriales($id_modulo);
 <!-- CURSOS -->
 <div class="contenedor-estilo">
    <div class="titulo-morado">Cursos Registrados</div>
+   <div class="boton-superior">
+<a href="#" onclick="abrirModalCurso()" class="btn-nuevo-curso">
+   <i class="fas fa-plus"></i> Agregar Curso Nuevo
+</a>
+</div>
    <div class="tabla-contenedor">
       <table>
          <thead>
@@ -234,11 +129,7 @@ $materiales = $controller->listarMateriales($id_modulo);
                <td><?= ucfirst($curso['estado']) ?></td>
                <td>
                   <div class="acciones">
-                     <form method="GET" action="CursoModulo.php" class="boton-estilo">
-                        <input type="hidden" name="id_curso" value="<?= $curso['id_curso'] ?>">
-                        <button type="submit"><i class="fa-solid fa-plus"></i></button>
-                     </form>
-                     <a href="editar_curso.php?id=<?= $curso['id_curso'] ?>" class="boton-estilo"><i class="fas fa-edit"></i></a>
+                     <a href="#" onclick="abrirModalEditarCurso(<?= $curso['id_curso'] ?>)" class="boton-estilo"><i class="fas fa-edit"></i></a>
                      <form method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar este curso y sus módulos?')" class="boton-estilo">
                         <input type="hidden" name="accion" value="eliminar_curso">
                         <input type="hidden" name="id_curso" value="<?= $curso['id_curso'] ?>">
@@ -256,6 +147,13 @@ $materiales = $controller->listarMateriales($id_modulo);
 <!-- MÓDULOS -->
 <div class="contenedor-estilo">
    <div class="titulo-morado">Módulos por Curso</div>
+   <div class="boton-superior">
+
+<a href="#" onclick="abrirModalModulo()" class="btn-nuevo-curso">
+   <i class="fas fa-plus"></i> Agregar Módulo Nuevo
+</a>
+
+</div>
    <div class="tabla-contenedor">
       <table>
          <thead>
@@ -282,11 +180,7 @@ $materiales = $controller->listarMateriales($id_modulo);
                   <td><?= ucfirst($modulo['estado']) ?></td>
                   <td>
                      <div class="acciones">
-                        <form method="GET" action="CursoModulo.php" class="boton-estilo">
-                           <input type="hidden" name="id_modulo" value="<?= $modulo['id_modulo'] ?>">
-                           <button type="submit"><i class="fa-solid fa-plus"></i></button>
-                        </form>
-                        <a href="editar_modulo.php?id=<?= $modulo['id_modulo'] ?>" class="boton-estilo"><i class="fas fa-edit"></i></a>
+                        <a href="#" onclick="abrirModalEditarModulo(<?= $modulo['id_modulo'] ?>)" class="boton-estilo"><i class="fas fa-edit"></i></a>
                         <form method="POST" style="display:inline;" onsubmit="return confirm('¿Eliminar este módulo?')" class="boton-estilo">
                            <input type="hidden" name="accion" value="eliminar_modulo">
                            <input type="hidden" name="id_modulo" value="<?= $modulo['id_modulo'] ?>">
@@ -301,11 +195,59 @@ $materiales = $controller->listarMateriales($id_modulo);
       </table>
    </div>
 </div>
+<!-- Modal Curso -->
+<div id="modal-curso" class="modal">
+   <div class="modal-contenido">
+      <span class="cerrar" onclick="cerrarModalCurso()">&times;</span>
+      <iframe id="iframe-curso" frameborder="0" style="width:100%; height: 500px;"></iframe>
+   </div>
+</div>
+
+<!-- Modal Módulo -->
+<div id="modal-modulo" class="modal">
+   <div class="modal-contenido">
+      <span class="cerrar" onclick="cerrarModalModulo()">&times;</span>
+      <iframe id="iframe-modulo" frameborder="0" style="width:100%; height: 500px;"></iframe>
+   </div>
+</div>
+<!-- Modal Editar Curso -->
+<div id="modal-editar-curso" class="modal">
+   <div class="modal-contenido">
+      <span class="cerrar" onclick="cerrarModalEditarCurso()">&times;</span>
+      <iframe id="iframe-editar-curso" frameborder="0" style="width:100%; height: 500px;"></iframe>
+   </div>
+</div>
+
+<!-- Modal Editar Módulo -->
+<div id="modal-editar-modulo" class="modal">
+   <div class="modal-contenido">
+      <span class="cerrar" onclick="cerrarModalEditarModulo()">&times;</span>
+      <iframe id="iframe-editar-modulo" frameborder="0" style="width:100%; height: 500px;"></iframe>
+   </div>
+</div>
 
 <footer class="footer">
-   &copy; copyright 2024 <span>EduGloss</span> | Todos los derechos reservados!
+   &copy; copyright 2025 <span>EduGloss</span> | Todos los derechos reservados!
 </footer>
 
 <script src="../js/script.js"></script>
+<script src="../js/modal_docente.js"></script>
+<script>
+function cerrarModalCurso() {
+  const modal = document.getElementById('modal-curso');
+  const iframe = document.getElementById('iframe-curso');
+  modal.style.display = 'none';
+  iframe.src = ''; // Limpia el iframe
+}
+
+window.addEventListener('message', function(event) {
+  if (event.data === 'curso_creado') {
+    cerrarModalCurso();
+    setTimeout(() => location.reload(), 100);
+  }
+});
+</script>
+
+</div>
 </body>
 </html>

@@ -58,7 +58,7 @@ $comentarios = $foroModel->getComentariosAnidados() ?? [];
             padding: 15px;
             background-color: white;
             border-radius: 5px;
-            border-left: 4px solid #5c3fa3;
+            border-left: 4px solid #8e4de6;
         }
         
         .respuesta {
@@ -72,7 +72,7 @@ $comentarios = $foroModel->getComentariosAnidados() ?? [];
         }
         
         .btn-responder {
-            background-color: #5c3fa3;
+            background-color: #8e4de6;
             color: white;
             border: none;
             padding: 5px 10px;
@@ -95,7 +95,7 @@ $comentarios = $foroModel->getComentariosAnidados() ?? [];
         }
         
         .btn-enviar {
-            background-color: #5c3fa3;
+            background-color: #8e4de6;
             color: white;
             border: none;
             padding: 8px 15px;
@@ -243,6 +243,8 @@ function mostrarFormRespuesta(id) {
     document.getElementById('form-respuesta-' + id).style.display = 'block';
 }
 </script>
-
+<footer class="footer">
+   &copy; copyright 2024 <span>EduGloss</span> | Todos los derechos reservados!
+</footer>
 </body>
 </html>

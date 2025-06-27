@@ -135,21 +135,21 @@ if (isset($_GET['m']) && $_GET['m'] == 'subir') {
                 if ($material['tipo'] === 'video') {
                     if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $material['url_material'], $matches)) {
                         $videoId = $matches[1];
-                        echo '<button class="btn-preview" onclick="showVideoPreview(\'' . $videoId . '\')">Previsualizar</button>';
+                        echo '<button class="btn-preview" onclick="showVideoPreview(\'' . $videoId . '\')" title="Previsualizar"><i class="fas fa-play"></i></button>';
                     }
-                    echo '<a href="' . htmlspecialchars($material['url_material']) . '" target="_blank" class="btn-ver">Ver en YouTube</a>';
+                    echo '<a href="' . htmlspecialchars($material['url_material']) . '" target="_blank" class="btn-ver" title="Ver en YouTube"><i class="fab fa-youtube"></i></a>';
                 } else {
-                    echo '<a href="' . htmlspecialchars($material['url_material']) . '" target="_blank" class="btn-ver">Ver PDF</a>';
+                    echo '<a href="' . htmlspecialchars($material['url_material']) . '" target="_blank" class="btn-ver" title="Ver PDF"><i class="fas fa-file-pdf"></i></a>';
                 }
                 echo '</td>';
                 echo '<td class="acciones-material">';
                 echo '<form method="GET" action="editar_material.php" style="display:inline-block;">';
                 echo '<input type="hidden" name="id" value="' . $material['id_material'] . '">';
-                echo '<button type="submit" class="btn-editar" title="Editar"><i class="fas fa-pencil-alt"></i></button>';
+                echo '<button type="submit" class="btn-editar" title="Editar"><i class="fas fa-edit"></i></button>';
                 echo '</form>';
-                echo '<form method="POST" action="eliminar_material.php" style="display:inline-block;" onsubmit="return confirm(\'\u00bfEst\u00e1s seguro de eliminar este material?\')">';
+                echo '<form method="POST" action="eliminar_material.php" style="display:inline-block;" onsubmit="return confirm(\'¿Estás seguro de eliminar este material?\')">';
                 echo '<input type="hidden" name="id_material" value="' . $material['id_material'] . '">';
-                echo '<button type="submit" class="btn-eliminar" title="Eliminar"><i class="far fa-trash-alt"></i></button>';
+                echo '<button type="submit" class="btn-eliminar" title="Eliminar"><i class="fas fa-trash"></i></i></button>';
                 echo '</form>';
                 echo '</td>';
                 echo '</tr>';
@@ -171,54 +171,45 @@ if (isset($_GET['m']) && $_GET['m'] == 'subir') {
     align-items: center;
     flex-wrap: wrap;
 }
-.btn-editar, .btn-eliminar {
+.btn-editar, .btn-eliminar, .btn-preview, .btn-ver {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 6px 12px;
-    font-size: 14px;
+    padding: 6px;
+    font-size: 16px;
+    width: 36px;
+    height: 36px;
     border: none;
     border-radius: 6px;
     color: white;
     cursor: pointer;
     text-decoration: none;
-    height: 36px;
-    line-height: 1;
+    transition: all 0.2s ease-in-out;
 }
 .btn-editar {
-    background: linear-gradient(135deg, #4a6bff 0%, #6a5acd 100%);
-    border: 1px solid rgba(255,255,255,0.1);
+    background-color: #0d6efd;
 }
 .btn-editar:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(74, 107, 255, 0.2);
+    background-color: #5941a9;
 }
 .btn-eliminar {
-    background: linear-gradient(135deg, #ff4a4a 0%, #d23369 100%);
-    border: 1px solid rgba(255,255,255,0.1);
+    background-color: #dc3545;
 }
 .btn-eliminar:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(255, 74, 74, 0.2);
+    background-color:#b62937;
 }
 .btn-preview {
-    background: linear-gradient(135deg, #28a745 0%, #218838 100%);
-    color: white;
-    border: 1px solid rgba(255,255,255,0.1);
-    padding: 7px;
-    border-radius: 5px;
+    background-color: #218838;
+}
+.btn-preview:hover {
+    background-color: #1e7e34;
 }
 .btn-ver {
-    background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
-    color: white;
-    border: 1px solid rgba(255,255,255,0.1);
-    padding: 6px 12px;
-    border-radius: 6px;
-    margin-left: 5px;
-    display: inline-block;
-    text-align: center;
-    font-size: 14px;
-    text-decoration: none;
+    background-color: #cc0000;
+    margin-left: 10px;
+}
+.btn-ver:hover {
+    background-color: #990000;
 }
 </style>
 
@@ -240,12 +231,14 @@ window.onclick = function(event) {
     }
 }
 </script>
+
 <div id="videoModal" class="modal">
     <div class="modal-content">
         <span class="close-btn" onclick="closeVideoModal()">&times;</span>
         <div id="videoContainer"></div>
     </div>
 </div>
+
 <footer class="footer">
     &copy; copyright 2024 <span>EduGloss</span> | Todos los derechos reservados!
 </footer>
