@@ -76,6 +76,21 @@ if ($material['tipo'] === 'video') {
     margin: 0 auto; /* centra horizontalmente */
     display: block; /* necesario para que funcione margin: auto */
 }
+
+   .icons .fas,
+.icons a.fas {
+   font-size: 2rem;
+   color: #333;
+   cursor: pointer;
+   margin-left: 1rem;
+   transition: color 0.3s;
+}
+
+.icons .fas:hover,
+.icons a.fas:hover {
+   color: #9b9b9b;
+}
+
    </style>
 
 </head>
@@ -92,6 +107,7 @@ if ($material['tipo'] === 'video') {
          <div id="menu-btn" class="fas fa-bars"></div>
          <div id="user-btn" class="fas fa-user"></div>
          <div id="toggle-btn" class="fas fa-sun"></div>
+          <a href="../../documentos/Manual de uso estudiante.pdf" target="_blank" id="help-btn" class="fas fa-question"></a>
       </div>
 
       <!-- Perfil del usuario, muestra la imagen, nombre y rol -->

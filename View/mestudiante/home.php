@@ -21,6 +21,22 @@ $hayInscripciones = !empty($redireccionCurso);
    <title>Inicio</title>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
    <link rel="stylesheet" href="../css/style_panel.css">
+<style>
+   .icons .fas,
+.icons a.fas {
+   font-size: 2rem;
+   color: #333;
+   cursor: pointer;
+   margin-left: 1rem;
+   transition: color 0.3s;
+}
+
+.icons .fas:hover,
+.icons a.fas:hover {
+   color: #9b9b9b;
+}
+
+</style>
 </head>
 <body>
 
@@ -33,6 +49,7 @@ $hayInscripciones = !empty($redireccionCurso);
          <div id="menu-btn" class="fas fa-bars"></div>
          <div id="user-btn" class="fas fa-user"></div>
          <div id="toggle-btn" class="fas fa-sun"></div>
+         <a href="../../documentos/Manual de uso estudiante.pdf" target="_blank" id="help-btn" class="fas fa-question"></a>
       </div>
       <div class="profile">
          <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
