@@ -30,6 +30,14 @@ if ($result->num_rows === 0) {
 $material = $result->fetch_assoc();
 
 $id_modulo = $material['id_modulo'];
+// Obtener total de materiales en este módulo
+$sqlCount = "SELECT COUNT(*) as total FROM material WHERE id_modulo = ?";
+$stmtCount = $conn->prepare($sqlCount);
+$stmtCount->bind_param("i", $id_modulo);
+$stmtCount->execute();
+$resultCount = $stmtCount->get_result();
+$totalMateriales = $resultCount->fetch_assoc()['total'];
+
 
 
 //
@@ -71,11 +79,14 @@ if ($material['tipo'] === 'video') {
    <link rel="stylesheet" href="../css/style_panel.css">
    <style>
      iframe, embed {
-            width: 100%;
-            height: 80vh;
-            border: none;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-        }
+    width: 90%;
+    height: 50vh;
+    border: none;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    margin: 0 auto; /* centra horizontalmente */
+    display: block; /* necesario para que funcione margin: auto */
+}
+
        .progress-container {
    margin: 20px 0;
    text-align: center;
@@ -185,7 +196,7 @@ if ($material['tipo'] === 'video') {
     
     <div class="video-container">
         <div class="video">
-
+         <h1 "><?= htmlspecialchars($material['nombre']) ?></h1>
             <?php if ($material['tipo'] === 'video'): ?>
                 <iframe 
                     src="<?= htmlspecialchars($url) ?>" 
@@ -201,9 +212,9 @@ if ($material['tipo'] === 'video') {
             <?php else: ?>
                 <p>Tipo de material no compatible.</p>
             <?php endif; ?>
-            <h3 class="title"><?= htmlspecialchars($material['nombre']) ?></h3>
             
-            <div class="progress-container">
+         </div>
+         <div class="progress-container">
             <label>Progreso del módulo:</label>
             <div class="progress-bar">
                 <div class="progress" style="width: 100%;"></div>
@@ -212,11 +223,7 @@ if ($material['tipo'] === 'video') {
             <a href="ver_materiales.php?id_modulo=<?= urlencode($id_modulo) ?>" class="btn" style="margin-top: 15px;">
                 Completado
             </a>
-            </div>
-
-
-
-        </div>
+         </div>
     </div>
 
    
@@ -232,12 +239,10 @@ if ($material['tipo'] === 'video') {
 <!-- custom js file link  -->
 <script src="../js/script.js"></script>
 <script>
-   // Simula cuántos materiales hay por módulo
-   const totalMateriales = 3; // por ejemplo, 3 videos o PDF
+   const totalMateriales = <?= $totalMateriales ?>;
    const materialActualId = <?= $id ?>;
 
-   // Guardamos el ID del material como visto
-   const vistosKey = 'materiales_vistos_modulo';
+   const vistosKey = 'materiales_vistos_modulo_<?= $id_modulo ?>'; // único por módulo
    let vistos = JSON.parse(localStorage.getItem(vistosKey)) || [];
 
    if (!vistos.includes(materialActualId)) {
@@ -245,23 +250,27 @@ if ($material['tipo'] === 'video') {
       localStorage.setItem(vistosKey, JSON.stringify(vistos));
    }
 
-   // Calcular progreso
    const porcentaje = Math.floor((vistos.length / totalMateriales) * 100);
-   document.getElementById('progress').style.width = porcentaje + '%';
-   document.getElementById('progress-text').innerText = porcentaje + '% completado';
 
-   // Habilitar el botón si se completaron todos
-   const nextBtn = document.getElementById('nextBtn');
-   if (vistos.length >= totalMateriales) {
-      nextBtn.disabled = false;
-      nextBtn.innerText = "¡Acceder al siguiente módulo!";
-      nextBtn.onclick = function () {
-         window.location.href = "siguiente_material.php"; // o lo que corresponda
-      };
-   } else {
-      nextBtn.innerText = "Completa todos los materiales para continuar";
+   // Actualizar la barra de progreso y texto
+   document.querySelector('.progress').style.width = porcentaje + '%';
+
+   const progressContainer = document.querySelector('.progress-container');
+   let textoProgreso = document.createElement('p');
+   textoProgreso.textContent = porcentaje + '% completado';
+   progressContainer.appendChild(textoProgreso);
+
+   // Mostrar botón solo si el 100% está completo
+   if (porcentaje === 100) {
+      const btnEvidencia = document.createElement('a');
+      btnEvidencia.href = "subir_evidencia.php?id_modulo=<?= $id_modulo ?>";
+      btnEvidencia.className = "btn";
+      btnEvidencia.style.marginTop = "15px";
+      btnEvidencia.innerText = "Subir evidencia del módulo";
+      progressContainer.appendChild(btnEvidencia);
    }
 </script>
+
 
 </body>
 </html>

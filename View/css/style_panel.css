@@ -710,6 +710,22 @@ section{
    color: var(--light-color);
 }
 
+.playlist-videos .box-container{
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+   max-width: 800px;
+   margin: 0 auto;
+   gap:1.5rem;
+   justify-content: center;
+   align-items: flex-start;
+}
+
+.playlist-videos .box-container .box{
+   background-color: var(--white);
+   border-radius: .5rem;
+   padding: 2rem;
+   position: relative;
+}
 
 .playlist-videos .box-container .box i{
    position: absolute;
@@ -744,6 +760,29 @@ section{
 
 .playlist-videos .box-container .box:hover h3{
    color: var(--main-color);
+}
+
+
+
+.watch-video h1 {
+   font-size: 2.5rem;
+   text-align: center;
+   color: #87A2FB;
+   margin-top: 30px;
+   margin-bottom: 10px;
+   margin-top: 0 !important;
+   position: relative;
+   font-weight: 800;
+}
+
+.watch-video h1::after {
+   content: '';
+   display: block;
+   width: 80px;
+   height: 4px;
+   background-color: #87A2FB;
+   margin: 10px auto 0 auto;
+   border-radius: 2px;
 }
 
 .watch-video .video-container{
@@ -2187,8 +2226,7 @@ form.boton-estilo button:hover {
    margin: 10px auto 0 auto;
    border-radius: 2px;
 }
-
-   .modulos-container {
+.modulos-container {
    display: grid;
    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
    gap: 25px;
@@ -2226,17 +2264,19 @@ form.boton-estilo button:hover {
 
 .card-modulo .contenido h3 {
    margin: 0;
-   font-size: 2.5rem;
+   font-size: 1.6rem;
    color: #2a2a2a;
    font-weight: bold;
 }
 
 .card-modulo .contenido p {
    margin-top: 10px;
-   font-size: 2rem;
+   font-size: 1.1rem;
    color: #555;
    line-height: 1.5;
 }
+
+
 /*ESTUDIANTE MODULOS CURSOS*/
 
 /* foro */

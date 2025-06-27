@@ -34,39 +34,6 @@ $materiales = $materialModel->obtenerMaterialPorModulo($id_modulo); // Usamos tu
 
    <!-- custom css file link  -->
    <link rel="stylesheet" href="../css/style_panel.css">
-   <style>
-      .titulo-modulo {
-         text-align: center;
-         font-size: 2rem;
-         color: #7b3df0;
-         border-bottom: 2px solid #7b3df0;
-         width: fit-content;
-         margin-bottom: 25px;
-      }
-      .box-container {
-   max-width: 1100px;   /* O ajusta a 900px si lo quieres más estrecho */
-   margin: 0 auto;
-   padding: 20px;
-   background-color: #fff;
-   border-radius: 10px;
-   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-      .material { 
-            margin: 20px 0; padding: 15px; 
-            background: #f9f9f9; border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        h1 { color: #2c3e50; }
-        h3 { color: #3498db; }
-        iframe, embed { 
-            width: 100%; 
-            height: 500px; 
-            border: 1px solid #ddd;
-            margin-top: 10px;
-        }
-        .pdf-container { height: 600px; }
-   </style>
 
 </head>
 <body>
@@ -150,11 +117,11 @@ $materiales = $materialModel->obtenerMaterialPorModulo($id_modulo); // Usamos tu
          <div class="box-container">
             <?php foreach ($materiales as $material): ?>
                   <a class="box" href="mostrar.php?id=<?= urlencode($material['id_material']) ?>" >
-                     <i class="fas fa-play"></i>
                      <?php if ($material['tipo'] === 'video'): ?>
-                        <img class="rotar-preview" src="<?= (function() { $imagenes = glob("../img/videos/*.jpg"); return $imagenes ? $imagenes[array_rand($imagenes)] : '../img/videos/default.jpg'; })() ?>" alt="Vista previa aleatoria">
-                     <i class="fas fa-file"></i>   
+                        <i class="fas fa-play"></i>
+                        <img class="rotar-preview" src="<?= (function() { $imagenes = glob("../img/videos/*.jpg"); return $imagenes ? $imagenes[array_rand($imagenes)] : '../img/videos/default.jpg'; })() ?>" alt="Vista previa aleatoria"> 
                      <?php elseif ($material['tipo'] === 'pdf'): ?>
+                        <i class="fas fa-file"></i>
                         <img class="rotar-preview" src="<?= (function() { $imagenes = glob("../img/pdf/*.jpg"); return $imagenes ? $imagenes[array_rand($imagenes)] : '../img/videos/default.jpg'; })() ?>" alt="Vista previa aleatoria">
                      <?php else: ?>
                         <img src="images/post-unknown.png" alt="Material">
@@ -166,7 +133,7 @@ $materiales = $materialModel->obtenerMaterialPorModulo($id_modulo); // Usamos tu
       <?php endif; ?>
 </div>
    <div style="text-align: right; margin: 10px;">
-      <a href="subir-evidencia.php" class="btn btn-primary">Subir Evidencia</a>
+      <a href="subir-evidencia.php" class="btn evidencia" style="background-color: #87A2FB; color: white; font-weight: bold;">Subir Evidencia</a>
    </div>
 
 </section>

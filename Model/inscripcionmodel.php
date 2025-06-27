@@ -74,6 +74,8 @@ class InscripcionModel {
                 </div>
             </div>
             ";
+            $mail->addEmbeddedImage($logoPath, 'logoCID');
+
             $mail->AltBody = "Tus credenciales:\nUsuario: $correo\nContraseña: $clave\nPor seguridad, cambia esta contraseña después de iniciar sesión.";
 
 
