@@ -335,7 +335,7 @@ if (!empty($mensaje)) {
                                             </button>
                                         </div>
 
-                                        <form action="procesar_pago.php" method="POST">
+                                        <form action="View/procesar_pago.php" method="POST">
                                             <input type="hidden" name="tipo_producto" value="modulo">
                                             <input type="hidden" name="id_producto" value="<?= $modulo['id_modulo'] ?>">
                                             <input type="hidden" name="nombre_producto" value="<?= htmlspecialchars($modulo['nombre']) ?>">

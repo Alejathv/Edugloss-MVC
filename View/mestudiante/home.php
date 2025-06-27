@@ -59,50 +59,41 @@ $hayInscripciones = !empty($redireccionCurso);
          <a href="home.php"><i class="fas fa-home"></i><span>Inicio</span></a>
          <a href="../ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
          <a href="<?= htmlspecialchars($redireccionCurso) ?>"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
-         <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Docentes</span></a>
+         <a href="tareas.php"><i class="fas fa-tasks"></i><span>Tareas</span></a>
+
       </nav>
    <?php endif; ?>
 </div>
 
-<div class="dashboard-container">
-   <div class="welcome-section">
+<div class="estudiante-container">
+   <div class="bienvenida-estudiante">
       <h2>Bienvenido, <?= htmlspecialchars($_SESSION['nombre']) ?></h2>
       <p>Revisa tus cursos, docentes y temas desde este panel</p>
    </div>
 
    <?php if ($hayInscripciones): ?>
-      <div class="cards-grid">
-         <a href="<?= htmlspecialchars($redireccionCurso) ?>" class="dashboard-card">
-            <div class="card-icon"><i class="fas fa-book-open"></i></div>
+      <div class="cursos-grid">
+         <a href="<?= htmlspecialchars($redireccionCurso) ?>" class="card-estudiante">
+            <div class="icono-estudiante"><i class="fas fa-book-open"></i></div>
             <h3>Mis Cursos</h3>
             <p>Accede a tus clases y contenidos</p>
          </a>
-         <a href="teachers.html" class="dashboard-card">
-            <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
-            <h3>Docentes</h3>
-            <p>Conoce a tus instructores</p>
-         </a>
-         <a href="../ForoGeneral.php" class="dashboard-card">
-            <div class="card-icon"><i class="fas fa-comments"></i></div>
+         <a href="../ForoGeneral.php" class="card-estudiante">
+            <div class="icono-estudiante"><i class="fas fa-comments"></i></div>
             <h3>Foro General</h3>
             <p>Haz preguntas o comenta tus dudas</p>
-         </a>
-         <a href="contact.html" class="dashboard-card">
-            <div class="card-icon"><i class="fas fa-envelope"></i></div>
-            <h3>Contacto</h3>
-            <p>Comunícate con el equipo</p>
          </a>
       </div>
    <?php endif; ?>
    
-   
-   <div class="quick-stats">
-      <div class="stat-card">
+   <div class="estadisticas-rapidas">
+      <div class="card-estadistica">
          <h4>Temas Populares</h4>
-         <p class="stat-number">4</p>
+         <div class="numero-estadistica">4</div>
       </div>
    </div>
 </div>
+
 
 <footer class="footer">
    &copy; copyright 2024 <span>EduGloss</span> | Todos los derechos reservados!

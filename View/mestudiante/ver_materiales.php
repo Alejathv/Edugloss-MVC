@@ -57,7 +57,6 @@ $materiales = $materialModel->obtenerMaterialPorModulo($id_modulo); // Usamos tu
 <header class="header">
    
    <section class="flex">
-
       <a href="home.php" class="logo">
          <img src="../img/LogoEGm.png" alt="EduGloss" style="height: 80px;">
       </a>
@@ -66,22 +65,15 @@ $materiales = $materialModel->obtenerMaterialPorModulo($id_modulo); // Usamos tu
          <div id="user-btn" class="fas fa-user"></div>
          <div id="toggle-btn" class="fas fa-sun"></div>
       </div>
-
-      <!-- Perfil del usuario, muestra la imagen, nombre y rol -->
       <div class="profile">
          <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
-         <h3 class="name">
-         <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
-         </h3>
+         <h3 class="name"><?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?></h3>
          <p class="role">Estudiante</p>
-         <a href="profile.html" class="btn">ver perfil</a>
-         <!-- Botones para iniciar sesión o registrarse -->
+         <a href="../perfil.php" class="btn">ver perfil</a>
          <div class="flex-btn">
-            <a href="login.html" class="option-btn">Entrar</a>
-            <a href="register.html" class="option-btn">Registrarse</a>
+            <a href="../../logout.php" class="option-btn">Cerrar Sesión</a>
          </div>
-      </div>   
-
+      </div>
    </section>
 
 </header>   
@@ -108,8 +100,6 @@ $materiales = $materialModel->obtenerMaterialPorModulo($id_modulo); // Usamos tu
    <?php if (isset($_SESSION['rol_nombre'])) { ?>
       <?php if ($_SESSION['rol_nombre'] == 'estudiante') { ?>
          <!-- Enlaces para estudiantes -->
-         <a href="ver_materiales.php"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
-         <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Docentes</span></a>
       
       <?php } elseif ($_SESSION['rol_nombre'] == 'docente') { ?>
          <!-- Enlaces para docentes -->
@@ -129,7 +119,7 @@ $materiales = $materialModel->obtenerMaterialPorModulo($id_modulo); // Usamos tu
    <?php } ?>
    
    <!-- Enlace común para todos -->
-   <a href="contact.html"><i class="fas fa-headset"></i><span>Contáctanos</span></a>
+    <a href="tareas.php"><i class="fas fa-tasks"></i><span>Tareas</span></a>
 </nav>
 
 </div>
@@ -141,7 +131,6 @@ $materiales = $materialModel->obtenerMaterialPorModulo($id_modulo); // Usamos tu
    <div class="box-container">
 
       <h1><?= htmlspecialchars($modulo['nombre']) ?></h1>
-      <p><?= htmlspecialchars($modulo['descripcion']) ?></p>
 
 <h2>Materiales</h2>
 

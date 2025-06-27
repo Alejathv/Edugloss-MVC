@@ -24,11 +24,23 @@ class ModuloModel {
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
-    public function eliminarModulo($id_modulo) {
-    $stmt = $this->db->prepare("DELETE FROM modulo WHERE id_modulo = ?");
-    $stmt->bind_param("i", $id_modulo);
-    return $stmt->execute();
-    }
+
+    public function eliminarModulo($idModulo) {
+    // Elimina pagos relacionados con el módulo
+    $stmtPagos = $this->db->prepare("DELETE FROM pago WHERE id_modulo = ?");
+    $stmtPagos->bind_param("i", $idModulo);
+    $stmtPagos->execute();
+    $stmtPagos->close();
+
+    // Ahora elimina el módulo
+    $stmtModulo = $this->db->prepare("DELETE FROM modulo WHERE id_modulo = ?");
+    $stmtModulo->bind_param("i", $idModulo);
+    $resultado = $stmtModulo->execute();
+    $stmtModulo->close();
+
+    return $resultado;
+}
+
 
     public function actualizarModulo($data) {
     $stmt = $this->db->prepare("UPDATE modulo SET nombre = ?, descripcion = ?, precio = ?, estado = ? WHERE id_modulo = ?");
