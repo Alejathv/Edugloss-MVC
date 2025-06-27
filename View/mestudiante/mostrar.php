@@ -30,17 +30,30 @@ if ($result->num_rows === 0) {
 $material = $result->fetch_assoc();
 
 $id_modulo = $material['id_modulo'];
-// Obtener total de materiales en este módulo
-$sqlCount = "SELECT COUNT(*) as total FROM material WHERE id_modulo = ?";
-$stmtCount = $conn->prepare($sqlCount);
-$stmtCount->bind_param("i", $id_modulo);
-$stmtCount->execute();
-$resultCount = $stmtCount->get_result();
-$totalMateriales = $resultCount->fetch_assoc()['total'];
+// Obtener todos los materiales de ese módulo
+$materialesModulo = [];
 
+$sqlLista = "SELECT id_material FROM material WHERE id_modulo = ? ORDER BY id_material ASC";
+$stmtLista = $conn->prepare($sqlLista);
+if ($stmtLista) {
+    $stmtLista->bind_param("i", $id_modulo);
+    $stmtLista->execute();
+    $resultLista = $stmtLista->get_result();
 
+    while ($row = $resultLista->fetch_assoc()) {
+        $materialesModulo[] = $row['id_material'];
+    }
 
-//
+    // Calcular posición actual y el siguiente material
+    $posActual = array_search($id, $materialesModulo);
+    $siguienteId = ($posActual !== false && isset($materialesModulo[$posActual + 1]))
+        ? $materialesModulo[$posActual + 1]
+        : null;
+} else {
+    echo "Error en consulta de materiales: " . $conn->error;
+    exit;
+}
+
 // FUNCIONES PARA TRANSFORMAR LAS URLS
 //
 function transformarYoutube($url) {
@@ -219,10 +232,6 @@ if ($material['tipo'] === 'video') {
             <div class="progress-bar">
                 <div class="progress" style="width: 100%;"></div>
             </div>
-            <p>100% completado</p>
-            <a href="ver_materiales.php?id_modulo=<?= urlencode($id_modulo) ?>" class="btn" style="margin-top: 15px;">
-                Completado
-            </a>
          </div>
     </div>
 
@@ -239,12 +248,15 @@ if ($material['tipo'] === 'video') {
 <!-- custom js file link  -->
 <script src="../js/script.js"></script>
 <script>
-   const totalMateriales = <?= $totalMateriales ?>;
+   const totalMateriales = <?= count($materialesModulo) ?>;
    const materialActualId = <?= $id ?>;
+   const siguienteId = <?= $siguienteId !== null ? $siguienteId : 'null' ?>;
+   const moduloId = <?= $id_modulo ?>;
 
-   const vistosKey = 'materiales_vistos_modulo_<?= $id_modulo ?>'; // único por módulo
+   const vistosKey = 'materiales_vistos_modulo_' + moduloId;
    let vistos = JSON.parse(localStorage.getItem(vistosKey)) || [];
 
+   // Marcar como visto el actual si no está
    if (!vistos.includes(materialActualId)) {
       vistos.push(materialActualId);
       localStorage.setItem(vistosKey, JSON.stringify(vistos));
@@ -252,24 +264,38 @@ if ($material['tipo'] === 'video') {
 
    const porcentaje = Math.floor((vistos.length / totalMateriales) * 100);
 
-   // Actualizar la barra de progreso y texto
+   // Actualizar barra de progreso
    document.querySelector('.progress').style.width = porcentaje + '%';
 
    const progressContainer = document.querySelector('.progress-container');
-   let textoProgreso = document.createElement('p');
+
+   // Agregar texto de porcentaje
+   const textoProgreso = document.createElement('p');
    textoProgreso.textContent = porcentaje + '% completado';
    progressContainer.appendChild(textoProgreso);
 
-   // Mostrar botón solo si el 100% está completo
+   // Mostrar botón de siguiente video si hay
+   if (siguienteId !== null) {
+      const btnSiguiente = document.createElement('a');
+      btnSiguiente.href = "mostrar.php?id=" + siguienteId;
+      btnSiguiente.className = "btn";
+      btnSiguiente.style.marginTop = "15px";
+      btnSiguiente.innerText = "Siguiente video";
+      progressContainer.appendChild(btnSiguiente);
+   }
+
+   // Mostrar botón de subir evidencia si 100% completado
    if (porcentaje === 100) {
       const btnEvidencia = document.createElement('a');
-      btnEvidencia.href = "subir_evidencia.php?id_modulo=<?= $id_modulo ?>";
+      btnEvidencia.href = "subir_evidencia.php?id_modulo=" + moduloId;
       btnEvidencia.className = "btn";
       btnEvidencia.style.marginTop = "15px";
       btnEvidencia.innerText = "Subir evidencia del módulo";
       progressContainer.appendChild(btnEvidencia);
    }
 </script>
+
+
 
 
 </body>
