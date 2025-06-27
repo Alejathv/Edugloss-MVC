@@ -1,6 +1,7 @@
 <?php
 error_reporting(E_ALL);
     ini_set('display_errors', 1);
+    session_start();
 require_once __DIR__ . '/../../Controller/AdminController.php';
 
 $adminController = new AdminController();
@@ -34,6 +35,22 @@ if (!$usuario) {
 
    <!-- custom css file link  -->
    <link rel="stylesheet" href="../css/style_panel.css">
+    <style>
+   .icons .fas,
+.icons a.fas {
+   font-size: 2rem;
+   color: #333;
+   cursor: pointer;
+   margin-left: 1rem;
+   transition: color 0.3s;
+}
+
+.icons .fas:hover,
+.icons a.fas:hover {
+   color: #9b9b9b;
+}
+
+</style>
 
 </head>
 <body>
@@ -49,6 +66,7 @@ if (!$usuario) {
          <div id="menu-btn" class="fas fa-bars"></div>
          <div id="user-btn" class="fas fa-user"></div>
          <div id="toggle-btn" class="fas fa-sun"></div>
+         <a href="../../documentos/Manual de administrador.pdf" target="_blank" id="help-btn" class="fas fa-question"></a>
       </div>
 
       <!-- Perfil del usuario, muestra la imagen, nombre y rol -->
@@ -58,9 +76,9 @@ if (!$usuario) {
          <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
          </h3>
          <p class="role">Administrador</p>
-         <a href="./View/perfil.php" class="btn">ver perfil</a>
+         <a href="../perfil.php" class="btn">ver perfil</a>
          <div class="flex-btn">
-         <a href="logout.php" class="option-btn">Cerrar Sesión</a>
+         <a href="../../logout.php" class="option-btn">Cerrar Sesión</a>
          </div>
       </div>   
 

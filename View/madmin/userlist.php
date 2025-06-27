@@ -23,6 +23,22 @@ $usuarios = $adminController->listarUsuarios();
 
    <!-- custom css file link  -->
    <link rel="stylesheet" href="../css/style_panel.css">
+    <style>
+   .icons .fas,
+.icons a.fas {
+   font-size: 2rem;
+   color: #333;
+   cursor: pointer;
+   margin-left: 1rem;
+   transition: color 0.3s;
+}
+
+.icons .fas:hover,
+.icons a.fas:hover {
+   color: #9b9b9b;
+}
+
+</style>
 
    <!-- Metadatos básicos para la página web, que especifican la codificación de caracteres, compatibilidad y diseño responsive -->
     <!-- DataTables y extensiones necesarias -->
@@ -75,6 +91,7 @@ $usuarios = $adminController->listarUsuarios();
          <div id="menu-btn" class="fas fa-bars"></div>
          <div id="user-btn" class="fas fa-user"></div>
          <div id="toggle-btn" class="fas fa-sun"></div>
+         <a href="../../documentos/Manual de administrador.pdf" target="_blank" id="help-btn" class="fas fa-question"></a>
       </div>
 
       <!-- Perfil del usuario, muestra la imagen, nombre y rol -->
