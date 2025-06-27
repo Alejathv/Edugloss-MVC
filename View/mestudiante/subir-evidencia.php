@@ -140,7 +140,7 @@ $evidencias = mysqli_query($conexion, "
    </div>
 
    <div class="tabla-evidencias p-4 border rounded bg-white mt-5">
-      <h2 class="mb-4">Mis Evidencias</h2>
+      <h2 class="titulo-tabla mb-4">Mis Evidencias</h2>
       <div class="table-responsive">
          <table class="tablaevidencia table table-striped">
             <thead>
@@ -196,7 +196,9 @@ $evidencias = mysqli_query($conexion, "
       </div>
    </div>
 </div>
-
+<footer class="footer">
+   &copy; copyright 2024 <span>EduGloss</span> | Todos los derechos reservados!
+</footer>
 <script src="../js/script.js"></script>
 <script src="../js/mensajes.js"></script>
 </body>

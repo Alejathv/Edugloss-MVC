@@ -1795,175 +1795,152 @@ form.boton-estilo button:hover {
 }
 
 
-/*subir material modulo*/
-.form-material {
-    background-color: #f2e7fc;
-    border: 1px solid #d2b4f2;
-    border-radius: 15px;
-    max-width: 1000px; /* Igual que la tabla */
-    margin: 30px auto;
-    padding: 25px 30px;
-    font-family: Arial, sans-serif;
-    box-shadow: 0 2px 8px rgba(108, 48, 194, 0.2); /* Igual que la tabla */
+/* === FORMULARIO DE SUBIDA === */
+.formulario-subida {
+   background-color: #e9efff;
+   border: 1px solid #c3d3fd;
+   border-radius: 15px;
+   padding: 30px;
+   max-width: 700px;
+   width: 100%;
+   box-shadow: 0 2px 8px rgba(135, 162, 251, 0.3);
 }
 
-.form-material h2 {
-    text-align: center;
- color: #6c2bd9;
-background-color: #e2cfff;/* el de .titulo-morado */
-    margin-bottom: 25px;
-    font-size: 2.5rem;
-padding: 1rem 1.5rem;
-    border-radius: 12px;
-    font-weight: bold;
+.formulario-subida h2 {
+   color: #87A2FB !important;
+   font-size: 2rem;
+   padding: 1rem;
+   border-radius: 12px;
+   margin-bottom: 25px;
+   text-align: center;
+   box-shadow: 0 2px 6px rgba(135, 162, 251, 0.3);
 }
 
-.form-material form label {
-    display: block;
-    margin-bottom: 6px;
-    color: #333;
-    font-size: 1.5rem;
+.formulario-subida label {
+   font-size: 2rem;
+   font-weight: bold;
+   color: #333;
+   margin-bottom: 6px;
 }
 
-.form-material form input,
-.form-material form select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 18px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-    box-sizing: border-box;
+.formulario-subida select,
+.formulario-subida input[type="file"] {
+   width: 100%;
+   padding: 10px;
+   margin-bottom: 18px;
+   border-radius: 8px;
+   border: 1px solid #bccdf8;
+   font-size: 2rem;
+   background-color: #f7faff;
+   box-sizing: border-box;
 }
 
-.form-material button {
-    width: 100%;
-    background-color: #8e4de6;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+.formulario-subida button[type="submit"] {
+   background-color: #87A2FB;
+   color: white;
+   border: none;
+   padding: 12px;
+   border-radius: 8px;
+   font-size: 16px;
+   cursor: pointer;
+   width: 100%;
+   transition: background-color 0.3s ease;
+   box-shadow: 0 2px 4px rgba(135, 162, 251, 0.2);
 }
 
-.form-material button:hover {
-    background-color: #732ec4;
+.formulario-subida button[type="submit"]:hover {
+   background-color: #6f90f3;
 }
 
-
-/*tabla material*/
-.materials-table {
-    margin: 30px auto;
-    max-width: 1000px;
-    font-family: Arial, sans-serif;
-    background-color: #f2e7fc;
-    border-radius: 15px;
-    padding: 20px 25px;
-    box-shadow: 0 2px 8px rgba(108, 48, 194, 0.2);
-    border: 1px solid #d2b4f2;
+/* === TABLA DE EVIDENCIAS === */
+.tabla-evidencias {
+   background-color: #f7faff;
+   border: 1px solid #d1e0fd;
+   border-radius: 15px;
+   box-shadow: 0 2px 8px rgba(135, 162, 251, 0.15);
 }
 
-.module-section {
-    background-color: #f2e7fc;
-    border: 1px solid #d2b4f2;
-    border-radius: 15px;
-    padding: 20px 25px;
-    margin-bottom: 30px;
-    font-family: Arial, sans-serif;
-    box-shadow: 0 2px 8px rgba(108, 48, 194, 0.15);
-    transition: transform 0.2s;
-}
-.module-section p {
-   font-size: 1.5rem;
-}
-.module-section:hover {
-    transform: scale(1.01);
-}
-.materials-table h2{
-text-align: center;
- color: #6c2bd9;
-background-color: #e2cfff;/* el de .titulo-morado */
-    margin-bottom: 25px;
-    font-size: 2.5rem;
-padding: 1rem 1.5rem;
-    border-radius: 12px;
-    font-weight: bold;
+.tabla-evidencias h2 {
+   color: #6f90f3 !important;
+   font-size: 2rem;
+   padding: 1rem;
+   border-radius: 12px;
+   margin-bottom: 20px;
+   text-align: center;
+   box-shadow: 0 2px 6px rgba(135, 162, 251, 0.2);
 }
 
-.materials-table h2,
-.module-section h3 {
-    color: #6c30c2;
-    margin-bottom: 15px;
-
+/* Tabla */
+.tablaevidencia {
+   width: 100%;
+   border-collapse: collapse;
+   background-color: white;
+   border-radius: 10px;
+   overflow: hidden;
+   box-shadow: 0 2px 4px rgba(135, 162, 251, 0.1);
 }
 
-.module-section h3 {
-    font-size: 2rem;
-    border-left: 5px solid #8e4de6;
-    padding-left: 10px;
+.tablaevidencia thead {
+   background-color: #87A2FB!important;
+   color: white;
+}
+.tablaevidencia th{
+   background-color: #6f90f3!important;
+}
+.tablaevidencia th,
+.tablaevidencia td {
+   padding: 12px 15px;
+   text-align: center;
+   border-bottom: 1px solid #e0e8ff;
+   font-size: 14px;
 }
 
-.material-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    background-color: white;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(108, 48, 194, 0.15);
+.tablaevidencia tr:hover {
+   background-color: #f3f7ff;
 }
 
-.material-table th,
-.material-table td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #e0d4f7;
-    font-size: 14px;
+.img-thumbnail {
+   border-radius: 6px;
+   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-.material-table th {
-    background-color: #8e4de6;
-    color: white;
-    font-weight: bold;
+/* === ESTADOS === */
+.estado-aprobado {
+   background-color: #d4edda;
+   color: #155724;
+   padding: 5px 10px;
+   border-radius: 6px;
+   font-weight: bold;
 }
 
-.material-table tr:hover {
-    background-color: #f8f1fc;
+.estado-reprobado {
+   background-color: #f8d7da;
+   color: #721c24;
+   padding: 5px 10px;
+   border-radius: 6px;
+   font-weight: bold;
 }
 
-/* Botones */
-.preview-btn,
-.view-link {
-    padding: 6px 10px;
-    margin-right: 6px;
-    border-radius: 6px;
-    font-size: 13px;
-    text-decoration: none;
-    cursor: pointer;
-    display: inline-block;
-    transition: background-color 0.3s;
-    border: none;
+.estado-pendiente {
+   background-color: #fff3cd;
+   color: #856404;
+   padding: 5px 10px;
+   border-radius: 6px;
+   font-weight: bold;
 }
 
-.preview-btn {
-    background-color: #6c30c2;
-    color: white;
+/* === BOTÓN ELIMINAR === */
+.delete-btn {
+   background-color: #e04c4c;
+   color: white;
+   border: none;
+   padding: 6px 12px;
+   border-radius: 6px;
+   transition: background-color 0.3s ease;
 }
 
-.preview-btn:hover {
-    background-color: #5718a9;
-}
-
-/* Azul claro en lugar de verde */
-.view-link {
-    background-color: #5abafa;
-    color: white;
-}
-
-.view-link:hover {
-    background-color: #389ee0;
+.delete-btn:hover {
+   background-color: #c53030;
 }
 
 /* Modal */
