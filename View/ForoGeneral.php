@@ -155,7 +155,7 @@ $comentarios = $foroModel->getComentariosAnidados() ?? [];
             <a href="mestudiante/home.php"><i class="fas fa-home"></i><span>Inicio</span></a>
             <a href="ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
             <a href="mestudiante/<?= htmlspecialchars($redireccionCurso) ?>"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
-            <a href="mestudiante/tareas.php"><i class="fas fa-tasks"></i><span>Tareas</span></a>
+            <a href="mestudiante/subir-evidencia.php"><i class="fas fa-tasks"></i><span>Tareas</span></a>
             
         <?php elseif ($_SESSION['rol_nombre'] == 'docente'): ?>
             <!-- Menú para docentes -->

@@ -4,11 +4,18 @@ ini_set('display_errors', 1);
 session_start();
 
 require_once '../../Model/database.php';
+require_once '../../Controller/EstudianteController.php';
+
 
 $database = new Database();
 $conexion = $database->getConnection();
 
 $id_usuario = $_SESSION['user_id'];
+$db = $database->getConnection();
+$controller = new EstudianteController($db);
+
+$redireccionCurso = $controller->mostrarInscripciones();
+$hayInscripciones = !empty($redireccionCurso);
 
 // Cursos donde está inscrito
 $cursos = mysqli_query($conexion, "
@@ -22,21 +29,22 @@ $cursos = mysqli_query($conexion, "
 $modulos = mysqli_query($conexion, "
     SELECT m.id_modulo, m.nombre AS nombre_modulo 
     FROM modulo m
-    INNER JOIN curso c ON m.id_curso = c.id_curso
-    INNER JOIN inscripcion i ON c.id_curso = i.id_curso
+    INNER JOIN inscripcion i ON i.id_modulo = m.id_modulo
     WHERE i.id_usuario = $id_usuario AND i.estado = 'activa'
 ");
+
 
 // Evidencias ya subidas por el usuario
 $evidencias = mysqli_query($conexion, "
     SELECT e.id_evidencia, e.url_archivo, e.fecha_subida, e.estado,
            c.nombre AS nombre_curso, m.nombre AS nombre_modulo
     FROM evidencias e
-    INNER JOIN curso c ON e.id_curso = c.id_curso
+    LEFT JOIN curso c ON e.id_curso = c.id_curso
     LEFT JOIN modulo m ON e.id_modulo = m.id_modulo
     WHERE e.id_usuario = $id_usuario
     ORDER BY e.fecha_subida DESC
 ");
+
 ?>
 
 <!DOCTYPE html>
@@ -81,9 +89,8 @@ $evidencias = mysqli_query($conexion, "
    <nav class="navbar">
       <a href="home.php"><i class="fas fa-home"></i><span>Inicio</span></a>
       <a href="../ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
-      <a href="ver_materiales.php"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
-      <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Docentes</span></a>
-      <a href="contact.html"><i class="fas fa-headset"></i><span>Contáctanos</span></a>
+      <a href="<?= htmlspecialchars($redireccionCurso) ?>"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
+      <a href="subir-evidencia.php"><i class="fas fa-tasks"></i><span>Tareas</span></a>
    </nav>
 </div>
 
@@ -93,14 +100,19 @@ $evidencias = mysqli_query($conexion, "
          <div class="formulario-subida">
             <h2 class="mb-4 text-center">Subir Evidencia</h2>
             <form action="../../Controller/EvidenciaController.php" method="POST" enctype="multipart/form-data">
-               <div class="mb-3">
-                  <label for="curso">Curso:</label>
-                  <select name="curso" id="curso" class="form-control" required>
-                     <?php while ($curso = mysqli_fetch_assoc($cursos)) { ?>
-                        <option value="<?= $curso['id_curso'] ?>"><?= htmlspecialchars($curso['nombre']) ?></option>
-                     <?php } ?>
-                  </select>
-               </div>
+               <?php if (mysqli_num_rows($cursos) > 0): ?>
+                  <div class="mb-3">
+                     <label for="curso">Curso:</label>
+                     <select name="curso" id="curso" class="form-control" required>
+                        <?php while ($curso = mysqli_fetch_assoc($cursos)) { ?>
+                           <option value="<?= $curso['id_curso'] ?>"><?= htmlspecialchars($curso['nombre']) ?></option>
+                        <?php } ?>
+                     </select>
+                  </div>
+               <?php else: ?>
+                  <p class="text-center text-danger">⚠ No estás inscrito en ningún curso aún.</p>
+               <?php endif; ?>
+
 
                <?php if (mysqli_num_rows($modulos) > 0): ?>
                <div class="mb-3">
@@ -144,7 +156,8 @@ $evidencias = mysqli_query($conexion, "
             <tbody>
                <?php while ($evidencia = mysqli_fetch_assoc($evidencias)) { ?>
                   <tr>
-                     <td><?= htmlspecialchars($evidencia['nombre_curso']) ?></td>
+                     <td><?= htmlspecialchars($evidencia['nombre_curso'] ?? 'Sin curso') ?></td>
+
                      <td><?= htmlspecialchars($evidencia['nombre_modulo'] ?? 'Sin módulo') ?></td>
                      <td>
                         <a href="../../documentos/<?= htmlspecialchars($evidencia['url_archivo']) ?>" target="_blank">

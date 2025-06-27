@@ -109,7 +109,7 @@
       <?php } ?>
    
    <!-- Enlace común para todos -->
-    <a href="tareas.php"><i class="fas fa-tasks"></i><span>Tareas</span></a>
+    <a href="subir-evidencia.php"><i class="fas fa-tasks"></i><span>Tareas</span></a>
 </nav>
 
 </div>

@@ -15,10 +15,11 @@ if (isset($_POST['subir_evidencia'])) {
     $id_modulo = isset($_POST['modulo']) && $_POST['modulo'] !== '' ? intval($_POST['modulo']) : null;
     $archivo = $_FILES['archivo'] ?? null;
 
-    if (!$id_usuario || !$id_curso || !$archivo) {
-        echo "Faltan datos obligatorios.";
-        exit();
-    }
+   if (!$id_usuario || (!$id_curso && !$id_modulo) || !$archivo) {
+    echo "Faltan datos obligatorios.";
+    exit();
+}
+
 
     $nombreArchivo = uniqid() . '_' . basename($archivo['name']);
     $ruta = '../documentos/' . $nombreArchivo;

@@ -9,8 +9,14 @@ if (!isset($_SESSION['user_id'])) {
 
 // Conexión a la base de datos
 require_once '../model/Database.php';
+require_once '../Controller/EstudianteController.php';
 $db = new Database();
 $conn = $db->getConnection();
+$database = new Database();
+$db = $database->getConnection();
+$controller = new EstudianteController($db);
+$redireccionCurso = $controller->mostrarInscripciones();
+$hayInscripciones = !empty($redireccionCurso);
 
 // Obtener datos del usuario desde la BD para mostrar nombre y rol actualizados
 $id_usuario = $_SESSION['user_id'];
@@ -116,10 +122,9 @@ $foto_perfil = isset($_SESSION['foto_perfil']) ? $_SESSION['foto_perfil'] : 'ico
       <?php if ($rol == 'estudiante'): ?>
          <!-- Menú para estudiantes -->
          <a href="../View/mestudiante/home.php"><i class="fas fa-home"></i><span>Inicio</span></a>
-         <a href="cursos.php"><i class="fas fa-book"></i><span>Mis Cursos</span></a>
-         <a href="calificaciones.php"><i class="fas fa-star"></i><span>Calificaciones</span></a>
-         <a href="tareas.php"><i class="fas fa-tasks"></i><span>Tareas</span></a>
-         <a href="foro.php"><i class="fas fa-comments"></i><span>Foro Estudiantil</span></a>
+            <a href="ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
+            <a href="mestudiante/<?= htmlspecialchars($redireccionCurso) ?>"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
+            <a href="mestudiante/subir-evidencia.php"><i class="fas fa-tasks"></i><span>Tareas</span></a>
          
       <?php elseif ($rol == 'docente'): ?>
          <!-- Menú para docentes -->

@@ -30,29 +30,6 @@ if ($result->num_rows === 0) {
 $material = $result->fetch_assoc();
 
 $id_modulo = $material['id_modulo'];
-// Obtener todos los materiales de ese módulo
-$materialesModulo = [];
-
-$sqlLista = "SELECT id_material FROM material WHERE id_modulo = ? ORDER BY id_material ASC";
-$stmtLista = $conn->prepare($sqlLista);
-if ($stmtLista) {
-    $stmtLista->bind_param("i", $id_modulo);
-    $stmtLista->execute();
-    $resultLista = $stmtLista->get_result();
-
-    while ($row = $resultLista->fetch_assoc()) {
-        $materialesModulo[] = $row['id_material'];
-    }
-
-    // Calcular posición actual y el siguiente material
-    $posActual = array_search($id, $materialesModulo);
-    $siguienteId = ($posActual !== false && isset($materialesModulo[$posActual + 1]))
-        ? $materialesModulo[$posActual + 1]
-        : null;
-} else {
-    echo "Error en consulta de materiales: " . $conn->error;
-    exit;
-}
 
 // FUNCIONES PARA TRANSFORMAR LAS URLS
 //
@@ -92,34 +69,13 @@ if ($material['tipo'] === 'video') {
    <link rel="stylesheet" href="../css/style_panel.css">
    <style>
      iframe, embed {
-    width: 90%;
+    width: 100%;
     height: 50vh;
     border: none;
     box-shadow: 0 0 15px rgba(0,0,0,0.1);
     margin: 0 auto; /* centra horizontalmente */
     display: block; /* necesario para que funcione margin: auto */
 }
-
-       .progress-container {
-   margin: 20px 0;
-   text-align: center;
-}
-
-.progress-bar {
-   width: 100%;
-   background-color: #eee;
-   border-radius: 20px;
-   overflow: hidden;
-   height: 20px;
-   margin-top: 10px;
-}
-
-.progress {
-   height: 100%;
-   background-color: #4CAF50;
-   transition: width 0.5s ease-in-out;
-}
-
    </style>
 
 </head>
@@ -141,17 +97,13 @@ if ($material['tipo'] === 'video') {
       <!-- Perfil del usuario, muestra la imagen, nombre y rol -->
       <div class="profile">
          <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
-         <h3 class="name">
-         <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
-         </h3>
+         <h3 class="name"><?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?></h3>
          <p class="role">Estudiante</p>
-         <a href="profile.html" class="btn">ver perfil</a>
-         <!-- Botones para iniciar sesión o registrarse -->
+         <a href="../perfil.php" class="btn">ver perfil</a>
          <div class="flex-btn">
-            <a href="login.html" class="option-btn">Entrar</a>
-            <a href="register.html" class="option-btn">Registrarse</a>
+            <a href="../../logout.php" class="option-btn">Cerrar Sesión</a>
          </div>
-      </div>   
+      </div> 
 
    </section>
 
@@ -175,32 +127,8 @@ if ($material['tipo'] === 'video') {
    <nav class="navbar">
    <a href="home.php"><i class="fas fa-home"></i><span>Inicio</span></a>
    <a href="../ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
+   <a href="subir-evidencia.php"><i class="fas fa-tasks"></i><span>Tareas</span></a>
    
-   <?php if (isset($_SESSION['rol_nombre'])) { ?>
-      <?php if ($_SESSION['rol_nombre'] == 'estudiante') { ?>
-         <!-- Enlaces para estudiantes -->
-         <a href="ver_materiales.php"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
-         <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Docentes</span></a>
-      
-      <?php } elseif ($_SESSION['rol_nombre'] == 'docente') { ?>
-         <!-- Enlaces para docentes -->
-         <a href="./TablasCM.php"><i class="fas fa-book"></i><span>Gestion De Aprendizaje</span></a>
-         <a href="./Contenido.php"><i class="fas fa-edit"></i><span>Contenido</span></a>
-         <a href="./evidencias.php"><i class="fas fa-users"></i><span>Evidencias</span></a>
-      
-      <?php } elseif ($_SESSION['rol_nombre'] == 'administrador') { ?>
-         <!-- Enlaces para administradores -->
-         <a href="gestion_usuarios.php"><i class="fas fa-user-cog"></i><span>Gestión de Usuarios</span></a>
-         <a href="gestion_cursos_admin.php"><i class="fas fa-book"></i><span>Gestión de Cursos</span></a>
-         <a href="reportes.php"><i class="fas fa-chart-bar"></i><span>Reportes</span></a>
-      <?php } ?>
-   <?php } else { ?>
-      <!-- Enlace para invitados/no logueados -->
-      <a href="login.php"><i class="fas fa-sign-in-alt"></i><span>Iniciar Sesión</span></a>
-   <?php } ?>
-   
-   <!-- Enlace común para todos -->
-   <a href="contact.html"><i class="fas fa-headset"></i><span>Contáctanos</span></a>
 </nav>
 
 </div>
@@ -227,12 +155,12 @@ if ($material['tipo'] === 'video') {
             <?php endif; ?>
             
          </div>
-         <div class="progress-container">
-            <label>Progreso del módulo:</label>
-            <div class="progress-bar">
-                <div class="progress" style="width: 100%;"></div>
-            </div>
-         </div>
+         <a href="ver_materiales.php?id_modulo=<?= urlencode($id_modulo) ?>" 
+            class="btn evidencia" 
+            style="background-color: #87A2FB; color: white; font-weight: bold;">
+            Ver Materiales
+         </a>
+
     </div>
 
    
@@ -247,53 +175,7 @@ if ($material['tipo'] === 'video') {
 
 <!-- custom js file link  -->
 <script src="../js/script.js"></script>
-<script>
-   const totalMateriales = <?= count($materialesModulo) ?>;
-   const materialActualId = <?= $id ?>;
-   const siguienteId = <?= $siguienteId !== null ? $siguienteId : 'null' ?>;
-   const moduloId = <?= $id_modulo ?>;
 
-   const vistosKey = 'materiales_vistos_modulo_' + moduloId;
-   let vistos = JSON.parse(localStorage.getItem(vistosKey)) || [];
-
-   // Marcar como visto el actual si no está
-   if (!vistos.includes(materialActualId)) {
-      vistos.push(materialActualId);
-      localStorage.setItem(vistosKey, JSON.stringify(vistos));
-   }
-
-   const porcentaje = Math.floor((vistos.length / totalMateriales) * 100);
-
-   // Actualizar barra de progreso
-   document.querySelector('.progress').style.width = porcentaje + '%';
-
-   const progressContainer = document.querySelector('.progress-container');
-
-   // Agregar texto de porcentaje
-   const textoProgreso = document.createElement('p');
-   textoProgreso.textContent = porcentaje + '% completado';
-   progressContainer.appendChild(textoProgreso);
-
-   // Mostrar botón de siguiente video si hay
-   if (siguienteId !== null) {
-      const btnSiguiente = document.createElement('a');
-      btnSiguiente.href = "mostrar.php?id=" + siguienteId;
-      btnSiguiente.className = "btn";
-      btnSiguiente.style.marginTop = "15px";
-      btnSiguiente.innerText = "Siguiente video";
-      progressContainer.appendChild(btnSiguiente);
-   }
-
-   // Mostrar botón de subir evidencia si 100% completado
-   if (porcentaje === 100) {
-      const btnEvidencia = document.createElement('a');
-      btnEvidencia.href = "subir_evidencia.php?id_modulo=" + moduloId;
-      btnEvidencia.className = "btn";
-      btnEvidencia.style.marginTop = "15px";
-      btnEvidencia.innerText = "Subir evidencia del módulo";
-      progressContainer.appendChild(btnEvidencia);
-   }
-</script>
 
 
 
