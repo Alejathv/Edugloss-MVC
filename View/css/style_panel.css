@@ -710,20 +710,6 @@ section{
    color: var(--light-color);
 }
 
-.playlist-videos .box-container{
-   display: grid;
-   grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
-   gap:1.5rem;
-   justify-content: center;
-   align-items: flex-start;
-}
-
-.playlist-videos .box-container .box{
-   background-color: var(--white);
-   border-radius: .5rem;
-   padding: 2rem;
-   position: relative;
-}
 
 .playlist-videos .box-container .box i{
    position: absolute;

@@ -35,6 +35,23 @@ $materiales = $materialModel->obtenerMaterialPorModulo($id_modulo); // Usamos tu
    <!-- custom css file link  -->
    <link rel="stylesheet" href="../css/style_panel.css">
    <style>
+      .titulo-modulo {
+         text-align: center;
+         font-size: 2rem;
+         color: #7b3df0;
+         border-bottom: 2px solid #7b3df0;
+         width: fit-content;
+         margin-bottom: 25px;
+      }
+      .box-container {
+   max-width: 1100px;   /* O ajusta a 900px si lo quieres más estrecho */
+   margin: 0 auto;
+   padding: 20px;
+   background-color: #fff;
+   border-radius: 10px;
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
       .material { 
             margin: 20px 0; padding: 15px; 
             background: #f9f9f9; border-radius: 5px;
@@ -125,37 +142,29 @@ $materiales = $materialModel->obtenerMaterialPorModulo($id_modulo); // Usamos tu
 </div>
 
 <section class="playlist-videos">
-
-   <h1 class="heading">Lista de Reproducción</h1>
-
+   <h1><?= htmlspecialchars($modulo['nombre']) ?></h1>
    <div class="box-container">
-
-      <h1><?= htmlspecialchars($modulo['nombre']) ?></h1>
-
-<h2>Materiales</h2>
-
-<?php if (empty($materiales)): ?>
-    <p>No hay materiales disponibles para este módulo.</p>
-<?php else: ?>
-    <div class="box-container">
-        <?php foreach ($materiales as $material): ?>
-            <a class="box" href="mostrar.php?id=<?= urlencode($material['id_material']) ?>" >
-                <i class="fas fa-play"></i>
-                <?php if ($material['tipo'] === 'video'): ?>
-                    <img class="rotar-preview" src="<?= (function() { $imagenes = glob("../img/videos/*.jpg"); return $imagenes ? $imagenes[array_rand($imagenes)] : '../img/videos/default.jpg'; })() ?>" alt="Vista previa aleatoria">
-                 <i class="fas fa-file"></i>   
-                <?php elseif ($material['tipo'] === 'pdf'): ?>
-                    <img class="rotar-preview" src="<?= (function() { $imagenes = glob("../img/pdf/*.jpg"); return $imagenes ? $imagenes[array_rand($imagenes)] : '../img/videos/default.jpg'; })() ?>" alt="Vista previa aleatoria">
-                <?php else: ?>
-                    <img src="images/post-unknown.png" alt="Material">
-                <?php endif; ?>
-                <h3><?= htmlspecialchars($material['nombre']) ?></h3>
-            </a>
-        <?php endforeach; ?>
-    </div>
-<?php endif; ?>
-
-   </div>
+      <?php if (empty($materiales)): ?>
+         <p>No hay materiales disponibles para este módulo.</p>
+      <?php else: ?>
+         <div class="box-container">
+            <?php foreach ($materiales as $material): ?>
+                  <a class="box" href="mostrar.php?id=<?= urlencode($material['id_material']) ?>" >
+                     <i class="fas fa-play"></i>
+                     <?php if ($material['tipo'] === 'video'): ?>
+                        <img class="rotar-preview" src="<?= (function() { $imagenes = glob("../img/videos/*.jpg"); return $imagenes ? $imagenes[array_rand($imagenes)] : '../img/videos/default.jpg'; })() ?>" alt="Vista previa aleatoria">
+                     <i class="fas fa-file"></i>   
+                     <?php elseif ($material['tipo'] === 'pdf'): ?>
+                        <img class="rotar-preview" src="<?= (function() { $imagenes = glob("../img/pdf/*.jpg"); return $imagenes ? $imagenes[array_rand($imagenes)] : '../img/videos/default.jpg'; })() ?>" alt="Vista previa aleatoria">
+                     <?php else: ?>
+                        <img src="images/post-unknown.png" alt="Material">
+                     <?php endif; ?>
+                     <h3><?= htmlspecialchars($material['nombre']) ?></h3>
+                  </a>
+            <?php endforeach; ?>
+         </div>
+      <?php endif; ?>
+</div>
    <div style="text-align: right; margin: 10px;">
       <a href="subir-evidencia.php" class="btn btn-primary">Subir Evidencia</a>
    </div>

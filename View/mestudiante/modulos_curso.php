@@ -125,7 +125,6 @@
                     <div class="icono"><i class="fas fa-book-open"></i></div>
                     <div class="contenido">
                         <h3><?= htmlspecialchars($modulo['nombre']) ?></h3>
-                        <p><?= htmlspecialchars($modulo['descripcion']) ?></p>
                     </div>
                 </div>
             <?php endforeach; ?>
