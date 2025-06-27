@@ -110,18 +110,14 @@ $tareas = ($resultado && $row = $resultado->fetch_assoc()) ? $row['total'] : 0;
     </div>
 <!-- Resumen Rápido -->
     <div class="quick-stats">
-        <div class="stat-card">
+        <a href="./TablasCM.php"  class="stat-card">
             <h4>Cursos Activos</h4>
             <p class="stat-number"><?= $cursos ?></p>
-        </div>
-        <div class="stat-card">
+        </a>
+        <a  href="./ver_inscripciones.php" class="stat-card">
             <h4>Estudiantes</h4>
             <p class="stat-number"><?= $estudiantes ?></p>
-        </div>
-        <div class="stat-card">
-            <h4>Tareas Pendientes</h4>
-            <p class="stat-number"><?= $tareas ?></p>
-        </div>
+        </a>
     </div>
     <!-- Tarjetas de Acceso Rápido (sin duplicar lo del sidebar) -->
     <div class="cards-grid">
@@ -146,7 +142,9 @@ $tareas = ($resultado && $row = $resultado->fetch_assoc()) ? $row['total'] : 0;
     </div>
 
 </div>
-
+<footer class="footer">
+   &copy; copyright 2024 <span>EduGloss</span> | Todos los derechos reservados!
+</footer>
 
 <script src="../js/script.js"></script>
 <script src="../js/mensajes.js"></script>

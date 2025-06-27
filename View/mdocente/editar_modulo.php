@@ -8,23 +8,22 @@ $conn = $db->getConnection();
 
 $moduloCtrl = new ModuloController($conn);
 
-
 if (!isset($_GET['id'])) {
-    echo "Curso no especificado.";
+    echo "Módulo no especificado.";
     exit;
 }
 
-$id_modulo= $_GET['id'];
+$id_modulo = $_GET['id'];
 $modulo = $moduloCtrl->obtenerModuloPorId($id_modulo);
 
 if (!$modulo) {
-    echo "Modulo no encontrado.";
+    echo "Módulo no encontrado.";
     exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $moduloCtrl->actualizarModulo($_POST);
-    header("Location: TablasCM.php?editado=modulo");
+    echo "<script>window.parent.location.href = 'TablasCM.php?editado=modulo';</script>";
     exit;
 }
 ?>
@@ -32,124 +31,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="es">
 <head>
    <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Inicio</title>
-
-   <!-- font awesome cdn link  -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
-
-   <!-- custom css file link  -->
+   <title>Editar Módulo</title>
    <link rel="stylesheet" href="../css/style_panel.css">
 
 </head>
 <body>
 
-<header class="header">
-   
-   <section class="flex">
+<section class="formulario-edicion">
+   <h2>Editar Módulo</h2>
+   <form method="POST">
+      <input type="hidden" name="id_modulo" value="<?= $modulo['id_modulo'] ?>">
 
-        <a href="docente_panel.php" class="logo">
-            <img src="../img/LogoEGm.png" alt="EduGloss" style="height: 80px;">
-        </a>
+      <label>Nombre:</label>
+      <input type="text" name="nombre" value="<?= htmlspecialchars($modulo['nombre']) ?>" required>
 
-      <div class="icons">
-         <div id="menu-btn" class="fas fa-bars"></div>
-         <div id="user-btn" class="fas fa-user"></div>
-         <div id="toggle-btn" class="fas fa-sun"></div>
-      </div>
+      <label>Descripción:</label>
+      <textarea name="descripcion" required><?= htmlspecialchars($modulo['descripcion']) ?></textarea>
 
-      <!-- Perfil del usuario, muestra la imagen, nombre y rol -->
-      <div class="profile">
-         <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
-         <h3 class="name">
-         <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
-         </h3>
-         <p class="role">Estudiante</p>
-         <a href="./View/perfil.php" class="btn">ver perfil</a>
-         <div class="flex-btn">
-         <a href="logout.php" class="option-btn">Cerrar Sesión</a>
-         </div>
-      </div>   
+      <label>Precio:</label>
+      <input type="number" name="precio" step="0.01" value="<?= htmlspecialchars($modulo['precio']) ?>" required>
 
-   </section>
-
-</header>   
-
-<div class="side-bar">
-
-   <div id="close-btn">
-      <i class="fas fa-times"></i>
-   </div>
-
-   <div class="profile">
-      <img src="../img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
-      <h3 class="name">
-      <?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?>
-      </h3>
-      <p class="role">estudiante</p>
-      <a href="../perfil.php" class="btn">ver perfil</a>
-   </div>
-
-   <nav class="navbar">
-   <a href="./docente_panel.php"><i class="fas fa-home"></i><span>Inicio</span></a>
-   <a href="../ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
-   
-   <?php if (isset($_SESSION['rol_nombre'])) { ?>
-      <?php if ($_SESSION['rol_nombre'] == 'estudiante') { ?>
-         <!-- Enlaces para estudiantes -->
-         <a href="ver_materiales.php"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
-         <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Docentes</span></a>
-      
-      <?php } elseif ($_SESSION['rol_nombre'] == 'docente') { ?>
-         <!-- Enlaces para docentes -->
-         <a href="./TablasCM.php"><i class="fas fa-book"></i><span>Gestion De Aprendizaje</span></a>
-         <a href="./Contenido.php"><i class="fas fa-upload"></i><span>Subir Material</span></a>
-         <a href="./evidencias.php"><i class="fas fa-file-alt"></i><span>Evidencias</span></a>
-      
-      <?php } elseif ($_SESSION['rol_nombre'] == 'administrador') { ?>
-         <!-- Enlaces para administradores -->
-         <a href="gestion_usuarios.php"><i class="fas fa-user-cog"></i><span>Gestión de Usuarios</span></a>
-         <a href="gestion_cursos_admin.php"><i class="fas fa-book"></i><span>Gestión de Cursos</span></a>
-         <a href="reportes.php"><i class="fas fa-chart-bar"></i><span>Reportes</span></a>
-      <?php } ?>
-   <?php } else { ?>
-      <!-- Enlace para invitados/no logueados -->
-      <a href="login.php"><i class="fas fa-sign-in-alt"></i><span>Iniciar Sesión</span></a>
-   <?php } ?>
-</nav>
-</div>
-<h2 class="heading">Editar Modulo</h2>
-
-<form method="POST" class="formulario-edicion">
-    <input type="hidden" name="id_modulo" value="<?= $modulo['id_modulo'] ?>">
-
-    <label>Nombre:</label>
-    <input type="text" name="nombre" value="<?= htmlspecialchars($modulo['nombre']) ?>" required>
-
-    <label>Descripción:</label>
-    <textarea name="descripcion" required><?= htmlspecialchars($modulo['descripcion']) ?></textarea>
-
-    <label>Precio:</label>
-    <input type="number" name="precio" step="0.01" value="<?= htmlspecialchars($modulo['precio']) ?>" required>
-
-    <label>Estado:</label>
+      <label>Estado:</label>
       <select name="estado">
          <option value="disponible" <?= ($modulo['estado'] ?? '') == 'disponible' ? 'selected' : '' ?>>Disponible</option>
          <option value="cerrado" <?= ($modulo['estado'] ?? '') == 'cerrado' ? 'selected' : '' ?>>Cerrado</option>
       </select>
 
-    <button type="submit">Actualizar Módulo</button>
-</form>
+      <button type="submit">Actualizar Módulo</button>
+   </form>
+</section>
 
-<footer class="footer">
-
-   &copy; copyright  2024 <span>EduGloss</span> | Todos los derechos reservados!
-
-</footer>
-
-<!-- custom js file link  -->
-<script src="../js/script.js"></script>
-<script src="../js/mensajes.js"></script>
 </body>
 </html>
