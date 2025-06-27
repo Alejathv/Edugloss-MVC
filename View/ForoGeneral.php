@@ -2,14 +2,20 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 require_once __DIR__ . '/../Model/ForoModel.php';
-
+require_once '../Controller/EstudianteController.php';
+$database = new Database();
+$db = $database->getConnection();
+$controller = new EstudianteController($db);
 $foroModel = new ForoModel();
 
+$redireccionCurso = $controller->mostrarInscripciones();
+$hayInscripciones = !empty($redireccionCurso);
 // Procesar envío de nuevo comentario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($_POST['contenido'])) {
@@ -124,7 +130,7 @@ $comentarios = $foroModel->getComentariosAnidados() ?? [];
         </div>
         <div class="profile">
             <img src="img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
-            <h3 class="name"><?= htmlspecialchars($_SESSION['nombre']) ?></h3>
+            <h3 class="name"><?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?></h3>
             <p class="role"><?= htmlspecialchars($_SESSION['rol_nombre']) ?></p>
             <a href="./perfil.php" class="btn">Ver Perfil</a>
             <div class="flex-btn">
@@ -139,18 +145,17 @@ $comentarios = $foroModel->getComentariosAnidados() ?? [];
     <div id="close-btn"><i class="fas fa-times"></i></div>
     <div class="profile">
         <img src="img/<?= htmlspecialchars($_SESSION['foto_perfil'] ?? 'icon1.png') ?>" class="image" alt="Foto de perfil">
-        <h3 class="name"><?= htmlspecialchars($_SESSION['nombre']) ?></h3>
+        <h3 class="name"><?= htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']) ?></h3>
         <p class="role"><?= htmlspecialchars($_SESSION['rol_nombre']) ?></p>
         <a href="./perfil.php" class="btn">Ver Perfil</a>
     </div>
     <nav class="navbar">
         <?php if ($_SESSION['rol_nombre'] == 'estudiante'): ?>
             <!-- Menú para estudiantes -->
-            <a href="home.php"><i class="fas fa-home"></i><span>Inicio</span></a>
-            <a href="cursos.php"><i class="fas fa-book"></i><span>Mis Cursos</span></a>
-            <a href="calificaciones.php"><i class="fas fa-star"></i><span>Calificaciones</span></a>
-            <a href="tareas.php"><i class="fas fa-tasks"></i><span>Tareas</span></a>
-            <a href="ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro Estudiantil</span></a>
+            <a href="mestudiante/home.php"><i class="fas fa-home"></i><span>Inicio</span></a>
+            <a href="ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
+            <a href="mestudiante/<?= htmlspecialchars($redireccionCurso) ?>"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
+            <a href="mestudiante/tareas.php"><i class="fas fa-tasks"></i><span>Tareas</span></a>
             
         <?php elseif ($_SESSION['rol_nombre'] == 'docente'): ?>
             <!-- Menú para docentes -->

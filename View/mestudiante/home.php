@@ -60,7 +60,6 @@ $hayInscripciones = !empty($redireccionCurso);
          <a href="../ForoGeneral.php"><i class="fas fa-comments"></i><span>Foro General</span></a>
          <a href="<?= htmlspecialchars($redireccionCurso) ?>"><i class="fas fa-graduation-cap"></i><span>Cursos</span></a>
          <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Docentes</span></a>
-         <a href="contact.html"><i class="fas fa-headset"></i><span>Contáctanos</span></a>
       </nav>
    <?php endif; ?>
 </div>

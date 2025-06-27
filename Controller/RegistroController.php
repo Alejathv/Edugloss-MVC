@@ -65,8 +65,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $mail->isHTML(true);
             $mail->Subject ='¡Bienvenido(a) a EduGlos! Explora nuestros planes';
+            $logoPath = __DIR__ . '/../View/img/logo.png';
+
+            if (!file_exists($logoPath)) {
+                echo "⚠ No se encontró el archivo en: $logoPath";
+                exit();
+            }
             $mail->Body = "
                 <div style='font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;'>
+                    <div style='text-align: center;'>
+                        <img src='cid:logoCID' alt='EduGloss Logo' style='max-width: 200px; margin-bottom: 20px;'>
+                    </div>
                     <div style='max-width: 600px; margin: auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);'>
                         <h2 style='color: #6f42c1;'>¡Hola $nombre!</h2>
                         <p style='font-size: 16px; color: #333;'>

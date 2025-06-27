@@ -70,9 +70,22 @@ if ($userModel->updatePassword($correo, $claveHash)) {
         // Contenido del correo
         $mail->isHTML(true);
         $mail->Subject = 'Recuperación de Contraseña - GlizCraft';
-        
-        $mail->Body    = "
+
+        $logoPath = __DIR__ . '/../View/img/logo.png';
+
+        if (!file_exists($logoPath)) {
+            echo "⚠ No se encontró el archivo en: $logoPath";
+            exit();
+        }
+
+        $mail->isHTML(true); // IMPORTANTE
+        $mail->addEmbeddedImage($logoPath, 'logoCID', 'logo.png');
+
+        $mail->Body = "
         <div style='font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;'>
+            <div style='text-align: center;'>
+                    <img src='cid:logoCID' alt='EduGloss Logo' style='max-width: 200px; margin-bottom: 20px;'>
+            </div>
             <div style='max-width: 600px; margin: auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);'>
                 <h2 style='color: #6f42c1;'>Recuperación de Contraseña</h2>
                 <p style='font-size: 16px; color: #333;'>Hola {$user['nombre']},</p>
@@ -93,6 +106,7 @@ if ($userModel->updatePassword($correo, $claveHash)) {
             </div>
         </div>
         ";
+
         $mail->AltBody = "Hola {$user['nombre']}, tu nueva clave es: $clave. Por seguridad, cambia esta contraseña después de iniciar sesión.";
 
         $mail->send();
